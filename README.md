@@ -1,2 +1,6 @@
 # SEMA
-Trabajo Practico Integrador , Catedra: Desarrollo de Software. Grupo 3
+Trabajo Practico Integrador Final 
+Catedra: Desarrollo de Software 
+Grupo: 3
+Profesor: 
+Integrantes:
