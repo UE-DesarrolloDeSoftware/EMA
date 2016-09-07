@@ -2,5 +2,5 @@
 ###Trabajo Practico Integrador Final 
 ###Catedra: Desarrollo de Software 
 ###Grupo: 3
-####Profesor: Sebastian Ramirez	, Federico Bruccheieri 
-####Integrantes: Pablo Ziegler
+####Profesores: Sebastian Ramirez, Federico Brucchieri 
+####Integrantes: Pablo Ziegler, Raúl Ferreyra, Tania Scortegagna
