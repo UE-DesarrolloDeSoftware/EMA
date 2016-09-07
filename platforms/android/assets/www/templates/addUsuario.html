@@ -1,0 +1,41 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-calm">
+
+        <h1 class="title">Nuevo Usuario</h1>
+
+        <div class="buttons">
+            <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
+        </div>
+
+    </ion-header-bar>
+
+    <ion-content class="padding">
+
+        <form name="usuarioForm" ng-submit="addUsuario()">
+
+            <div class="list">
+                <label class="item item-input">
+                    <input type="text" placeholder="Nombre" ng-model="input.name" required>
+                </label>
+
+                <label class="item item-input">
+                    <input type="text" type="email" placeholder="Email" ng-model="input.email" required>
+                </label>
+
+                <label class="item item-input">
+                    <input type="text" type="password" placeholder="Password" ng-model="input.password" required>
+                </label>
+
+            </div>
+
+            <div class="padding">
+
+                <button class="button button-block button-balanced" ng-disabled="usuarioForm.$invalid">Save Usuario</button>
+
+            </div>
+
+        </form>
+
+    </ion-content>
+
+</ion-modal-view>

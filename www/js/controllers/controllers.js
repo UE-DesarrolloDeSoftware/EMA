@@ -1,56 +1,108 @@
-angular.module('ema.controllers.controllers', [])
+angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncate'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('UsuariosCtrl', function($scope, $ionicPopup, UsuarioService) {
 
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+    $scope.usuarios = [];
+    $scope.input = {};
 
-  // Form data for the login modal
-  $scope.loginData = {};
+    function getAllUsuarios(){
+        UsuarioService.getUsuarios().then(function(result){
+            $scope.usuarios = result.data.data;
+        });
+    }
 
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('partials/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
+    $scope.addUsuario = function(){
+        UsuarioService.addUsuario($scope.input).then(function(result){
+            $scope.input = {};
+            getAllUsuarios();
+        });
+    }
 
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
+    $scope.deleteUsuario = function(id){
+        UsuarioService.deleteUsuario(id).then(function(result){
+            getAllUsuarios();
+        });
+    }
 
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
+    getAllUsuarios();
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+.controller('LoginCtrl', function($scope, $ionicPopup, $state, UsuarioService) {
+
+	$scope.login = {};
+
+    $scope.doLogin = function(){
+//      UsuarioService.doLogin($scope.login).then(function(result){
+//
+//        $ionicPopup.alert({
+//           title: 'Usuario Encontrado',
+//           template: result.data[0].name + ' / ' + result.data[0].email
+//        });
+//
+//        $state.go('tab.usuarios');
+//      });
+
+      $state.go('app.map');
+    };
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-});
+.controller('MapController',function($scope, $cordovaGeolocation ){
+
+      // INICIALIZACION DEL MAPA
+      $scope.$on("$stateChangeSuccess", function() {
+        $scope.map = {
+          defaults: {
+            tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+            maxZoom: 18,
+            zoomControlPosition: 'bottomleft'
+          },
+          markers : {},
+          events: {
+            map: {
+              enable: ['context'],
+              logic: 'emit'
+            }
+          }
+        };
+
+        $scope.map.center  = {
+          lat : 38.8951100,
+          lng : -77.0363700,
+          zoom : 12
+        };
+
+        $scope.map.markers[0] = {
+          lat : 38.8951100,
+          lng : -77.0363700,
+          message: 'Washington D.C., USA',
+          focus: true,
+          draggable: false
+        };
+      });
+
+      $scope.locate = function(){
+
+        $cordovaGeolocation
+          .getCurrentPosition()
+          .then(function (position) {
+            $scope.map.center.lat  = position.coords.latitude;
+            $scope.map.center.lng = position.coords.longitude;
+            $scope.map.center.zoom = 15;
+
+            $scope.map.markers.now = {
+              lat:position.coords.latitude,
+              lng:position.coords.longitude,
+              message: "You Are Here",
+              focus: true,
+              draggable: false
+            };
+
+          }, function(err) {
+            // error
+            console.log("Location error!");
+            console.log(err);
+          });
+
+      };
+})
+

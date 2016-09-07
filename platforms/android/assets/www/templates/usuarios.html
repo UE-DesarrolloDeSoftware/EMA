@@ -1,0 +1,26 @@
+<ion-view view-title="Usuarios">
+  <ion-content class="has-header">
+
+    <div class="padding">
+      <button class="button button-block button-balanced" ng-click="modal.show();">
+        Nuevo Usuario
+      </button>
+    </div>
+
+    <ion-list can-swipe="true">
+
+      <ion-item ng-repeat="usuario in usuarios">
+
+        {{usuario.email}} /
+        {{usuario.password}}
+
+        <ion-option-button class="button-assertive" ng-click="deleteUsuario(usuario.id)">
+          Elminar
+        </ion-option-button>
+
+      </ion-item>
+
+    </ion-list>
+
+  </ion-content>
+</ion-view>

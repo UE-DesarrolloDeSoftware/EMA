@@ -1,28 +1,58 @@
-'use strict';
 
-/* Services */
+angular.module('ema.Services.services', [])
 
-/*
- http://docs.angularjs.org/api/ngResource.$resource
- Default ngResources are defined as
- 'get':    {method:'GET'},
- 'save':   {method:'POST'},
- 'query':  {method:'GET', isArray:true},
- 'remove': {method:'DELETE'},
- 'delete': {method:'DELETE'}
- */
+.service('UsuarioService', function ($http, Backand){
+      var baseUrl = '/1/objects/';
+      var objectName = 'usuarios/'
 
-var services = angular.module('ema.services.services', []);
+      function getUrl() {
+          return Backand.getApiUrl() + baseUrl + objectName;
+      }
 
-/* USUARIO
-Lo dejo para consultar.
-services.factory('UsuarioFactory', function ($resource) {
-	return $resource('/tracker/rest/usuario/:id', {}, {
-        show: { method: 'GET' },
-        remove: { method: 'DELETE' },
-        update: { method: 'PUT' },
-        create: { method: 'POST' },
-        query: { method: 'GET', params: {}, isArray: true },
-    });
-});
-*/
+      function getUrlForId(id) {
+          return getUrl() + id;
+      }
+
+      getUsuarios = function () {
+          return $http.get(getUrl());
+      };
+
+      getUsuario = function (id) {
+          return $http.get(getUrlForId(id));
+      };
+
+      addUsuario = function (object) {
+          return $http.post(getUrl(), object);
+      };
+
+      updateUsuario = function (id, object) {
+          return $http.put(getUrlForId(id), object);
+      };
+
+      deleteUsuario = function (id) {
+          return $http.delete(getUrlForId(id));
+      };
+
+        doLogin = function (login) {
+			return $http({
+							method:"GET",
+							url:Backand.getApiUrl() + '/1/query/data/getUserByEmailAndPass',
+							params:{
+								parameters: {
+								  email: login.email,
+								  pass: login.password
+								}
+							}
+						});
+		};
+
+
+      return {
+        getUsuarios: getUsuarios,
+        getUsuario: getUsuario,
+        addUsuario: addUsuario,
+        updateUsuario: updateUsuario,
+        deleteUsuario: deleteUsuario,
+        doLogin: doLogin
+      }
+  })

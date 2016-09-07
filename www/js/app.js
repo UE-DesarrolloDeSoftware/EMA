@@ -1,73 +1,66 @@
-// Ionic ema App
+angular.module('ema', ['ionic', 'ema.Controllers.controllers','ema.Services.services', 'backand'])
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'ema' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'ema.controllers.controllers' is found in controllers/controllers.js
-angular.module('ema', ['ionic', 'ema.controllers.controllers','ema.services.services'])
+  .run(function($ionicPlatform) {
+    $ionicPlatform.ready(function() {
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      if(window.cordova && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        window.cordova.plugins.Keyboard.disableScroll(true);
+      }
+      if(window.StatusBar) {
+        StatusBar.styleDefault();
+      }
+    });
+  })
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+.config(function(BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
 
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
-  });
-})
+  BackandProvider.setAppName('plosada');
+  BackandProvider.setAnonymousToken('9198a4e0-4da8-4e03-a02e-d03f67e4e4c6');
 
-.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
+      $stateProvider
+
+      .state('login', {
+        url: "/login",
+        templateUrl: "templates/login.html",
+        controller: 'LoginCtrl'
+      })
+
+    //   setup an abstract state for the tabs directive
+      .state('tab', {
+          url: '/tabs',
+          abstract: true,
+          templateUrl: 'templates/tabs.html'
+      })
+
+      .state('tab.usuarios', {
+          url: '/usuarios',
+          views: {
+              'tab-usuarios': {
+                  templateUrl: 'templates/usuarios.html',
+                  controller: 'UsuariosCtrl'
+              }
+          }
+      })
 
     .state('app', {
-    url: '/app',
-    abstract: true,
-    templateUrl: 'partials/menu.html',
-    controller: 'AppCtrl'
-  })
+      url: "/app",
+      abstract: true,
+      templateUrl: "templates/menu.html",
+      controller: 'MapController'
+    })
 
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'partials/search.html'
-      }
-    }
-  })
-
-  .state('app.browse', {
-      url: '/browse',
+    .state('app.map', {
+      url: "/map",
       views: {
-        'menuContent': {
-          templateUrl: 'partials/browse.html'
+        'menuContent' :{
+          templateUrl: "templates/map.html"
         }
       }
     })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'partials/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
+  ;
 
-  .state('app.single', {
-    url: '/playlists/:playlistId',
-    views: {
-      'menuContent': {
-        templateUrl: 'partials/playlist.html',
-        controller: 'PlaylistCtrl'
-      }
-    }
-  });
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
-});
+   $urlRouterProvider.otherwise('/login');
+})
+

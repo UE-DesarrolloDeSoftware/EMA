@@ -1,0 +1,40 @@
+<ion-view view-title="Usuarios">
+  <ion-content class="has-header">
+
+    <form>
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="Nombre" ng-model="input.name">
+        </label>
+
+        <label class="item item-input">
+          <input type="text" type="email" placeholder="Email" ng-model="input.email">
+        </label>
+
+        <label class="item item-input">
+          <input type="text" type="password" placeholder="Password" ng-model="input.password">
+        </label>
+      </div>
+
+      <button class="button button-balanced button-small" ng-click="addUsuario()">
+        Crear Usuario
+      </button>
+    </form>
+
+    <ion-list can-swipe="true">
+
+      <ion-item ng-repeat="usuario in usuarios">
+
+        {{usuario.email}} /
+        {{usuario.password}}
+
+        <ion-option-button class="button-assertive" ng-click="deleteUsuario(usuario.id)">
+          Elminar
+        </ion-option-button>
+
+      </ion-item>
+
+    </ion-list>
+
+  </ion-content>
+</ion-view>
