@@ -36,8 +36,8 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
     getAllUsuarios();
 })
 
-.controller('LoginCtrl', function($scope, $ionicPopup, $state, UsuarioService) {
-
+.controller('LoginCtrl', function($scope, $ionicPopup, $ionicModal, $state, UsuarioService) {
+    $scope.input = {};
 	$scope.login = {};
 
 	// PARA DESARROLLO
@@ -48,13 +48,6 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
       UsuarioService.doLogin($scope.login).then(function(result){
 
         if (result.data[0] != null){
-//          $state.go('tab.usuarios');
-
-//            $ionicPopup.alert({
-//               title: '',
-//               template: result.data[0].name
-//            });
-
             window.localStorage['usuario'] = result.data[0].name;
             $state.go('app.map');
         }
@@ -66,6 +59,30 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
         }
       });
     };
+
+    $scope.addUsuario = function(){
+        UsuarioService.validateUserByEmail($scope.input).then(function(result){
+            if (result.data[0] != null){
+                $ionicPopup.alert({
+                   title: '',
+                   template: "Usuario existente"
+                });
+            } else {
+                UsuarioService.addUsuario($scope.input).then(function(){
+                    $scope.input = {};
+                    $scope.modal.hide();
+                });
+            }
+        });
+    }
+
+      /* GENERA VISTA DE ALTA DE USUARIO */
+      $ionicModal.fromTemplateUrl('templates/addUsuario.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+          $scope.modal = modal;
+      });
 
     if (window.localStorage['usuario'] != null){
         $state.go('app.map');
@@ -105,11 +122,6 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
           draggable: false
         };
 
-//        $ionicPopup.alert({
-//           title: 'Usuario Logueado',
-//           template: window.localStorage['usuario']
-//        });
-
       });
 
       // SITUAR EN POSICION ACTUAL
@@ -146,6 +158,11 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
 
     $scope.goToUsuarios = function(){
         $state.go('usuarios');
+    };
+
+    $scope.logOut = function(){
+        window.localStorage.removeItem("usuario");
+        $state.go('login');
     };
 
     $scope.usuario = window.localStorage['usuario'];

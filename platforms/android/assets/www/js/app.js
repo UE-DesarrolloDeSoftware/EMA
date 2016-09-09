@@ -16,8 +16,8 @@ angular.module('ema', ['ionic', 'ema.Controllers.controllers','ema.Services.serv
 
 .config(function(BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
 
-  BackandProvider.setAppName('plosada');
-  BackandProvider.setAnonymousToken('9198a4e0-4da8-4e03-a02e-d03f67e4e4c6');
+  BackandProvider.setAppName('emaupe');
+  BackandProvider.setAnonymousToken('41979cd2-4dc3-4d87-942b-57dd11da6589');
 
       $stateProvider
 
