@@ -1,25 +1,28 @@
-<ion-modal-view>
-  <ion-header-bar>
-    <h1 class="title">Login</h1>
-    <div class="buttons">
-      <button class="button button-clear" ng-click="closeLogin()">Close</button>
-    </div>
-  </ion-header-bar>
-  <ion-content>
-    <form ng-submit="doLogin()">
-      <div class="list">
-        <label class="item item-input">
-          <span class="input-label">Username</span>
-          <input type="text" ng-model="loginData.username">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Password</span>
-          <input type="password" ng-model="loginData.password">
-        </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
-        </label>
-      </div>
-    </form>
-  </ion-content>
-</ion-modal-view>
+  <ion-view view-title="Login">
+    <!--<div class="bar bar-header bar-balanced">-->
+      <!--<h1 class="title">EMA</h1>-->
+    <!--</div>-->
+
+    <img src="img/logo.jpg" class="center" style="padding: 20px;" alt="Estacionamiento Medido Automatizado" height="200">
+
+    <ion-content style="padding-top: 200px;">
+      <form ng-submit="doLogin()" class="padding">
+        <div class="list">
+          <label class="item item-input">
+            <input id="email" name="email" type="email"  placeholder="Your email" ng-model="login.email">
+          </label>
+          <label class="item item-input">
+            <input id="password" name="password" type="password" placeholder="Your password" ng-model="login.password">
+          </label>
+        </div>
+        <div class="padding">
+          <button class="button button-block button-positive" type="submit">
+            Login
+          </button>
+        </div>
+        <div class="padding">
+          <a ng-click="modal.show()">Registrarme!</a>
+        </div>
+      </form>
+    </ion-content>
+  </ion-view>
