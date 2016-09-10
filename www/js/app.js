@@ -16,8 +16,8 @@ angular.module('ema', ['ionic', 'ema.Controllers.controllers','ema.Services.serv
 
 .config(function(BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
 
-  BackandProvider.setAppName('plosada');
-  BackandProvider.setAnonymousToken('9198a4e0-4da8-4e03-a02e-d03f67e4e4c6');
+  BackandProvider.setAppName('emaupe');
+  BackandProvider.setAnonymousToken('41979cd2-4dc3-4d87-942b-57dd11da6589');
 
       $stateProvider
 
@@ -27,35 +27,42 @@ angular.module('ema', ['ionic', 'ema.Controllers.controllers','ema.Services.serv
         controller: 'LoginCtrl'
       })
 
-    //   setup an abstract state for the tabs directive
-      .state('tab', {
-          url: '/tabs',
-          abstract: true,
-          templateUrl: 'templates/tabs.html'
-      })
+        .state('usuarios', {
+            url: '/usuarios',
+            templateUrl: 'templates/usuarios.html',
+            controller: 'UsuariosCtrl'
+        })
 
-      .state('tab.usuarios', {
-          url: '/usuarios',
-          views: {
-              'tab-usuarios': {
-                  templateUrl: 'templates/usuarios.html',
-                  controller: 'UsuariosCtrl'
-              }
-          }
-      })
+    //   setup an abstract state for the tabs directive
+//      .state('tab', {
+//          url: '/tabs',
+//          abstract: true,
+//          templateUrl: 'templates/tabs.html'
+//      })
+
+//      .state('tab.usuarios', {
+//          url: '/usuarios',
+//          views: {
+//              'tab-usuarios': {
+//                  templateUrl: 'templates/usuarios.html',
+//                  controller: 'UsuariosCtrl'
+//              }
+//          }
+//      })
 
     .state('app', {
       url: "/app",
       abstract: true,
       templateUrl: "templates/menu.html",
-      controller: 'MapController'
+      controller: 'MenuCtrl'
     })
 
     .state('app.map', {
       url: "/map",
       views: {
         'menuContent' :{
-          templateUrl: "templates/map.html"
+          templateUrl: "templates/map.html",
+          controller: 'MapController'
         }
       }
     })

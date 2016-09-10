@@ -3,9 +3,10 @@
   <ion-pane ion-side-menu-content>
 
     <ion-nav-bar class="bar-positive nav-title-slide-ios7">
-      <ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-back"></i></ion-nav-back-button>
+      <ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-back">Menu</i>MENU</ion-nav-back-button>
     </ion-nav-bar>
 
+    // MAPA
     <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
 
   </ion-pane>
@@ -14,13 +15,32 @@
   <ion-side-menu side="left">
 
     <header class="bar bar-header bar-stable">
-      <h1 class="title">Locations</h1>
+      <h1 class="title"> {{ usuario }} </h1>
     </header>
 
     <ion-content class="has-header">
 
       <ion-list>
 
+        <ion-item nav-clear menu-close ng-click="goToUsuarios()" >
+          Usuarios
+        </ion-item>
+
+        <ion-item nav-clear menu-close  >
+          Configuracion
+        </ion-item>
+
+        <ion-item nav-clear menu-close  >
+          Ayuda
+        </ion-item>
+
+        <ion-item nav-clear menu-close  >
+          Reportar un error
+        </ion-item>
+
+        <ion-item nav-clear menu-close ng-click="logOut()"  >
+          LogOut
+        </ion-item>
 
       </ion-list>
 

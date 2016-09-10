@@ -1,3 +1,6 @@
+
+
+
 <ion-view view-title="Usuarios">
   <ion-content class="has-header">
 
@@ -11,8 +14,15 @@
 
       <ion-item ng-repeat="usuario in usuarios">
 
-        {{usuario.email}} /
-        {{usuario.password}}
+        Email: {{usuario.email}}  |
+        Password: {{usuario.password}}  |
+        DNI: {{usuario.dni}} |
+        Fecha Nacimiento: {{usuario.birthday}} |
+        Nombre: {{usuario.name}} |
+        Apellido: {{usuario.lastname}} |
+        Telefono: {{usuario.phone}} |
+        Telefono Celular: {{usuario.mobilephone}} |
+
 
         <ion-option-button class="button-assertive" ng-click="deleteUsuario(usuario.id)">
           Elminar
