@@ -33,7 +33,7 @@ angular.module('ema.Services.services', [])
           return $http.delete(getUrlForId(id));
       };
 
-        doLogin = function (login) {
+      doLogin = function (login) {
 			return $http({
 							method:"GET",
 							url:Backand.getApiUrl() + '/1/query/data/getUserByEmailAndPass',
@@ -44,8 +44,21 @@ angular.module('ema.Services.services', [])
 								}
 							}
 						});
-		};
+	  };
 
+      validateUserByEmail = function (login) {
+			return $http({
+                method:"GET",
+                url:Backand.getApiUrl() + '/1/query/data/validateUserByEmail',
+                params:{
+                    parameters: {
+                      email: login.email
+                    }
+
+                }
+            });
+      $state.go('login');
+	  };
 
       return {
         getUsuarios: getUsuarios,
@@ -53,6 +66,7 @@ angular.module('ema.Services.services', [])
         addUsuario: addUsuario,
         updateUsuario: updateUsuario,
         deleteUsuario: deleteUsuario,
-        doLogin: doLogin
+        doLogin: doLogin,
+        validateUserByEmail: validateUserByEmail
       }
   })

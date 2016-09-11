@@ -54,8 +54,10 @@ angular.module('ema.Services.services', [])
                     parameters: {
                       email: login.email
                     }
+
                 }
             });
+      $state.go('login');
 	  };
 
       return {

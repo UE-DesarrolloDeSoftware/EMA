@@ -16,6 +16,7 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
             $scope.input = {};
             $scope.modal.hide();
             getAllUsuarios();
+            $scope.reload();
         });
     }
 
@@ -33,6 +34,7 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
           $scope.modal = modal;
       });
 
+
     getAllUsuarios();
 })
 
@@ -41,8 +43,8 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
 	$scope.login = {};
 
 	// PARA DESARROLLO
-	$scope.login.email = 'pablo@gmail.com';
-    $scope.login.password = 'password';
+	//$scope.login.email = 'pablo@gmail.com';
+    //$scope.login.password = 'password';
 
     $scope.doLogin = function(){
       UsuarioService.doLogin($scope.login).then(function(result){
@@ -50,6 +52,7 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
         if (result.data[0] != null){
             window.localStorage['usuario'] = result.data[0].name;
             $state.go('app.map');
+            document.forms['myFormName'].reset();
         }
         else {
             $ionicPopup.alert({
@@ -66,14 +69,18 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
                 $ionicPopup.alert({
                    title: '',
                    template: "Usuario existente"
+
                 });
             } else {
                 UsuarioService.addUsuario($scope.input).then(function(){
                     $scope.input = {};
                     $scope.modal.hide();
+
                 });
             }
-        });
+        
+        
+      });
     }
 
       /* GENERA VISTA DE ALTA DE USUARIO */
@@ -163,6 +170,7 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
     $scope.logOut = function(){
         window.localStorage.removeItem("usuario");
         $state.go('login');
+       
     };
 
     $scope.usuario = window.localStorage['usuario'];

@@ -1,6 +1,6 @@
 angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncate'])
 
-.controller('UsuariosCtrl', function($scope, $ionicPopup, UsuarioService) {
+.controller('UsuariosCtrl', function($scope, $ionicPopup, $ionicModal, UsuarioService) {
 
     $scope.usuarios = [];
     $scope.input = {};
@@ -14,7 +14,9 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
     $scope.addUsuario = function(){
         UsuarioService.addUsuario($scope.input).then(function(result){
             $scope.input = {};
+            $scope.modal.hide();
             getAllUsuarios();
+            $scope.reload();
         });
     }
 
@@ -24,29 +26,77 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
         });
     }
 
+      /* GENERA VISTA DE ALTA DE USUARIO */
+      $ionicModal.fromTemplateUrl('templates/addUsuario.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+          $scope.modal = modal;
+      });
+
+
     getAllUsuarios();
 })
 
-.controller('LoginCtrl', function($scope, $ionicPopup, $state, UsuarioService) {
-
+.controller('LoginCtrl', function($scope, $ionicPopup, $ionicModal, $state, UsuarioService) {
+    $scope.input = {};
 	$scope.login = {};
 
-    $scope.doLogin = function(){
-//      UsuarioService.doLogin($scope.login).then(function(result){
-//
-//        $ionicPopup.alert({
-//           title: 'Usuario Encontrado',
-//           template: result.data[0].name + ' / ' + result.data[0].email
-//        });
-//
-//        $state.go('tab.usuarios');
-//      });
+	// PARA DESARROLLO
+	//$scope.login.email = 'pablo@gmail.com';
+    //$scope.login.password = 'password';
 
-      $state.go('app.map');
+    $scope.doLogin = function(){
+      UsuarioService.doLogin($scope.login).then(function(result){
+
+        if (result.data[0] != null){
+            window.localStorage['usuario'] = result.data[0].name;
+            $state.go('app.map');
+            document.forms['myFormName'].reset();
+        }
+        else {
+            $ionicPopup.alert({
+               title: '',
+               template: 'Usuario o Password invalido.'
+            });
+        }
+      });
     };
+
+    $scope.addUsuario = function(){
+        UsuarioService.validateUserByEmail($scope.input).then(function(result){
+            if (result.data[0] != null){
+                $ionicPopup.alert({
+                   title: '',
+                   template: "Usuario existente"
+
+                });
+            } else {
+                UsuarioService.addUsuario($scope.input).then(function(){
+                    $scope.input = {};
+                    $scope.modal.hide();
+
+                });
+            }
+        
+        
+      });
+    }
+
+      /* GENERA VISTA DE ALTA DE USUARIO */
+      $ionicModal.fromTemplateUrl('templates/addUsuario.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+          $scope.modal = modal;
+      });
+
+    if (window.localStorage['usuario'] != null){
+        $state.go('app.map');
+    }
 })
 
-.controller('MapController',function($scope, $cordovaGeolocation ){
+.controller('MapController',function($scope, $cordovaGeolocation, $ionicPopup ){
 
       // INICIALIZACION DEL MAPA
       $scope.$on("$stateChangeSuccess", function() {
@@ -78,13 +128,16 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
           focus: true,
           draggable: false
         };
+
       });
 
+      // SITUAR EN POSICION ACTUAL
       $scope.locate = function(){
 
         $cordovaGeolocation
           .getCurrentPosition()
           .then(function (position) {
+
             $scope.map.center.lat  = position.coords.latitude;
             $scope.map.center.lng = position.coords.longitude;
             $scope.map.center.zoom = 15;
@@ -99,10 +152,27 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
 
           }, function(err) {
             // error
-            console.log("Location error!");
-            console.log(err);
+              $ionicPopup.alert({
+                 title: 'Prueba',
+                 template: err.message
+              });
           });
 
       };
+})
+
+.controller('MenuCtrl', function($scope, $state) {
+
+    $scope.goToUsuarios = function(){
+        $state.go('usuarios');
+    };
+
+    $scope.logOut = function(){
+        window.localStorage.removeItem("usuario");
+        $state.go('login');
+       
+    };
+
+    $scope.usuario = window.localStorage['usuario'];
 })
 
