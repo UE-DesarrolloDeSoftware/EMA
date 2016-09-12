@@ -51,8 +51,8 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
 
         if (result.data[0] != null){
             window.localStorage['usuario'] = result.data[0].name;
+            $scope.login = {};
             $state.go('app.map');
-            document.forms['myFormName'].reset();
         }
         else {
             $ionicPopup.alert({
@@ -78,8 +78,6 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
 
                 });
             }
-        
-        
       });
     }
 
