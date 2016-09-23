@@ -1,5 +1,5 @@
 
-angular.module('ema.Services.services', [])
+angular.module('ema.services', [])
 
 .service('UsuarioService', function ($http, Backand){
       var baseUrl = '/1/objects/';

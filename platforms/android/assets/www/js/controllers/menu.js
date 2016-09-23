@@ -1,4 +1,4 @@
-angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncate'])
+angular.module('ema.controllers', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncate'])
 
 .controller('UsuariosCtrl', function($scope, $ionicPopup, $ionicModal, UsuarioService) {
 
@@ -51,8 +51,8 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
 
         if (result.data[0] != null){
             window.localStorage['usuario'] = result.data[0].name;
-            $scope.login = {};
             $state.go('app.map');
+            document.forms['myFormName'].reset();
         }
         else {
             $ionicPopup.alert({
@@ -78,6 +78,8 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
 
                 });
             }
+        
+        
       });
     }
 
@@ -170,6 +172,22 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
         $state.go('login');
        
     };
+
+    $scope.sendEmail = function () {
+        if (window.plugins && window.plugins.emailComposer) {
+            window.plugins.emailComposer.showEmailComposerWithCallback(function (result) {
+                console.log("Response -> " + result);
+            },
+            "Reporte de error", // Subject
+            'Funcionalidad: <br/> Problema:',                      // Body
+            ["soporte.ema@gmail.com"],    // To
+            [],                    // CC
+            [],                    // BCC
+             'true',                   // isHTML
+            [],                    // Attachments
+            []);                   // Attachment Data
+        }
+    }
 
     $scope.usuario = window.localStorage['usuario'];
 })

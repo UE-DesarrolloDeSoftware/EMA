@@ -173,6 +173,22 @@ angular.module('ema.Controllers.controllers', ['ionic', 'leaflet-directive', 'ng
        
     };
 
+    $scope.sendEmail = function () {
+        if (window.plugins && window.plugins.emailComposer) {
+            window.plugins.emailComposer.showEmailComposerWithCallback(function (result) {
+                console.log("Response -> " + result);
+            },
+            "Feedback for your App", // Subject
+            ' ',                      // Body
+            ["test@example.com"],    // To
+            [],                    // CC
+            [],                    // BCC
+             'false',                   // isHTML
+            [],                    // Attachments
+            []);                   // Attachment Data
+        }
+    }
+
     $scope.usuario = window.localStorage['usuario'];
 })
 

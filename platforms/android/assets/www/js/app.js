@@ -1,4 +1,4 @@
-angular.module('ema', ['ionic', 'ema.Controllers.controllers','ema.Services.services', 'backand'])
+angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
 
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
