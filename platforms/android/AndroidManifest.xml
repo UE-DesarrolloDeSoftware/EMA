@@ -11,6 +11,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider android:authorities="com.ionicframework.ema666101.plugins.emailcomposer.provider" android:name="com.jcjee.plugins.EmailAttachmentProvider" />
     </application>
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="23" />
 </manifest>
