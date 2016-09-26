@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+
+
     <title>Leaflet Demo</title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
@@ -20,8 +23,8 @@
     <script src="lib/angularbknd-sdk/dist/backand.min.js"></script>
 
     <script src="js/app.js"></script>
-    <script src="js/controllers/menu.js"></script>
-    <script src="js/services/usuario.js"></script>
+    <script src="js/controllers/controllers.js"></script>
+    <script src="js/services/services.js"></script>
     <!--<script src="js/services/instructionsService.js"></script>-->
     <script src="js/directives/igTruncate.js"></script>
 

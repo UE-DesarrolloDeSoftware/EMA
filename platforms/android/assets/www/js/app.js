@@ -1,4 +1,4 @@
-angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
+angular.module('ema', ['ionic', 'ema.controllers.controllers','ema.services.services', 'backand'])
 
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -24,6 +24,11 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
       .state('login', {
         url: "/login",
         templateUrl: "templates/login.html",
+        controller: 'LoginCtrl'
+      })
+      .state('verificacionEmail', {
+        url: "/verificacion-email",
+        templateUrl: "templates/verificacionEmail.html",
         controller: 'LoginCtrl'
       })
 
