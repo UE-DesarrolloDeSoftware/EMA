@@ -1,4 +1,3 @@
-
 angular.module('ema.services', [])
 
 .service('UsuarioService', function ($http, Backand){
