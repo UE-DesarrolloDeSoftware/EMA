@@ -1,6 +1,6 @@
 angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
 
-  .run(function($ionicPlatform) {
+.run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -31,74 +31,6 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         templateUrl: "templates/verificacionEmail.html",
         controller: 'LoginCtrl'
       })
-
-    //.state('app', {
-    //  url: "/app",
-    //  abstract: true,
-    //  controller: 'AppController',
-    //  template: '<ui-view/>'
-    //})
-
-    //.state('app.menuVendedor', {
-    //    url: "/menuVendedor",
-    //    templateUrl: "templates/menuVendedor.html",
-    //    controller: 'MenuVendedorController'
-    //})
-
-    //.state('app.usuarios', {
-    //    url: '/usuarios',
-    //    templateUrl: 'templates/usuarios.html',
-    //    controller: 'UsuariosCtrl'
-    //})
-
-    //.state('menu', {
-    //    url: "/menu",
-    //    abstract: true,
-    //    templateUrl: "templates/menu.html",
-    //    controller: 'MenuConductorController'
-    //})
-
-    //.state('menu.map', {
-    //  url: "/map",
-    //  views: {
-    //    'menuContent' :{
-    //      templateUrl: "templates/map.html",
-    //      controller: 'MapController'
-    //    }
-    //  }
-    //})
-
-    //.state('eventmenu', {
-    //        url: "/event",
-    //        abstract: true,
-    //        templateUrl: "eventMenu.html"
-    //})
-    //.state('eventmenu.home', {
-    //    url: "/home",
-    //    views: {
-    //        'menuContent': {
-    //            templateUrl: "menuVendedor.html"
-    //        }
-    //    }
-    //})
-
-    //.state('menuVendedor', {
-    //    url: "/menuVendedor",
-    //    controller: 'MenuVendedorController',
-    //    templateUrl: "templates/menuVendedor.html"
-    //})
-
-    //.state('liquidarTicket', {
-    //    url: '/liquidarTicket',
-    //    controller: 'LiquidarTicketController',
-    //    templateUrl: "templates/liquidarTicket.html"
-    //})
-
-    //.state('cancelarTicket', {
-    //    url: '/cancelarTicket',
-    //    controller: 'CancelarTicketController',
-    //    templateUrl: "templates/cancelarTicket.html"
-    //})
 
         .state('eventmenu', {
             url: "/event",

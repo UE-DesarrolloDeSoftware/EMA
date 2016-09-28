@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 angular.module('ema.services', [])
+=======
+
+angular.module('ema.services.services', [])
+>>>>>>> 9d24726eb7bbee20bd8d7a8dab735b3acac420d4
 
 .service('UsuarioService', function ($http, Backand){
       var baseUrl = '/1/objects/';
       var objectName = 'usuarios/'
+      
 
       function getUrl() {
           return Backand.getApiUrl() + baseUrl + objectName;
@@ -58,6 +64,10 @@ angular.module('ema.services', [])
             });
       $state.go('login');
 	  };
+
+
+
+
 
       return {
         getUsuarios: getUsuarios,
