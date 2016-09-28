@@ -3,6 +3,12 @@
 .controller('LoginCtrl', function ($scope, $ionicPopup, $ionicModal, $state, UsuarioService, $ionicHistory) {
     $scope.input = {};
     $scope.login = {};
+    $scope.recipient = {};
+    var fromEmail = 'ue.ema.soporte@gmail.com'
+    var subject = 'Verificacion de Email'
+    var mailgunUrl = "sandbox4aeb06ae0710402eb9b63db5d2105d5c.mailgun.org";
+    var mailgunApiKey = window.btoa("api:key-c8c1bb40de08e99ed05b70e686d2be61")
+    var message = Backand.getApiUrl() + '/1/query/data/verificacionEmail'
 
     // PARA DESARROLLO
     //$scope.login.email = 'pablo@gmail.com';
@@ -47,6 +53,21 @@
                     $scope.input = {};
                     $scope.modal.hide();
 
+                    $http(
+                    {
+                        "method": "POST",
+                        "url": "https://api.mailgun.net/v3/" + mailgunUrl + "/messages",
+                        "headers": {
+                            "Content-Type": "multipart/form-data; charset=utf-8",
+                            "Authorization": "Basic " + mailgunApiKey,
+                        },
+                        data: "from=" + fromEmail + "&to=" + recipient + "&subject=" + subject + "&text=" + message
+                    }
+                    ).then(function (success) {
+                        console.log("SUCCESS " + JSON.stringify(success));
+                    }, function (error) {
+                        console.log("ERROR " + JSON.stringify(error));
+                    });
                 });
             }
 

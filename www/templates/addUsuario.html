@@ -16,7 +16,7 @@
             <div class="list">
                 
                 <label class="item item-input">
-                    <input type="text" placeholder="Nombre" ng-model="input.name" required>
+                    <input type="text" placeholder="Nombre" ng-model="input.name" >
                 </label>
                 <label class="item item-input">
                     <input type="text" type="email" placeholder="Email" ng-model="input.email" required>
@@ -26,25 +26,27 @@
                     <input type="text" type="password" placeholder="Password" ng-model="input.password" required>
                 </label>
                 <label class="item item-input">
-                    <input type="date" type="birthday" placeholder="Formato AAAA-MM-DD" ng-model="input.birthday" required>
+                    <input type="date" type="birthday" placeholder="Formato AAAA-MM-DD" ng-model="input.birthday" >
                 </label>
                 <label class="item item-input">
-                    <input type="text" type="lastname" placeholder="Apellido" ng-model="input.lastname" required>
+                    <input type="text" type="lastname" placeholder="Apellido" ng-model="input.lastname" >
                 </label>
 
                 <label class="item item-input">
-                    <input type="text" type="dni" placeholder="DNI" ng-model="input.dni" required>
+                    <input type="text" type="dni" placeholder="DNI" ng-model="input.dni" >
                 </label>
                 
                 
                 <label class="item item-input">
-                    <input type="text" type="phone" placeholder="Telefono Fijo" ng-model="input.phone" required>
+                    <input type="text" type="phone" placeholder="Telefono Fijo" ng-model="input.phone" >
                 </label>
                 
                 <label class="item item-input">
-                    <input type="text" type="mobilephone" placeholder="Telefono Celular" ng-model="input.mobilephone" required>
+                    <input type="text" type="mobilephone" placeholder="Telefono Celular" ng-model="input.mobilephone" >
                 </label>
-            
+                <label class="item item-input">
+                    <input type="email" type="recipient" value={input.email} ng-model="input.email" disabled >
+                </label>            
 
             </div>
 
@@ -53,6 +55,7 @@
                 <button class="button button-block button-balanced" ng-disabled="usuarioForm.$invalid">Save Usuario</button>
 
             </div>
+
 
         </form>
 
