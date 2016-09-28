@@ -26,11 +26,12 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         templateUrl: "templates/login.html",
         controller: 'LoginCtrl'
       })
-      .state('verificacionEmail', {
-        url: "/verificacion-email",
-        templateUrl: "templates/verificacionEmail.html",
-        controller: 'LoginCtrl'
-      })
+
+      //.state('verificacionEmail', {
+      //  url: "/verificacion-email",
+      //  templateUrl: "templates/verificacionEmail.html",
+      //  controller: 'LoginCtrl'
+      //})
 
         .state('eventmenu', {
             url: "/event",

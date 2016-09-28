@@ -1,6 +1,6 @@
 ﻿angular.module('ema.controllers')
 
-.controller('LoginCtrl', function ($scope, $ionicPopup, $ionicModal, $state, UsuarioService, $ionicHistory) {
+.controller('LoginCtrl', function ($scope, $ionicPopup, $ionicModal, $state, UsuarioService, $ionicHistory, Backand) {
     $scope.input = {};
     $scope.login = {};
     $scope.recipient = {};
@@ -29,6 +29,8 @@
                 //$state.go('app.map');
                 $state.go('eventmenu.menuVendedor');
 
+                // blanqueo de campos
+                $scope.login = {};
                 document.forms['loginForm'].reset();
             }
             else {
