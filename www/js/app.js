@@ -87,7 +87,8 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             url: "/cierreVentas",
             views: {
                 'menuContent@eventmenu': {
-                    templateUrl: "templates/cierreDiario.html"
+                    templateUrl: "templates/cierreDiario.html",
+                    controller: 'CierreCtrl'
                 }
             }
         })
@@ -132,7 +133,7 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         })
 
       .state('eventmenu.menuAdmin.usuarios', {
-          url: "/liquidarTicket",
+          url: "/usuarios",
           views: {
               'menuContent@eventmenu': {
                   templateUrl: "templates/usuarios.html",

@@ -12,6 +12,7 @@ body {
 }
 
 .item.item-body p {
+  font-family: "Verdana"
   margin-top: 0;
 }
 
@@ -23,3 +24,31 @@ img.center {
     display: block;
     margin: 0 auto;
 }
+
+div.header .col {
+	text-align: center;
+    background-color:lightsteelblue;
+    font-family: "Verdana";
+    border-color: grey;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.col {
+
+    border: solid 1px grey;
+    border-bottom-style: solid;
+    border-right-style: solid;
+    font: "Verdana";
+    
+
+}
+
+.col:last-child {
+    border-right: solid 1px grey;
+}
+
+.row:last-child .col {
+    border-bottom: solid 1px grey;
+}
+
