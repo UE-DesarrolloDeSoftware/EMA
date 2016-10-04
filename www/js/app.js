@@ -82,7 +82,8 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             url: "/cierreVentas",
             views: {
                 'menuContent@eventmenu': {
-                    templateUrl: "templates/cierreDiario.html"
+                    templateUrl: "templates/cierreDiario.html",
+                    controller: 'CierreCtrl'
                 }
             }
         })

@@ -14,3 +14,20 @@ angular.module('ema.controllers')
 
 
 })
+
+
+.controller('CierreCtrl', function ($scope, $ionicPopup, $ionicModal, VentasService) {
+
+    $scope.sales = [];
+ 
+
+    function getAllSales() {
+        VentasService.getSales().then(function (result) {
+            $scope.sales = result.data.data;
+        });
+    }
+
+    getAllSales();
+
+ })
+
