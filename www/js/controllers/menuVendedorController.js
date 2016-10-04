@@ -1,7 +1,8 @@
 angular.module('ema.controllers')
 
  .controller('MenuVendedorController', function ($scope, $state) {
-
+     
+     $scope.usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
  })
 
 .controller('CancelarTicketController', function ($scope) {

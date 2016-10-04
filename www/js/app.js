@@ -27,12 +27,6 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         controller: 'LoginCtrl'
       })
 
-      //.state('verificacionEmail', {
-      //  url: "/verificacion-email",
-      //  templateUrl: "templates/verificacionEmail.html",
-      //  controller: 'LoginCtrl'
-      //})
-
         .state('eventmenu', {
             url: "/event",
             abstract: true,
@@ -45,7 +39,8 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             url: "/menuVendedor",
             views: {
                 'menuContent': {
-                    templateUrl: "templates/menuVendedor.html"
+                    templateUrl: "templates/menuVendedor.html",
+                    controller: 'MenuVendedorController'
             }
         }
         })
@@ -132,7 +127,7 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         })
 
       .state('eventmenu.menuAdmin.usuarios', {
-          url: "/liquidarTicket",
+          url: "/usuarios",
           views: {
               'menuContent@eventmenu': {
                   templateUrl: "templates/usuarios.html",
@@ -142,16 +137,6 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
       })
 
     // MENU CONDUCTOR
-
-        //.state('eventmenu.menuConductor', {
-        //    url: "/menuConductor",
-        //    views: {
-        //    'menuContent' :{
-        //        templateUrl: "templates/menu.html",
-        //        controller: 'MenuConductorController'
-        //    }
-        //    }
-        //})
 
         .state('menu', {
             url: "/menu",
@@ -172,6 +157,6 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
 
     ;
 
-      $urlRouterProvider.otherwise("/login");
+    $urlRouterProvider.otherwise("/login");
 })
 

@@ -57,12 +57,7 @@ angular.module('ema.services', [])
 
                 }
             });
-      $state.go('login');
 	  };
-
-
-
-
 
       return {
         getUsuarios: getUsuarios,

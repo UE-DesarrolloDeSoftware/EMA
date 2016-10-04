@@ -3,96 +3,106 @@
 .controller('LoginCtrl', function ($scope, $ionicPopup, $ionicModal, $state, UsuarioService, $ionicHistory, Backand) {
     $scope.input = {};
     $scope.login = {};
-    $scope.recipient = {};
-    var fromEmail = 'ue.ema.soporte@gmail.com'
-    var subject = 'Verificacion de Email'
-    var mailgunUrl = "sandbox4aeb06ae0710402eb9b63db5d2105d5c.mailgun.org";
-    var mailgunApiKey = window.btoa("api:key-c8c1bb40de08e99ed05b70e686d2be61")
-    var message = Backand.getApiUrl() + '/1/query/data/verificacionEmail'
-
-    // PARA DESARROLLO
-    //$scope.login.email = 'pablo@gmail.com';
-    //$scope.login.password = 'password';
 
     $scope.doLogin = function () {
         UsuarioService.doLogin($scope.login).then(function (result) {
 
             if (result.data[0] != null) {
-                window.localStorage['usuario'] = result.data[0].name;
 
-                // Para que la vista de login no se retrocedible
-                $ionicHistory.nextViewOptions({
-                    disableAnimate: true,
-                    disableBack: true
-                });
+                var usuario = result.data[0];
 
-                //$state.go('app.map');
-                $state.go('eventmenu.menuVendedor');
+                // Usuario con verifiacion de email pendiente
+                if (usuario.enabled == false) {
 
-                // blanqueo de campos
-                $scope.login = {};
-                document.forms['loginForm'].reset();
+                    $ionicPopup.alert({
+                        title: 'Usuario no verificado',
+                        template: 'Por favor verifique su cuenta con el email que le enviamos a su casilla de correo electronico.'
+                    });
+
+                } else {
+
+                    localStorage.setItem('usuario', JSON.stringify(result.data[0]));
+
+                    // Para que la vista de login no se retrocedible
+                    $ionicHistory.nextViewOptions({ disableAnimate: true, disableBack: true });
+
+                    // blanqueo de campos
+                    $scope.login = {};
+                    document.forms['loginForm'].reset();
+
+                    // Redireccion segun rol
+                    redirigirSegunRol(usuario.role_id);
+                }
             }
             else {
-                $ionicPopup.alert({
-                    title: '',
-                    template: 'Usuario o Password invalido.'
-                });
+                $ionicPopup.alert({title: 'Atencion', template: 'Usuario o Password invalido.'});
             }
         });
     };
 
     $scope.addUsuario = function () {
         UsuarioService.validateUserByEmail($scope.input).then(function (result) {
+
             if (result.data[0] != null) {
+
                 $ionicPopup.alert({
                     title: '',
                     template: "Usuario existente"
-
                 });
+
             } else {
+
+                $scope.input.enabled = false;
+
                 UsuarioService.addUsuario($scope.input).then(function () {
+
+                    $scope.send($scope.input.email, "Email de Verificacion", "Link de verificacion");
+
                     $scope.input = {};
                     $scope.modal.hide();
 
-                    $http(
-                    {
-                        "method": "POST",
-                        "url": "https://api.mailgun.net/v3/" + mailgunUrl + "/messages",
-                        "headers": {
-                            "Content-Type": "multipart/form-data; charset=utf-8",
-                            "Authorization": "Basic " + mailgunApiKey,
-                        },
-                        data: "from=" + fromEmail + "&to=" + recipient + "&subject=" + subject + "&text=" + message
-                    }
-                    ).then(function (success) {
-                        console.log("SUCCESS " + JSON.stringify(success));
-                    }, function (error) {
-                        console.log("ERROR " + JSON.stringify(error));
-                    });
                 });
             }
-
-
         });
-    }
+    };
+
+    $scope.sendEmail = function () {
+        $scope.send($scope.login.email, "Email de Verificacion", "Presione el siguiente link.");
+    };
 
     /* GENERA VISTA DE ALTA DE USUARIO */
     $ionicModal.fromTemplateUrl('templates/addUsuario.html', {
         scope: $scope,
         animation: 'slide-in-up'
-    }).then(function (modal) {
-        $scope.modal = modal;
-    });
+    }).then(function (modal) {  $scope.modal = modal; });
 
+    // Si ya esta logueado
     if (window.localStorage['usuario'] != null) {
 
-        // Para que la vista de login no se retrocedible
-        $ionicHistory.nextViewOptions({
-            disableAnimate: true,
-            disableBack: true
-        });
+        var usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
 
-        $state.go('eventmenu.menuVendedor');
+        // Para que la vista de login no se retrocedible
+        $ionicHistory.nextViewOptions({ disableAnimate: true, disableBack: true });
+
+        // Redireccion segun rol
+        redirigirSegunRol(usuarioLogueado.role_id);
+    }
+
+    function redirigirSegunRol(role_id) {
+        // Redireccion segun rol
+        switch (role_id) {
+            case 1:
+                $state.go('eventmenu.menuAdmin');
+                break;
+            case 2:
+                $state.go('eventmenu.menuVendedor');
+                break;
+            case 3:
+                $state.go('eventmenu.menuAgenteTransito');
+                break;
+            case 4:
+                $state.go('menu.map');
+                break;
+        }
     }
 })

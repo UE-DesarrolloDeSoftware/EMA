@@ -2,6 +2,12 @@ angular.module('ema.controllers')
 
 .controller('MenuConductorController', function ($scope, $state, $cordovaGeolocation, $ionicPopup) {
 
+    $scope.usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
+
+    $scope.sendEmail = function () {
+        $scope.send("ue.ema.soporte@gmail.com", "Reportar Error", "Se ha encontrado el siguiente error..");
+    };
+
     //// INICIALIZACION DEL MAPA
     //$scope.$on("$stateChangeSuccess", function () {
     //    $scope.map = {
@@ -64,22 +70,5 @@ angular.module('ema.controllers')
 
     //};
 
-     $scope.sendEmail = function () {
-         if (window.plugins && window.plugins.emailComposer) {
-             window.plugins.emailComposer.showEmailComposerWithCallback(function (result) {
-                 console.log("Response -> " + result);
-             },
-             "Feedback for your App", // Subject
-             ' ',                      // Body
-             ["test@example.com"],    // To
-             [],                    // CC
-             [],                    // BCC
-              'false',                   // isHTML
-             [],                    // Attachments
-             []);                   // Attachment Data
-         }
-     }
-
-     $scope.usuario = window.localStorage['usuario'];
 
  })

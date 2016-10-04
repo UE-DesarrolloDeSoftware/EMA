@@ -1,5 +1,11 @@
 ﻿<ion-view title="Menu" class="has-header">
 
+    <ion-nav-buttons side="left">
+        <label class="">
+            Bienvenido, {{usuarioLogueado.name}}
+        </label>
+    </ion-nav-buttons>
+
     <ion-nav-buttons side="right">
         <button ng-click="logOut();" class="button">LogOut</button>
     </ion-nav-buttons>
