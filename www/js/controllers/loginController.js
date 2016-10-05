@@ -5,6 +5,9 @@
     $scope.login = {};
 
     $scope.doLogin = function () {
+
+        $scope.login.password = hex_md5($scope.login.password);
+
         UsuarioService.doLogin($scope.login).then(function (result) {
 
             if (result.data[0] != null) {
@@ -53,6 +56,10 @@
             } else {
 
                 $scope.input.enabled = false;
+                // Encriptar password
+                $scope.input.password = hex_md5($scope.input.password);
+                // Rol conductor
+                $scope.input.role_id = 4;
 
                 UsuarioService.addUsuario($scope.input).then(function () {
 
