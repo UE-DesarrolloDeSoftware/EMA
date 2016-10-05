@@ -6,8 +6,6 @@
 
     $scope.doLogin = function () {
 
-        $scope.login.password = hex_md5($scope.login.password);
-
         UsuarioService.doLogin($scope.login).then(function (result) {
 
             if (result.data[0] != null) {

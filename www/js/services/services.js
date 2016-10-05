@@ -34,13 +34,16 @@ angular.module('ema.services', [])
       };
 
       doLogin = function (login) {
+
+            var passwordMD5 = hex_md5(login.password);
+
 			return $http({
 							method:"GET",
 							url:Backand.getApiUrl() + '/1/query/data/getUserByEmailAndPass',
 							params:{
 								parameters: {
 								  email: login.email,
-								  pass: login.password
+								  pass: passwordMD5
 								}
 							}
 						});
