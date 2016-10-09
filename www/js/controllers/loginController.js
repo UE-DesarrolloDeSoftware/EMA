@@ -1,6 +1,6 @@
 ﻿angular.module('ema.controllers')
 
-.controller('LoginCtrl', function ($scope, $ionicPopup, $ionicModal, $state, UsuarioService, $ionicHistory, Backand) {
+.controller('LoginCtrl', function ($scope, $ionicPopup, $ionicModal, $state, UsuarioService, ConfigurationsService, $ionicHistory, Backand) {
     $scope.input = {};
     $scope.login = {};
 
@@ -17,11 +17,11 @@
 
                     $ionicPopup.alert({
                         title: 'Usuario no verificado',
-                        template: 'Por favor verifique su cuenta con el email que le enviamos a su casilla de correo electronico.'
+                        template: 'Por favor verifique la cuenta con el email que le enviamos a su correo electronico.'
                     });
 
                 } else {
-
+                    // Guarda usuario logueado
                     localStorage.setItem('usuario', JSON.stringify(result.data[0]));
 
                     // Para que la vista de login no se retrocedible
@@ -47,32 +47,33 @@
             if (result.data[0] != null) {
 
                 $ionicPopup.alert({
-                    title: '',
-                    template: "Usuario existente"
+                    title: 'Atencion',
+                    template: "El usuario que ingreso ya se encuentra registrado. </br> ¿Ha olvidado su contraseña? </br> <-Link para reestablecerla->"
                 });
 
             } else {
 
                 $scope.input.enabled = false;
-                // Encriptar password
-                $scope.input.password = hex_md5($scope.input.password);
                 // Rol conductor
                 $scope.input.role_id = 4;
+                // Genera codigo de verificacion por email
+                $scope.input.verification_hash = randomString();
 
                 UsuarioService.addUsuario($scope.input).then(function () {
 
-                    $scope.send($scope.input.email, "Email de Verificacion", "Link de verificacion");
+                    ConfigurationsService.getConfigurationByKey("verification_email").then(function (result) {
+
+                    var email = String.format(result.data.data[0].value, $scope.input.email, $scope.input.verification_hash);
+
+                    $scope.send($scope.input.email, "Email de Verificacion", encodeURIComponent(email));
 
                     $scope.input = {};
                     $scope.modal.hide();
 
+                    });
                 });
             }
         });
-    };
-
-    $scope.sendEmail = function () {
-        $scope.send($scope.login.email, "Email de Verificacion", "Presione el siguiente link.");
     };
 
     /* GENERA VISTA DE ALTA DE USUARIO */
@@ -110,4 +111,5 @@
                 break;
         }
     }
+
 })
