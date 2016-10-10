@@ -3,6 +3,8 @@ angular.module('ema.controllers')
 
 .controller('MapController',function($scope, $cordovaGeolocation, $ionicPopup ){
 
+    $scope.zonaest= {};
+
     // INICIALIZACION DEL MAPA
     //$scope.$on("$stateChangeSuccess", function() {
       // create a map in the "map" div, set the view to a given place and zoom
@@ -64,10 +66,14 @@ angular.module('ema.controllers')
         
             editableLayers.addLayer(layer);
             var shape = layer.toGeoJSON()
+            var prueba = layer.toString()
+            //var shape_for_db = JSON.stringify(shape);
             var shape_for_db = JSON.stringify(shape);
+
+            
             //var data = editableLayers.toGeoJSON();
             //var convertData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
-            //console.log(data);
+            console.log(prueba);
             console.log(shape_for_db);
 
         });
