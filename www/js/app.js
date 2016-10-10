@@ -12,13 +12,20 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         StatusBar.styleDefault();
       }
     });
+
   })
+
+.run(function (Backand) {
+
+    //Backand.signin("ue.ema.soporte@gmail.com", "emadesarrollosw");
+})
 
 .config(function(BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
 
   BackandProvider.setAppName('emaupe');
   BackandProvider.setAnonymousToken('41979cd2-4dc3-4d87-942b-57dd11da6589');
-
+  //BackandProvider.setSignUpToken('aa34be1e-8b2c-11e6-8eff-0e00ae4d21e3');
+  
       $stateProvider
 
       .state('login', {
@@ -26,6 +33,12 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         templateUrl: "templates/login.html",
         controller: 'LoginCtrl'
       })
+
+        .state('validacionEmail', {
+            url: "/validacionEmail?email&verificationHash",
+            templateUrl: "templates/validacionEmail.html",
+            controller: 'ValidacionEmailController'
+        })
 
         .state('eventmenu', {
             url: "/event",
@@ -73,7 +86,8 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             url: "/buscarTicket",
             views: {
                 'menuContent@eventmenu': {
-                    templateUrl: "templates/buscarTicket.html"
+                    templateUrl: "templates/buscarTicket.html",
+                    controller: "BuscarTicketController"
                 }
             }
         })
@@ -83,7 +97,7 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             views: {
                 'menuContent@eventmenu': {
                     templateUrl: "templates/cierreDiario.html",
-                    controller: 'CierreCtrl'
+                    controller: 'CierreController'
                 }
             }
         })
@@ -154,6 +168,16 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
               controller: 'MapController'
             }
           }
+        })
+
+        .state('menu.map.condicionesUso', {
+            url: "/condicionesUso",
+            views: {
+                'menuContent@menu': {
+                    templateUrl: "templates/condicionesUso.html",
+                    controller: 'CondicionesUsoController'
+                }
+            }
         })
 
     ;

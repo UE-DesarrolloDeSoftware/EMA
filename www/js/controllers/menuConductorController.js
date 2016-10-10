@@ -71,4 +71,10 @@ angular.module('ema.controllers')
     //};
 
 
- })
+})
+
+.controller('CondicionesUsoController', function ($scope) {
+
+    $scope.condicionesUso = "<h2>Condiciones de uso</h2>";
+
+})

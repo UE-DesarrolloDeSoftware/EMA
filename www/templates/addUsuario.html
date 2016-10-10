@@ -14,7 +14,10 @@
         <form name="usuarioForm" ng-submit="addUsuario()">
             <div class="list">    
                 <label class="item item-input">
-                    <input type="text" placeholder="Nombre" ng-model="input.name" >
+                    <input type="text" placeholder="Nombre" ng-model="input.name" required>
+                </label>
+                <label class="item item-input">
+                    <input type="text" placeholder="Apellido" ng-model="input.lastname" required>
                 </label>
                 <label class="item item-input">
                     <input type="text" placeholder="Email" ng-model="input.email" required>
@@ -23,13 +26,10 @@
                     <input type="password" placeholder="Password" ng-model="input.password" required>
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="Apellido" ng-model="input.lastname" >
-                </label>
-                <label class="item item-input">
                     <input type="text" placeholder="DNI" ng-model="input.dni" >
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="Telefono Fijo" ng-model="input.phone" >
+                    <input type="text" placeholder="Telefono Fijo" ng-model="input.phone">
                 </label>
                 <label class="item item-input">
                     <input type="text" placeholder="Telefono Celular" ng-model="input.mobilephone" >

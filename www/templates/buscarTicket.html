@@ -1,11 +1,31 @@
 <ion-view title="Buscar ticket" id="page6" style="background-color:#6C9FEE;">
     <ion-content padding="true" class="has-header">
-        <form id="buscarTicket-form5" class="list">
+        <form name="buscarForm" ng-submit="buscarTickets()" class="list">
             <label class="item item-input" id="buscarTicket-input17">
                 <span class="input-label">Nro de ticket</span>
-                <input type="text" placeholder="">
+                <input type="text" ng-model="inputForm.nroTicket" placeholder="">
             </label>
+            <label class="item item-input" id="buscarTicket-input17">
+                <span class="input-label">Fecha</span>
+                <input type="date" ng-model="inputForm.date" placeholder="">
+            </label>
+            <button id="buscarTicket-button4" style="border-radius:14px 14px 14px 14px;" class="button button-dark  button-block">Buscar</button>
         </form>
-        <button id="buscarTicket-button4" style="border-radius:14px 14px 14px 14px;" class="button button-dark  button-block">Buscar</button>
+
+        <div class="row header">
+            <div class="col">Estacionamiento</div>
+            <div class="col">Fecha</div>
+            <div class="col">Hora</div>
+            <div class="col">Cantidad</div>
+            <div class="col">Importe</div>
+        </div>
+
+        <div class="row" ng-repeat="sale in sales">
+            <div class="col">{{sale.parking}}</div>
+            <div class="col">{{sale.paid_date}}</div>
+            <div class="col">{{sale.hours}}</div>
+            <div class="col">{{sale.vendor}}</div>
+            <div class="col"> $ {{sale.amount}}</div>
+        </div>
     </ion-content>
 </ion-view>
