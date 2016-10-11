@@ -1,8 +1,8 @@
 angular.module('ema.services')
 
-.service('VentasService', function ($http, Backand){
+.service('ParkingService', function ($http, Backand){
       var baseUrl = '/1/objects/';
-      var objectName = 'sales/';
+      var objectName = 'parking/';
 
 
       function getUrl() {
@@ -13,15 +13,15 @@ angular.module('ema.services')
           return getUrl() + id;
       }
 
-      getSales = function () {
+      getParkings = function () {
           return $http.get(getUrl());
       };
 
-      getSale = function (id) {
+      getParking = function (id) {
           return $http.get(getUrlForId(id));
       };
 
-      getSalesFilter = function (filter) {
+      getParkingsFilter = function (filter) {
           return $http({
               method: "GET",
               url: getUrl(),
@@ -37,19 +37,32 @@ angular.module('ema.services')
               }
           });
       };
-      addVenta = function (object) {
+
+      addParking = function (object) {
 
           var venta = Object.assign({}, object);
           
-          return $http.post(getUrl(), usuario);
+          return $http.post(getUrl(), venta);
       };
 
+      getParkingByPatente = function (patente) {
 
+        return $http({
+              method:"GET",
+              url:Backand.getApiUrl() + '/1/query/data/getParkingByPatente',
+              params:{
+                parameters: {
+                  patente: patente
+                }
+              }
+        });
+    };
 
       return {
-        getSales: getSales,
-        getSale: getSale,
-        getSalesFilter: getSalesFilter,
-        addVenta:addVenta
+        getParkings: getParkings,
+        getParking: getParking,
+        getParkingsFilter: getParkingsFilter,
+        addParking: addParking,
+        getParkingByPatente: getParkingByPatente
       }
   })

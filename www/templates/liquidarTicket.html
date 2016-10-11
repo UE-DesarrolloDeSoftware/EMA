@@ -1,35 +1,34 @@
-<ion-view title="Liquidar ticket" id="page2" style="background-color:#6C9FEE;">
-    <ion-content padding="true" class="has-header">
-        <form id="liquidarTicket-form1" class="list">
-            <label class="item item-input" id="liquidarTicket-input1">
-                <span class="input-label">Patente</span>
-                <input type="text" placeholder="">
-            </label>
-            <label class="item item-input" id="liquidarTicket-input2">
-                <span class="input-label">Nombre y apellido</span>
-                <input type="text" placeholder="">
-            </label>
-            <label class="item item-input" id="liquidarTicket-input3">
-                <span class="input-label">DNI</span>
-                <input type="text" placeholder="">
-            </label>
-            <label class="item item-input" id="liquidarTicket-input4">
-                <span class="input-label">Hora Inicio</span>
-                <input type="time" placeholder="">
-            </label>
-            <label class="item item-input" id="liquidarTicket-input5">
-                <span class="input-label">Tiempo</span>
-                <input type="number" placeholder="">
-            </label>
-            <label class="item item-input" id="liquidarTicket-input6">
-                <span class="input-label">Hora fin</span>
-                <input type="time" placeholder="">
-            </label>
-            <label class="item item-input" id="liquidarTicket-input7">
-                <span class="input-label">Importe</span>
-                <input type="number" placeholder="">
-            </label>
+<ion-view>
+    <ion-header-bar class="bar-calm">
+
+        <h1 class="title"> Liquidar Ticket</h1>
+
+        <div class="buttons">
+            <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
+        </div>
+
+    </ion-header-bar>
+
+    <ion-content class="padding">
+
+        <form name="ventaForm" ng-submit="addVenta()">
+            <div class="list">    
+                <label class="item item-input">
+                    <input type="text" placeholder="Patente" ng-model="input.patente" >
+                </label>
+                <label class="item item-input">
+                    <input type="number" placeholder="Importe" ng-model="input.amount" >
+                </label>
+                <label class="item item-input">
+                    <input type="number" placeholder="Hora" ng-model="input.hours" >
+                </label>
+  
+            </div>
+
+            <div class="padding">
+                <button class="button button-block button-balanced" ng-disabled="ventaForm.$invalid">Save Venta</button>
+            </div>
         </form>
-        <button id="liquidarTicket-button1" style="border-radius:14px 14px 14px 14px;" class="button button-dark  button-block">Habilitar</button>
+
     </ion-content>
 </ion-view>

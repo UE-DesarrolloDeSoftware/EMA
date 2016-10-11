@@ -10,10 +10,31 @@ angular.module('ema.controllers')
 
 })
 
-.controller('LiquidarTicketController', function ($scope) {
+.controller('LiquidarTicketController', function ($scope,VentasService, ParkingService, VendedorService) {
+    $scope.input = {};
+    
+    $scope.addVenta = function(){
 
+         ParkingService.getParkingByPatente($scope.input.patente).then(function (result) {
+            
+            $scope.input.parking = result.data[0].id;
+            $scope.input.paid_date = new Date();
 
+            var usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
+            
+            VendedorService.getVendedorByIdUsuario(usuarioLogueado.id).then(function (result) {
+
+                $scope.input.vendor = result.data[0].id;
+
+                VentasService.addVenta($scope.input).then(function (result) {
+            
+                
+                });
+            });
+        });
+    }
 })
+
 
 .controller('CierreController', function ($scope, $ionicPopup, $ionicModal, VentasService) {
     $scope.sales = [];

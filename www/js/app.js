@@ -61,7 +61,8 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             url: "/liquidarTicket",
             views: {
                 'menuContent@eventmenu': {
-                    templateUrl: "templates/liquidarTicket.html"
+                    templateUrl: "templates/liquidarTicket.html",
+                    controller:"LiquidarTicketController"
                 }
             }
         })
