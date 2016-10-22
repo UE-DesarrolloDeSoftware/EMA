@@ -1,4 +1,4 @@
-angular.module('ema.services', [])
+angular.module('ema.services')
 
 .service('ZonaEstacionamientoServices', function ($http, Backand){
       var baseUrl = '/1/objects/';
