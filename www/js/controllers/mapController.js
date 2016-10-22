@@ -1,7 +1,7 @@
 
 angular.module('ema.controllers')
 
-.controller('MapController',function($scope, $cordovaGeolocation, $ionicPopup ){
+.controller('MapController',function($scope, $cordovaGeolocation, $ionicPopup,ZonaEstacionamientoServices ){
 
     $scope.zonaest= {};
 
@@ -47,7 +47,7 @@ angular.module('ema.controllers')
             edit: {
 
                 featureGroup: editableLayers, //REQUIRED!!
-                remove: false
+                remove: true
                 
             }
 
@@ -55,28 +55,85 @@ angular.module('ema.controllers')
         
         var drawControl = new L.Control.Draw(options);
         map.addControl(drawControl);
-        
+
         map.on('draw:created', function (e) {
-            var type = e.layerType,
-                layer = e.layer;
+          var coordinates = [];
+
+
+
+          var type = e.layerType,
+              layer = e.layer;
+
+          if (type === 'polyline') {
+              // here you got the polygon points
+              //coordinates = layer._latlngs;
+              
+              //console.log(coordenadas);
+
+              // here you can get it in geojson format
+              var geojson = layer.toGeoJSON();
+
+
+            
+            latlngs = layer.getLatLngs();
+            for (var i = 0; i < latlngs.length; i++) {
+                coordinates.push([latlngs[i].lat, latlngs[i].lng])
+        }
+
+         
+         // here you add it to a layer to display it in the map
+           editableLayers.addLayer(layer);
+            
+          //console.log(zonaest);
+           // console.log(coordinates);
+          var estacionamiento = {};
+          //estacionamiento.coordinates = coordenadas;
+          estacionamiento.coordinates = JSON.stringify(coordinates);
+
+        ZonaEstacionamientoServices.addZonaEstacionamiento(estacionamiento).then(function () {
+          //console.log(estacionamiento);  
+           
+        })
         
-            if (type === 'marker') {
-                layer.bindPopup('A popup!');
-            }
+        }      
+        })
+/*
+    $scope.addZonaEstacionamiento = function () {
+        ZonaEstacionamientoServices.addZonaEstacionamiento($scope.zonaest).then(function () {
+            
+  
+
+          
+        })
+    };
+
+*/
+
+
+       // map.on('draw:created', function (e) {
+       //     var type = e.layerType,
+       //         layer = e.layer;
+            
+       // }
+   //         if (type === 'marker') {
+   //             layer.bindPopup('A popup!');
+   //         }
         
-            editableLayers.addLayer(layer);
-            var shape = layer.toGeoJSON()
-            var prueba = layer.toString()
-            //var shape_for_db = JSON.stringify(shape);
-            var shape_for_db = JSON.stringify(shape);
+            
+   //         var shape = layer.toGeoJSON()
+   //         var prueba = layer.toString()
+   //         
+   //         //var shape_for_db = JSON.stringify(shape);
+   //         var shape_for_db = JSON.stringify(shape);
 
             
             //var data = editableLayers.toGeoJSON();
             //var convertData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
-            console.log(prueba);
-            console.log(shape_for_db);
+         //   console.log(shape);
+           // console.log(prueba);
+           // console.log(shape_for_db);
 
-        });
+       // });
         
        /* $scope.map = {
             defaults: {

@@ -2,7 +2,7 @@ angular.module('ema.services', [])
 
 .service('ZonaEstacionamientoServices', function ($http, Backand){
       var baseUrl = '/1/objects/';
-      var objectName = '/1/objects/paid_parking_zones/';
+      var objectName = 'paid_parking_zones';
       
 
       function getUrl() {
@@ -21,9 +21,8 @@ angular.module('ema.services', [])
           return $http.get(getUrlForId(id));
       };
 
-      addZonaEstacionamiento = function (object) {
-
-          var zonaest = Object.assign({}, object);
+      addZonaEstacionamiento = function (zonaest) {
+          
           return $http.post(getUrl(), zonaest);
       };
 
