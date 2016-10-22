@@ -131,55 +131,116 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         })
 
 
-        // MENU ADMINISTRADOR
+    // MENU ADMINISTRADOR
 
-        .state('eventmenu.menuAdmin', {
-            url: "/menuAdmin",
-            views: {
-                'menuContent': {
-                    templateUrl: "templates/menuAdministrador.html"
-                }
+    .state('eventmenu.menuAdmin', {
+        url: "/menuAdmin",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/menuAdministrador.html"
             }
-        })
+        }
+    })
 
-      .state('eventmenu.menuAdmin.usuarios', {
-          url: "/usuarios",
-          views: {
-              'menuContent@eventmenu': {
-                  templateUrl: "templates/usuarios.html",
-                  controller: 'UsuariosCtrl'
-              }
-          }
-      })
+    .state('eventmenu.menuAdmin.usuarios', {
+        url: "/usuarios",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/usuarios.html",
+                controller: 'UsuariosCtrl'
+            }
+        }
+    })
+
+    // MENU AGENTE DE TRANSITO
+
+    .state('eventmenu.menuAgenteTransito', {
+        url: "/menuAgenteTransito",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/menuAgenteTransito.html"
+            }
+        }
+    })
+
+    .state('eventmenu.menuAgenteTransito.comprobarEstadoVehiculo', {
+        url: "/comprobarEstadoVehiculo",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/comprobarEstadoVehiculo.html",
+                controller: 'ComprobarEstadoVehiculoController'
+            }
+        }
+    })
+
+    .state('eventmenu.menuAgenteTransito.preguntasFrecuentes', {
+        url: "/preguntasFrecuentes",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/preguntasFrecuentes.html",
+                controller: 'PreguntasFrecuentesController'
+            }
+        }
+    })
+
+    .state('eventmenu.menuAgenteTransito.condicionesUso', {
+        url: "/condicionesUso",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/condicionesUso.html",
+                controller: 'CondicionesUsoController'
+            }
+        }
+    })
+
+    .state('eventmenu.menuAgenteTransito.estadoServicio', {
+        url: "/estadoServicio",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/estadoServicio.html",
+                controller: 'EstadoServicioController'
+            }
+        }
+    })
+
+    .state('eventmenu.menuAgenteTransito.contactoSoporte', {
+        url: "/contactoSoporte",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/contactoSoporte.html",
+                controller: 'ContactoSoporteController'
+            }
+        }
+    })
 
     // MENU CONDUCTOR
 
-        .state('menu', {
-            url: "/menu",
-            abstract: true,
-            templateUrl: "templates/menu.html",
-            controller: 'MenuConductorController'
-        })
+    .state('menu', {
+        url: "/menu",
+        abstract: true,
+        templateUrl: "templates/menu.html",
+        controller: 'MenuConductorController'
+    })
 
-        .state('menu.map', {
-          url: "/map",
-          views: {
-            'menuContent' :{
-              templateUrl: "templates/map.html",
-              controller: 'MapController'
-            }
-          }
-        })
+    .state('menu.map', {
+        url: "/map",
+        views: {
+        'menuContent' :{
+            templateUrl: "templates/map.html",
+            controller: 'MapController'
+        }
+        }
+    })
 
-        .state('menu.map.condicionesUso', {
-            url: "/condicionesUso",
-            views: {
-                'menuContent@menu': {
-                    templateUrl: "templates/condicionesUso.html",
-                    controller: 'CondicionesUsoController'
-                }
+    .state('menu.map.condicionesUso', {
+        url: "/condicionesUso",
+        views: {
+            'menuContent@menu': {
+                templateUrl: "templates/condicionesUso.html",
+                controller: 'CondicionesUsoController'
             }
-        })
+        }
+    })
 
     ;
 
