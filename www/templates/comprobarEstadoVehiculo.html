@@ -10,18 +10,25 @@
 
         <div class="animate-switch-container"
              ng-switch on="parking.estado">
+
             <div class="animate-switch" ng-switch-when="1">
-                <div  style="height:100px;width:100px;background-color:red;border-radius:50%;float:left;"></div> 
-                <h1>Infraccion</h1>
+                <div class="circle red" style="float:left;"></div> 
+                <div class="circleLabel">
+                    <font size="12">Infracci&oacute;n</font>
+                </div>
             </div>
             <div class="animate-switch" ng-switch-when="2">
-                <div style="height:100px;width:100px;background-color:orangered;border-radius:50%;float:left;"></div> 
-                <h1>Prorroga</h1>
-            </div>     
+                <div class="circle orange" style="float:left;"></div>
+                <div class="circleLabel">
+                    <font size="12">Pr&oacute;rroga</font>
+                </div>
+            </div> 
             <div class="animate-switch" ng-switch-when="3">
-                <div style="height:100px;width:100px;background-color:green;border-radius:50%;float:left;"></div> 
-                <h1>Estacionado</h1>
-            </div>
+                <div class="circle green" style="float:left;"></div>
+                <div class="circleLabel">
+                    <font size="12">Estacionado</font>
+                </div>
+            </div> 
         </div>
 
     </ion-content>

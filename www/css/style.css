@@ -51,3 +51,30 @@ div.header .col {
 .row:last-child .col {
     border-bottom: solid 1px grey;
 }
+
+div.circle {
+    border-radius:50%;
+    height:5rem;
+    width:5rem;
+}
+
+.circle.red{
+    background-color:red;
+}
+
+.circle.orange{
+    background-color:orangered;
+}
+
+.circle.green{
+    background-color:green;
+}
+
+div.circleLabel {
+    float:left;
+    text-align:center;
+    vertical-align:middle;
+    height:5rem;
+    line-height:5rem;
+    padding-left:20px;
+}
