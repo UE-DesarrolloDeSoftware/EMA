@@ -133,6 +133,16 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             }
         })
 
+        .state('eventmenu.menuVendedor.contactoSoporte', {
+            url: "/contactoSoporte",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/contactoSoporte.html",
+                    controller: 'ContactoSoporteController'
+                }
+            }
+        })
+
 
     // MENU ADMINISTRADOR
 
@@ -151,6 +161,16 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             'menuContent@eventmenu': {
                 templateUrl: "templates/usuarios.html",
                 controller: 'UsuariosCtrl'
+            }
+        }
+    })
+
+    .state('eventmenu.menuAdmin.contactoSoporte', {
+        url: "/contactoSoporte",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/contactoSoporte.html",
+                controller: 'ContactoSoporteController'
             }
         }
     })
@@ -242,6 +262,15 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             'menuContent@menu': {
                 templateUrl: "templates/condicionesUso.html",
                 controller: 'CondicionesUsoController'
+            }
+        }
+    })
+    .state('menu.map.contactoSoporte', {
+        url: "/contactoSoporte",
+        views: {
+            'menuContent@menu': {
+                templateUrl: "templates/contactoSoporte.html",
+                controller: 'ContactoSoporteController'
             }
         }
     })

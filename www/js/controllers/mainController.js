@@ -57,3 +57,29 @@
     };
 })
 
+.controller('ContactoSoporteController', function ($scope, $state) {
+
+    $scope.inputForm = {};
+    $scope.inputForm.motivo = "Consulta";
+
+    $scope.enviarComentarios = function () {
+
+        var mensaje = "<div><h2>{0}</h2><h2>{1}</h2><div>{2}</div></div>";
+
+        $scope.usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
+
+        mensaje = String.format(mensaje, $scope.usuarioLogueado.email, $scope.inputForm.motivo, $scope.inputForm.comentarios);
+
+        $scope.send("ue.ema.soporte@gmail.com", "Contacto desde la app", mensaje);
+
+    }
+})
+
+.controller('CondicionesUsoController', function ($scope, ConfigurationsService) {
+
+    ConfigurationsService.getConfigurationByKey("terminos_legales").then(function (result) {
+
+        $scope.condicionesUso = result.data.data[0].value;
+
+    });
+})

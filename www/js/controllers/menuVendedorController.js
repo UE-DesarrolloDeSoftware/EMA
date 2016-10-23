@@ -55,7 +55,6 @@ angular.module('ema.controllers')
     }
 })
 
-
 .controller('CierreController', function ($scope, $ionicPopup, $ionicModal, VentasService) {
     $scope.sales = [];
  
