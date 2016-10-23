@@ -158,7 +158,8 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         url: "/menuAgenteTransito",
         views: {
             'menuContent': {
-                templateUrl: "templates/menuAgenteTransito.html"
+                templateUrl: "templates/menuAgenteTransito.html",
+                controller: "MenuAgenteTransitoController"
             }
         }
     })

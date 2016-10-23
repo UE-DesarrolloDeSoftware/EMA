@@ -1,4 +1,15 @@
 ﻿<ion-view title="Menu" class="has-header">
+
+    <ion-nav-buttons side="left">
+        <label class="">
+            Bienvenido, {{usuarioLogueado.name}}
+        </label>
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <button ng-click="logOut();" class="button">LogOut</button>
+    </ion-nav-buttons>
+
     <ion-list>
         <ion-item class="item-thumbnail-left calm" id="menu-list-item4" ui-sref="eventmenu.menuAgenteTransito.comprobarEstadoVehiculo" >
             <img src="img/menuAgenteTransito/estado_vehiculo.ico">
