@@ -70,10 +70,13 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             url: "/cancelarTicket",
             views: {
                 'menuContent@eventmenu': {
-                    templateUrl: "templates/cancelarTicket.html"
+                    templateUrl: "templates/cancelarTicket.html",
+                    controller: "CancelarTicketController"
+                
                 }
             }
         })
+
         .state('eventmenu.menuVendedor.revisionVentas', {
             url: "/revisionVentas",
             views: {

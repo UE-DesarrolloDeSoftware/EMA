@@ -5,12 +5,32 @@ angular.module('ema.controllers')
      $scope.usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
  })
 
-.controller('CancelarTicketController', function ($scope) {
+.controller('CancelarTicketController', function ($scope, VentasService,ParkingService) {
+    $scope.input = {};
+    $scope.sales = [];
 
+    $scope.buscarVentas = function(){
+
+        ParkingService.getParkingByPatente($scope.input.patente).then(function (result) {
+            
+            var parking_id = result.data[0].id;
+            VentasService.getSalesByParkingId(parking_id).then(function(result) {
+                $scope.sales = [];
+                $scope.sales = result.data;
+
+            });
+
+        });
+    }
+    $scope.deleteVenta = function (id) {
+        VentasService.deleteVenta(id).then(function (result) {
+            $scope.buscarVentas();
+        });
+    }
 
 })
 
-.controller('LiquidarTicketController', function ($scope,VentasService, ParkingService, VendedorService) {
+.controller('LiquidarTicketController', function ($scope,VentasService, ParkingService, VendedorService,$ionicPopup) {
     $scope.input = {};
     
     $scope.addVenta = function(){
@@ -28,7 +48,7 @@ angular.module('ema.controllers')
 
                 VentasService.addVenta($scope.input).then(function (result) {
             
-                
+                $ionicPopup.alert({title: 'Atencion', template: 'Venta registrada'});
                 });
             });
         });
