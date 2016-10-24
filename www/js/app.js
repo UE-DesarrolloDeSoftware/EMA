@@ -132,40 +132,58 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
                 }
             }
         })
-        .state('eventmenu.menuVendedor.condicionesUso', {
-            url: "/condicionesUso",
-            views: {
-                'menuContent@eventmenu': {
-                    templateUrl: "templates/condicionesUso.html"
-                }
-            }
-        })
 
         .state('eventmenu.menuVendedor.preguntasFrecuentes', {
             url: "/preguntasFrecuentes",
             views: {
                 'menuContent@eventmenu': {
-                    templateUrl: "templates/preguntasFrecuentes.html"
+                    templateUrl: "templates/preguntasFrecuentes.html",
+                    controller: 'PreguntasFrecuentesController'
                 }
             }
         })
-        .state('eventmenu.menuVendedor.estadoAplicacion', {
-            url: "/estadoAplicacion",
+
+
+
+        .state('eventmenu.menuVendedor.condicionesUso', {
+            url: "/condicionesUso",
             views: {
                 'menuContent@eventmenu': {
-                    templateUrl: "templates/estadoAplicacion.html"
+                    templateUrl: "templates/condicionesUso.html",
+                    controller: 'CondicionesUsoController'
                 }
             }
         })
+
+        .state('eventmenu.menuVendedor.estadoServicio', {
+            url: "/estadoServicio",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/estadoServicio.html",
+                    controller: 'EstadoServicioController'
+                }
+            }
+        })
+
+>>>>>>> origin/Desarrollo
         .state('eventmenu.menuVendedor.contactoSoporte', {
             url: "/contactoSoporte",
             views: {
                 'menuContent@eventmenu': {
+<<<<<<< HEAD
                     templateUrl: "templates/contactoSoporte.html"
                 }
             }
         })
         
+=======
+                    templateUrl: "templates/contactoSoporte.html",
+                    controller: 'ContactoSoporteController'
+                }
+            }
+        })
+
+>>>>>>> origin/Desarrollo
 
     // MENU ADMINISTRADOR
 
@@ -184,6 +202,16 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             'menuContent@eventmenu': {
                 templateUrl: "templates/usuarios.html",
                 controller: 'UsuariosCtrl'
+            }
+        }
+    })
+
+    .state('eventmenu.menuAdmin.contactoSoporte', {
+        url: "/contactoSoporte",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/contactoSoporte.html",
+                controller: 'ContactoSoporteController'
             }
         }
     })
@@ -269,12 +297,41 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         }
     })
 
+    .state('menu.map.preguntasFrecuentes', {
+        url: "/preguntasFrecuentes",
+        views: {
+            'menuContent@menu': {
+                templateUrl: "templates/preguntasFrecuentes.html",
+                controller: 'PreguntasFrecuentesController'
+            }
+        }
+    })
+
     .state('menu.map.condicionesUso', {
         url: "/condicionesUso",
         views: {
             'menuContent@menu': {
                 templateUrl: "templates/condicionesUso.html",
                 controller: 'CondicionesUsoController'
+            }
+        }
+    })
+    .state('menu.map.estadoServicio', {
+        url: "/estadoServicio",
+        views: {
+            'menuContent@menu': {
+                templateUrl: "templates/estadoServicio.html",
+                controller: 'EstadoServicioController'
+            }
+        }
+    })
+
+    .state('menu.map.contactoSoporte', {
+        url: "/contactoSoporte",
+        views: {
+            'menuContent@menu': {
+                templateUrl: "templates/contactoSoporte.html",
+                controller: 'ContactoSoporteController'
             }
         }
     })

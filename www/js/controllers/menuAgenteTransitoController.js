@@ -5,7 +5,7 @@ angular.module('ema.controllers')
      $scope.usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
  })
 
- .controller('ComprobarEstadoVehiculoController', function ($scope, $state, ConfigurationsService, ParkingService) {
+.controller('ComprobarEstadoVehiculoController', function ($scope, $state, ConfigurationsService, ParkingService) {
      $scope.inputForm = {};
      $scope.parking = {};
 
@@ -47,4 +47,9 @@ angular.module('ema.controllers')
              }
          });
      }
+ })
+
+.controller('PreguntasFrecuentesController', function ($scope, $state) {
+
+     $scope.usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
  })
