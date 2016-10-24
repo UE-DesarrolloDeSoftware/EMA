@@ -1,4 +1,4 @@
-﻿<ion-view title="Menu" class="has-header">
+﻿<ion-view title="Menu">
 
     <ion-nav-buttons side="left">
         <label class="">
@@ -9,23 +9,40 @@
     <ion-nav-buttons side="right">
         <button ng-click="logOut();" class="button">LogOut</button>
     </ion-nav-buttons>
-
-    <ion-list>
-        <ion-item class="item-thumbnail-left calm" ui-sref="eventmenu.menuVendedor.liquidarTicket">
-            <img src="img/menuVendedor/liquidar_ticket.ico">
-            <h2calm>Liquidar ticket</h2calm>
-        </ion-item>
-        <ion-item class="item-thumbnail-left calm" id="menu-list-item4" ui-sref="eventmenu.menuVendedor.cancelarTicket">
-            <img src="img/menuVendedor/cancelar_ticket.ico">
-            <h2calm>Cancelar ticket</h2calm>
-        </ion-item>
-        <ion-item class="item-thumbnail-left calm" id="menu-list-item5" ui-sref="eventmenu.menuVendedor.revisionVentas">
-            <img src="img/menuVendedor/revision_de_ventas.ico">
-            <h2calm>Revision de ventas</h2calm>
-        </ion-item>
-        <ion-item class="item-thumbnail-left calm" id="menu-list-item6" ui-sref="eventmenu.menuVendedor.listaPrecios">
-            <img src="img/menuVendedor/lista_de_precios.ico">
-            <h2calm>Lista de precios</h2calm>
-        </ion-item>
-    </ion-list>
+    <ion-content>
+        <ion-list>
+            <ion-item class="item-thumbnail-left calm" ui-sref="eventmenu.menuVendedor.liquidarTicket">
+                <img src="img/menuVendedor/liquidar_ticket.ico">
+                <h2calm>Liquidar ticket</h2calm>
+            </ion-item>
+            <ion-item class="item-thumbnail-left calm" ui-sref="eventmenu.menuVendedor.cancelarTicket">
+                <img src="img/menuVendedor/cancelar_ticket.ico">
+                <h2calm>Cancelar ticket</h2calm>
+            </ion-item>
+            <ion-item class="item-thumbnail-left calm" ui-sref="eventmenu.menuVendedor.revisionVentas">
+                <img src="img/menuVendedor/revision_de_ventas.ico">
+                <h2calm>Revision de ventas</h2calm>
+            </ion-item>
+            <ion-item class="item-thumbnail-left calm" ui-sref="eventmenu.menuVendedor.listaPrecios">
+                <img src="img/menuVendedor/lista_de_precios.ico">
+                <h2calm>Lista de precios</h2calm>
+            </ion-item>
+            <ion-item class="item-thumbnail-left calm" ui-sref="eventmenu.menuVendedor.preguntasFrecuentes">
+                <img src="img/preguntas_frecuentes.ico">
+                <h2calm>Ayuda y Preguntas Frecuentes</h2calm>
+            </ion-item>
+            <ion-item class="item-thumbnail-left calm" ui-sref="eventmenu.menuVendedor.condicionesUso">
+                <img src="img/terminos_y_condiciones.ico">
+                <h2calm>Terminos y Condiciones</h2calm>
+            </ion-item>
+            <ion-item class="item-thumbnail-left calm" ui-sref="eventmenu.menuVendedor.estadoServicio">
+                <img src="img/estado_aplicacion.ico">
+                <h2calm>Estado</h2calm>
+            </ion-item>
+            <ion-item class="item-thumbnail-left calm" ui-sref="eventmenu.menuVendedor.contactoSoporte">
+                <img src="img/contacto.ico">
+                <h2calm>Contacto</h2calm>
+            </ion-item>
+        </ion-list>
+    </ion-content>
 </ion-view>

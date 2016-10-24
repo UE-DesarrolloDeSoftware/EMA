@@ -133,6 +133,36 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             }
         })
 
+        .state('eventmenu.menuVendedor.preguntasFrecuentes', {
+            url: "/preguntasFrecuentes",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/preguntasFrecuentes.html",
+                    controller: 'PreguntasFrecuentesController'
+                }
+            }
+        })
+
+        .state('eventmenu.menuVendedor.condicionesUso', {
+            url: "/condicionesUso",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/condicionesUso.html",
+                    controller: 'CondicionesUsoController'
+                }
+            }
+        })
+
+        .state('eventmenu.menuVendedor.estadoServicio', {
+            url: "/estadoServicio",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/estadoServicio.html",
+                    controller: 'EstadoServicioController'
+                }
+            }
+        })
+
         .state('eventmenu.menuVendedor.contactoSoporte', {
             url: "/contactoSoporte",
             views: {
