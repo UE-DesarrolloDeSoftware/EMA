@@ -143,8 +143,6 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             }
         })
 
-
-
         .state('eventmenu.menuVendedor.condicionesUso', {
             url: "/condicionesUso",
             views: {
@@ -165,25 +163,18 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             }
         })
 
->>>>>>> origin/Desarrollo
         .state('eventmenu.menuVendedor.contactoSoporte', {
             url: "/contactoSoporte",
             views: {
                 'menuContent@eventmenu': {
-<<<<<<< HEAD
-                    templateUrl: "templates/contactoSoporte.html"
-                }
-            }
-        })
-        
-=======
+
                     templateUrl: "templates/contactoSoporte.html",
                     controller: 'ContactoSoporteController'
                 }
             }
         })
 
->>>>>>> origin/Desarrollo
+
 
     // MENU ADMINISTRADOR
 
