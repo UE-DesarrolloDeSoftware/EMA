@@ -1,0 +1,35 @@
+<ion-view title="Comprobar estado vehiculo" id="page6" style="background-color:#6C9FEE;">
+    <ion-content padding="true" class="has-header">
+        <form name="buscarForm" ng-submit="comprobarEstado()" class="list">
+            <label class="item item-input" id="buscarTicket-input17">
+                <span class="input-label">Patente</span>
+                <input type="text" ng-model="inputForm.patente" placeholder="">
+            </label>
+            <button id="buscarTicket-button4" style="border-radius:14px 14px 14px 14px;" class="button button-dark  button-block">Buscar</button>
+        </form>
+
+        <div class="animate-switch-container"
+             ng-switch on="parking.estado">
+
+            <div class="animate-switch" ng-switch-when="1">
+                <div class="circle red" style="float:left;"></div> 
+                <div class="circleLabel">
+                    <font size="12">Infracci&oacute;n</font>
+                </div>
+            </div>
+            <div class="animate-switch" ng-switch-when="2">
+                <div class="circle orange" style="float:left;"></div>
+                <div class="circleLabel">
+                    <font size="12">Pr&oacute;rroga</font>
+                </div>
+            </div> 
+            <div class="animate-switch" ng-switch-when="3">
+                <div class="circle green" style="float:left;"></div>
+                <div class="circleLabel">
+                    <font size="12">Estacionado</font>
+                </div>
+            </div> 
+        </div>
+
+    </ion-content>
+</ion-view>

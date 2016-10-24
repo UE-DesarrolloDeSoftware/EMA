@@ -70,10 +70,13 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             url: "/cancelarTicket",
             views: {
                 'menuContent@eventmenu': {
-                    templateUrl: "templates/cancelarTicket.html"
+                    templateUrl: "templates/cancelarTicket.html",
+                    controller: "CancelarTicketController"
+                
                 }
             }
         })
+
         .state('eventmenu.menuVendedor.revisionVentas', {
             url: "/revisionVentas",
             views: {
@@ -130,6 +133,48 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             }
         })
 
+        .state('eventmenu.menuVendedor.preguntasFrecuentes', {
+            url: "/preguntasFrecuentes",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/preguntasFrecuentes.html",
+                    controller: 'PreguntasFrecuentesController'
+                }
+            }
+        })
+
+        .state('eventmenu.menuVendedor.condicionesUso', {
+            url: "/condicionesUso",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/condicionesUso.html",
+                    controller: 'CondicionesUsoController'
+                }
+            }
+        })
+
+        .state('eventmenu.menuVendedor.estadoServicio', {
+            url: "/estadoServicio",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/estadoServicio.html",
+                    controller: 'EstadoServicioController'
+                }
+            }
+        })
+
+        .state('eventmenu.menuVendedor.contactoSoporte', {
+            url: "/contactoSoporte",
+            views: {
+                'menuContent@eventmenu': {
+
+                    templateUrl: "templates/contactoSoporte.html",
+                    controller: 'ContactoSoporteController'
+                }
+            }
+        })
+
+
 
     // MENU ADMINISTRADOR
 
@@ -152,13 +197,24 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         }
     })
 
+    .state('eventmenu.menuAdmin.contactoSoporte', {
+        url: "/contactoSoporte",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/contactoSoporte.html",
+                controller: 'ContactoSoporteController'
+            }
+        }
+    })
+
     // MENU AGENTE DE TRANSITO
 
     .state('eventmenu.menuAgenteTransito', {
         url: "/menuAgenteTransito",
         views: {
             'menuContent': {
-                templateUrl: "templates/menuAgenteTransito.html"
+                templateUrl: "templates/menuAgenteTransito.html",
+                controller: "MenuAgenteTransitoController"
             }
         }
     })
@@ -232,12 +288,41 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         }
     })
 
+    .state('menu.map.preguntasFrecuentes', {
+        url: "/preguntasFrecuentes",
+        views: {
+            'menuContent@menu': {
+                templateUrl: "templates/preguntasFrecuentes.html",
+                controller: 'PreguntasFrecuentesController'
+            }
+        }
+    })
+
     .state('menu.map.condicionesUso', {
         url: "/condicionesUso",
         views: {
             'menuContent@menu': {
                 templateUrl: "templates/condicionesUso.html",
                 controller: 'CondicionesUsoController'
+            }
+        }
+    })
+    .state('menu.map.estadoServicio', {
+        url: "/estadoServicio",
+        views: {
+            'menuContent@menu': {
+                templateUrl: "templates/estadoServicio.html",
+                controller: 'EstadoServicioController'
+            }
+        }
+    })
+
+    .state('menu.map.contactoSoporte', {
+        url: "/contactoSoporte",
+        views: {
+            'menuContent@menu': {
+                templateUrl: "templates/contactoSoporte.html",
+                controller: 'ContactoSoporteController'
             }
         }
     })

@@ -72,12 +72,3 @@ angular.module('ema.controllers')
 
 
 })
-
-.controller('CondicionesUsoController', function ($scope, $ionicHistory, ConfigurationsService) {
-
-    ConfigurationsService.getConfigurationByKey("terminos_legales").then(function (result) {
-
-        $scope.condicionesUso = result.data.data[0].value;
-
-    });
-})

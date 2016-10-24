@@ -37,12 +37,28 @@ angular.module('ema.services')
               }
           });
       };
-      addVenta = function (object) {
-
-          var venta = Object.assign({}, object);
-          
-          return $http.post(getUrl(), usuario);
+      addVenta = function (venta) {          
+          return $http.post(getUrl(), venta);
       };
+      
+
+      deleteVenta = function (id) {
+          return $http.delete(getUrlForId(id));
+      };
+
+      getSalesByParkingId = function (parking_id) {
+
+        return $http({
+              method:"GET",
+              url:Backand.getApiUrl() + '/1/query/data/getSalesByParkingId',
+              params:{
+                parameters: {
+                  parking_id: parking_id
+                }
+              }
+        });
+    };
+
 
 
 
@@ -50,6 +66,8 @@ angular.module('ema.services')
         getSales: getSales,
         getSale: getSale,
         getSalesFilter: getSalesFilter,
-        addVenta:addVenta
+        addVenta: addVenta,
+        deleteVenta: deleteVenta,
+        getSalesByParkingId: getSalesByParkingId
       }
   })
