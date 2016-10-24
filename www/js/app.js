@@ -132,35 +132,8 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
                 }
             }
         })
-        .state('eventmenu.menuVendedor.condicionesUso', {
-            url: "/condicionesUso",
-            views: {
-                'menuContent@eventmenu': {
-                    templateUrl: "templates/condicionesUso.html"
-                }
-            }
-        })
 
-            views: {
-                'menuContent@eventmenu': {
-                }
-            }
-        })
-        .state('eventmenu.menuVendedor.estadoAplicacion', {
-            url: "/estadoAplicacion",
-            views: {
-                'menuContent@eventmenu': {
-                    templateUrl: "templates/estadoAplicacion.html"
-                }
-            }
-        })
-            views: {
-                'menuContent@eventmenu': {
-                    templateUrl: "templates/contactoSoporte.html"
-                }
-            }
-        })
-        
+
     // MENU ADMINISTRADOR
 
     .state('eventmenu.menuAdmin', {
