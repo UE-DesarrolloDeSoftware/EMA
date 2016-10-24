@@ -286,6 +286,16 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         }
     })
 
+    .state('menu.map.preguntasFrecuentes', {
+        url: "/preguntasFrecuentes",
+        views: {
+            'menuContent@menu': {
+                templateUrl: "templates/preguntasFrecuentes.html",
+                controller: 'PreguntasFrecuentesController'
+            }
+        }
+    })
+
     .state('menu.map.condicionesUso', {
         url: "/condicionesUso",
         views: {
@@ -295,6 +305,16 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             }
         }
     })
+    .state('menu.map.estadoServicio', {
+        url: "/estadoServicio",
+        views: {
+            'menuContent@menu': {
+                templateUrl: "templates/estadoServicio.html",
+                controller: 'EstadoServicioController'
+            }
+        }
+    })
+
     .state('menu.map.contactoSoporte', {
         url: "/contactoSoporte",
         views: {
