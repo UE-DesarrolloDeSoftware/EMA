@@ -4,7 +4,8 @@ angular.module('ema.controllers')
 .controller('MapController',function($scope, $cordovaGeolocation, $ionicPopup,ZonaEstacionamientoServices ){
 
     $scope.zonaest= {};
-
+    var coordinates = [];
+    var coordenadas = [];
     // INICIALIZACION DEL MAPA
     //$scope.$on("$stateChangeSuccess", function() {
       // create a map in the "map" div, set the view to a given place and zoom
@@ -13,10 +14,24 @@ angular.module('ema.controllers')
         cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18}),
         map = new L.Map('map', {layers: [cloudmade], center: new L.LatLng(-34.789439,-58.523198),
          zoom: 18 });
-        
+
         var editableLayers = new L.FeatureGroup();
         map.addLayer(editableLayers);
         
+       
+      /*        latlngs = zona.getLatLngs();
+              for (var i = 0; i < latlngs.length; i++) {
+                   zonas.push([latlngs[i].lat, latlngs[i].lng])
+                   }
+
+                  console.log('ZONAS..................');    
+                  console.log(latlngs);
+                  console.log('ZONAS2');
+                  console.log(zonas);
+            });
+*/
+            
+      
         var MyCustomMarker = L.Icon.extend({
             options: {
                 shadowUrl: null,
@@ -52,88 +67,56 @@ angular.module('ema.controllers')
             }
 
         };
-        
+          
+
+
         var drawControl = new L.Control.Draw(options);
         map.addControl(drawControl);
-
+        
         map.on('draw:created', function (e) {
-          var coordinates = [];
-
-
+          
 
           var type = e.layerType,
               layer = e.layer;
 
+               ZonaEstacionamientoServices.getZonasEstacionamiento().then(function (result) {
+
+             var zona = result.data.data
+
+
+             for (var i = 0; i < zona.length; i++) {
+                coordenadas.push([zona[i].lat, zona[i].lng])
+                console.log(coordenadas);
+                }
+             coordenadas = layer.setLatLngs(zona)
+              
+              })
           if (type === 'polyline') {
               // here you got the polygon points
               //coordinates = layer._latlngs;
-              
-              //console.log(coordenadas);
-
               // here you can get it in geojson format
               var geojson = layer.toGeoJSON();
-
-
+              L.drawLocal.draw.toolbar.buttons.polyline = 'dibuja una linea';
+              
             
             latlngs = layer.getLatLngs();
             for (var i = 0; i < latlngs.length; i++) {
                 coordinates.push([latlngs[i].lat, latlngs[i].lng])
-        }
+                }
 
          
          // here you add it to a layer to display it in the map
            editableLayers.addLayer(layer);
             
-          //console.log(zonaest);
-           // console.log(coordinates);
-          var estacionamiento = {};
-          //estacionamiento.coordinates = coordenadas;
-          estacionamiento.coordinates = JSON.stringify(coordinates);
-
-        ZonaEstacionamientoServices.addZonaEstacionamiento(estacionamiento).then(function () {
-          //console.log(estacionamiento);  
-           
-        })
-        
-        }      
-        })
-/*
-    $scope.addZonaEstacionamiento = function () {
-        ZonaEstacionamientoServices.addZonaEstacionamiento($scope.zonaest).then(function () {
-            
-  
-
+          
+            var estacionamiento = {};
+            estacionamiento.coordinates = JSON.stringify(coordinates);
+            ZonaEstacionamientoServices.addZonaEstacionamiento(estacionamiento).then(function () {
           
         })
-    };
-
-*/
-
-
-       // map.on('draw:created', function (e) {
-       //     var type = e.layerType,
-       //         layer = e.layer;
-            
-       // }
-   //         if (type === 'marker') {
-   //             layer.bindPopup('A popup!');
-   //         }
-        
-            
-   //         var shape = layer.toGeoJSON()
-   //         var prueba = layer.toString()
-   //         
-   //         //var shape_for_db = JSON.stringify(shape);
-   //         var shape_for_db = JSON.stringify(shape);
-
-            
-            //var data = editableLayers.toGeoJSON();
-            //var convertData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
-         //   console.log(shape);
-           // console.log(prueba);
-           // console.log(shape_for_db);
-
-       // });
+          
+      }      
+    })
         
        /* $scope.map = {
             defaults: {
@@ -149,7 +132,7 @@ angular.module('ema.controllers')
                 marker: true
             },
           
-d
+
             markers : {
 
             },
@@ -161,26 +144,6 @@ d
             }
         };
 */
-
-//        $scope.map.center  = {
-//
-  //          lat : -34.789439,
-  //          lng : -58.523198,
-  //          zoom : 18
-  //      };
-//
- //       $scope.map.markers[0] = {
- //           lat : -34.789439,
- //           lng : -58.523198,
- //           message: 'Universidad de Ezeiza',
- //           focus: true,
- //           draggable: true
- //       };
-
-   // });
-
-
-
     // SITUAR EN POSICION ACTUAL
     $scope.locate = function(){
 
@@ -203,7 +166,7 @@ d
           }, function(err) {
               // error
               $ionicPopup.alert({
-                  title: 'Prueba',
+                  title: 'Error',
                   template: err.message
               });
           });
