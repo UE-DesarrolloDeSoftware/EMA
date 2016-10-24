@@ -132,7 +132,40 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
                 }
             }
         })
+        .state('eventmenu.menuVendedor.condicionesUso', {
+            url: "/condicionesUso",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/condicionesUso.html"
+                }
+            }
+        })
 
+        .state('eventmenu.menuVendedor.preguntasFrecuentes', {
+            url: "/preguntasFrecuentes",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/preguntasFrecuentes.html"
+                }
+            }
+        })
+        .state('eventmenu.menuVendedor.estadoAplicacion', {
+            url: "/estadoAplicacion",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/estadoAplicacion.html"
+                }
+            }
+        })
+        .state('eventmenu.menuVendedor.contactoSoporte', {
+            url: "/contactoSoporte",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/contactoSoporte.html"
+                }
+            }
+        })
+        
 
     // MENU ADMINISTRADOR
 
