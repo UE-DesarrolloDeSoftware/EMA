@@ -1,0 +1,28 @@
+<ion-view title="Cierre diario" style="background-color:#FFFFFF;">
+
+    <ion-content padding="true" class="has-header">
+
+        <div class="row header">
+          <div class="col">Estacionamiento</div>
+          <div class="col">Fecha</div>
+          <div class="col">Hora</div>
+          <div class="col">Cantidad</div>
+          <div class="col">Importe</div>
+        </div>
+
+        <div class="row" ng-repeat="sale in sales">
+          <div class="col">{{sale.parking}}</div>
+          <div class="col">{{sale.paid_date}}</div>
+          <div class="col">{{sale.hours}}</div>
+          <div class="col">{{sale.vendor}}</div>
+          <div class="col"> $ {{sale.amount}}</div>
+        </div>
+
+
+       <button id="cierreDiariot-button4" style="border-radius:14px 14px 14px 14px;" class="button button-dark  button-block">   
+
+       Cerrar Ventas</button>
+
+    </ion-content>
+
+</ion-view>

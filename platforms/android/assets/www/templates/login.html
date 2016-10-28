@@ -3,10 +3,10 @@
       <!--<h1 class="title">EMA</h1>-->
     <!--</div>-->
 
-    <img src="img/logo.jpg" class="center" style="padding: 20px;" alt="Estacionamiento Medido Automatizado" height="200">
+    <img src="img/logo.png" class="center" style="padding: 20px;" alt="Estacionamiento Medido Automatizado" height="200">
 
     <ion-content style="padding-top: 200px;">
-      <form ng-submit="doLogin()" class="padding">
+      <form ng-submit="doLogin()" name="loginForm" class="padding">
         <div class="list">
           <label class="item item-input">
             <input id="email" name="email" type="email"  placeholder="Your email" ng-model="login.email">
@@ -21,8 +21,8 @@
           </button>
         </div>
         <div class="padding">
-          <a ng-click="modal.show()">Registrarme!</a>
+          <button class= "button button-positive" ng-click="modal.show()">Registrarme!</a>
         </div>
       </form>
     </ion-content>
-  </ion-view>
+  </ion-view> 

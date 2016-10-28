@@ -1,0 +1,36 @@
+<ion-view>
+    <ion-header-bar class="bar-calm">
+
+        <h1 class="title"> Liquidar Ticket</h1>
+
+        <div class="buttons">
+            <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
+        </div>
+
+    </ion-header-bar>
+
+    <ion-content class="padding">
+
+        <form name="ventaForm" ng-submit="addVenta()">
+            <div class="list">    
+                <label class="item item-input">
+                    <input type="text" placeholder="Patente" ng-model="input.patente" >
+                </label>
+                <label class="item item-input item-select">
+                    <input type="number" placeholder="Importe" ng-model="input.amount" >
+                </label>   
+                <label class="item item-input item-select">
+                    <input type="number" placeholder="Hora" ng-model="input.hours" >
+                    <select>
+                          <option>1</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="padding">
+                <button class="button button-block button-balanced" ng-disabled="ventaForm.$invalid">Save Venta</button>
+            </div>
+        </form>
+
+    </ion-content>
+</ion-view>

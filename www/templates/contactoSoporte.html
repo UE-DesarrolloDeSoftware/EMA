@@ -1,0 +1,29 @@
+<ion-view title="Contacto con soporte tecnico" style="background-color:#6C9FEE;">
+    
+     <ion-content padding="true" class="has-header">
+
+        <form name="contactoForm" ng-submit="enviarComentarios()" class="list">
+
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Motivo
+                </div>
+
+                <select ng-model="inputForm.motivo">
+                    <option>Consulta</option>
+                    <option>Error</option>
+                    <option>Felicitaciones</option>
+                </select>
+            </label>
+
+
+            <label class="item item-input">           
+                <textarea ng-model="inputForm.comentarios" placeholder="Comentarios" rows="10"></textarea>
+            </label>
+
+            <button class="button button-dark  button-block">Enviar</button>
+
+        </form>
+
+    </ion-content>
+</ion-view>

@@ -1,7 +1,21 @@
+@font-face {
+  font-family: 'EMAfont';
+
+  src: url('webfont.eot'); /* IE9 Compat Modes */
+  /*src: url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('webfont.woff2') format('woff2'), /* Super Modern Browsers */
+       url('webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('webfont.svg#svgFontName') format('svg'); /* Legacy iOS */*/
+
+
+}
 body {
+  text-align: center;
   height: auto;
   min-height: 100%;
-}
+  font-family: 'EMAfont', Fallback, AR BONNIE;
+ }
 
 .scroll, .angular-leaflet-map {
   height: 100%;
@@ -17,4 +31,62 @@ body {
 
 .tabs.border-top {
   border-top: 1px solid #ddd !important;
+}
+
+img.center {
+    display: block;
+    margin: 0 auto;
+}
+
+div.header .col {
+	text-align: center;
+    background-color:lightsteelblue;
+    border-color: grey;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.col {
+
+    border: solid 1px grey;
+    border-bottom-style: solid;
+    border-right-style: solid;
+ 
+    
+
+}
+
+.col:last-child {
+    border-right: solid 1px grey;
+}
+
+.row:last-child .col {
+    border-bottom: solid 1px grey;
+}
+
+div.circle {
+    border-radius:50%;
+    height:5rem;
+    width:5rem;
+}
+
+.circle.red{
+    background-color:red;
+}
+
+.circle.orange{
+    background-color:orangered;
+}
+
+.circle.green{
+    background-color:green;
+}
+
+div.circleLabel {
+    float:left;
+    text-align:center;
+    vertical-align:middle;
+    height:5rem;
+    line-height:5rem;
+    padding-left:20px;
 }

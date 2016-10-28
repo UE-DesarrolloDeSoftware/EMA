@@ -1,36 +1,42 @@
-
-
-
 <ion-view view-title="Usuarios">
-  <ion-content class="has-header">
+    <ion-content padding="true" class="has-header">
 
-    <div class="padding">
-      <button class="button button-block button-balanced" ng-click="modal.show();">
-        Nuevo Usuario
-      </button>
-    </div>
+        <div class="row header">
+            <div class="col">Email</div>
+            <div class="col">Password</div>
+            <div class="col">Nombre</div>
+            <div class="col">Apellido</div>
+            <div class="col">DNI</div>
+            <div class="col">Telefono</div>
+            <div class="col">Telefono Movil</div>
+            <div class="col">Rol</div>
+            <div class="col" style="border: none; background-color:#FFFFFF;"></div>
+        </div>
 
-    <ion-list can-swipe="true">
+        <div class="row" ng-repeat="usuario in usuarios">
+            <div class="col">{{usuario.email}}</div>
+            <div class="col">{{usuario.password}}</div>
+            <div class="col">{{usuario.name}}</div>
+            <div class="col">{{usuario.lastname}}</div>
+            <div class="col">{{usuario.dni}}</div>
+            <div class="col">{{usuario.phone}}</div>
+            <div class="col">{{usuario.mobilephone}}</div>
+            <div class="col">{{usuario.role_id == 1 ? "Administrador" : 
+                                                      usuario.role_id == 2 ? "Vendedor" : 
+                                                      usuario.role_id == 3 ? "Agente transito" : "Conductor"
+                            }}
+            </div>
 
-      <ion-item ng-repeat="usuario in usuarios">
+            <div class="col" style="border: none;">
+                <button class="button button-assertive" ng-click="deleteUsuario(usuario.id)"> Eliminar </button>
+            </div>
+        </div>
 
-        Email: {{usuario.email}}  |
-        Password: {{usuario.password}}  |
-        DNI: {{usuario.dni}} |
-        Fecha Nacimiento: {{usuario.birthday}} |
-        Nombre: {{usuario.name}} |
-        Apellido: {{usuario.lastname}} |
-        Telefono: {{usuario.phone}} |
-        Telefono Celular: {{usuario.mobilephone}} |
+        <div class="padding">
+            <button class="button button-balanced" ng-click="modal.show();">
+                Nuevo Usuario
+            </button>
+        </div>
 
-
-        <ion-option-button class="button-assertive" ng-click="deleteUsuario(usuario.id)">
-          Elminar
-        </ion-option-button>
-
-      </ion-item>
-
-    </ion-list>
-
-  </ion-content>
+    </ion-content>
 </ion-view>

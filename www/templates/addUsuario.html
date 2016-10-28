@@ -12,48 +12,33 @@
     <ion-content class="padding">
 
         <form name="usuarioForm" ng-submit="addUsuario()">
-
-            <div class="list">
-                
+            <div class="list">    
                 <label class="item item-input">
                     <input type="text" placeholder="Nombre" ng-model="input.name" required>
                 </label>
                 <label class="item item-input">
-                    <input type="text" type="email" placeholder="Email" ng-model="input.email" required>
-                </label>
-
-                <label class="item item-input">
-                    <input type="text" type="password" placeholder="Password" ng-model="input.password" required>
+                    <input type="text" placeholder="Apellido" ng-model="input.lastname" required>
                 </label>
                 <label class="item item-input">
-                    <input type="date" type="birthday" placeholder="Formato AAAA-MM-DD" ng-model="input.birthday" required>
+                    <input type="text" placeholder="Email" ng-model="input.email" required>
                 </label>
                 <label class="item item-input">
-                    <input type="text" type="lastname" placeholder="Apellido" ng-model="input.lastname" required>
+                    <input type="password" placeholder="Password" ng-model="input.password" required>
                 </label>
-
                 <label class="item item-input">
-                    <input type="text" type="dni" placeholder="DNI" ng-model="input.dni" required>
+                    <input type="text" placeholder="DNI" ng-model="input.dni" >
                 </label>
-                
-                
                 <label class="item item-input">
-                    <input type="text" type="phone" placeholder="Telefono Fijo" ng-model="input.phone" required>
+                    <input type="text" placeholder="Telefono Fijo" ng-model="input.phone">
                 </label>
-                
                 <label class="item item-input">
-                    <input type="text" type="mobilephone" placeholder="Telefono Celular" ng-model="input.mobilephone" required>
-                </label>
-            
-
+                    <input type="text" placeholder="Telefono Celular" ng-model="input.mobilephone" >
+                </label>    
             </div>
 
             <div class="padding">
-
                 <button class="button button-block button-balanced" ng-disabled="usuarioForm.$invalid">Save Usuario</button>
-
             </div>
-
         </form>
 
     </ion-content>

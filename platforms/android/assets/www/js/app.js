@@ -1,4 +1,4 @@
-angular.module('ema', ['ionic', 'ema.Controllers.controllers','ema.Services.services', 'backand'])
+angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
 
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -26,48 +26,219 @@ angular.module('ema', ['ionic', 'ema.Controllers.controllers','ema.Services.serv
         templateUrl: "templates/login.html",
         controller: 'LoginCtrl'
       })
+      .state('verificacionEmail', {
+        url: "/verificacion-email",
+        templateUrl: "templates/verificacionEmail.html",
+        controller: 'LoginCtrl'
+      })
 
-        .state('usuarios', {
-            url: '/usuarios',
-            templateUrl: 'templates/usuarios.html',
-            controller: 'UsuariosCtrl'
+    //.state('app', {
+    //  url: "/app",
+    //  abstract: true,
+    //  controller: 'AppController',
+    //  template: '<ui-view/>'
+    //})
+
+    //.state('app.menuVendedor', {
+    //    url: "/menuVendedor",
+    //    templateUrl: "templates/menuVendedor.html",
+    //    controller: 'MenuVendedorController'
+    //})
+
+    //.state('app.usuarios', {
+    //    url: '/usuarios',
+    //    templateUrl: 'templates/usuarios.html',
+    //    controller: 'UsuariosCtrl'
+    //})
+
+    //.state('menu', {
+    //    url: "/menu",
+    //    abstract: true,
+    //    templateUrl: "templates/menu.html",
+    //    controller: 'MenuConductorController'
+    //})
+
+    //.state('menu.map', {
+    //  url: "/map",
+    //  views: {
+    //    'menuContent' :{
+    //      templateUrl: "templates/map.html",
+    //      controller: 'MapController'
+    //    }
+    //  }
+    //})
+
+    //.state('eventmenu', {
+    //        url: "/event",
+    //        abstract: true,
+    //        templateUrl: "eventMenu.html"
+    //})
+    //.state('eventmenu.home', {
+    //    url: "/home",
+    //    views: {
+    //        'menuContent': {
+    //            templateUrl: "menuVendedor.html"
+    //        }
+    //    }
+    //})
+
+    //.state('menuVendedor', {
+    //    url: "/menuVendedor",
+    //    controller: 'MenuVendedorController',
+    //    templateUrl: "templates/menuVendedor.html"
+    //})
+
+    //.state('liquidarTicket', {
+    //    url: '/liquidarTicket',
+    //    controller: 'LiquidarTicketController',
+    //    templateUrl: "templates/liquidarTicket.html"
+    //})
+
+    //.state('cancelarTicket', {
+    //    url: '/cancelarTicket',
+    //    controller: 'CancelarTicketController',
+    //    templateUrl: "templates/cancelarTicket.html"
+    //})
+
+        .state('eventmenu', {
+            url: "/event",
+            abstract: true,
+            templateUrl: "templates/eventMenu.html"
         })
 
-    //   setup an abstract state for the tabs directive
-//      .state('tab', {
-//          url: '/tabs',
-//          abstract: true,
-//          templateUrl: 'templates/tabs.html'
-//      })
+        // MENU VENDEDOR
 
-//      .state('tab.usuarios', {
-//          url: '/usuarios',
-//          views: {
-//              'tab-usuarios': {
-//                  templateUrl: 'templates/usuarios.html',
-//                  controller: 'UsuariosCtrl'
-//              }
-//          }
-//      })
-
-    .state('app', {
-      url: "/app",
-      abstract: true,
-      templateUrl: "templates/menu.html",
-      controller: 'MenuCtrl'
-    })
-
-    .state('app.map', {
-      url: "/map",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/map.html",
-          controller: 'MapController'
+        .state('eventmenu.menuVendedor', {
+            url: "/menuVendedor",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/menuVendedor.html"
+            }
         }
-      }
-    })
-  ;
+        })
+        .state('eventmenu.menuVendedor.liquidarTicket', {
+            url: "/liquidarTicket",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/liquidarTicket.html"
+                }
+            }
+        })
+        .state('eventmenu.menuVendedor.cancelarTicket', {
+            url: "/cancelarTicket",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/cancelarTicket.html"
+                }
+            }
+        })
+        .state('eventmenu.menuVendedor.revisionVentas', {
+            url: "/revisionVentas",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/ventas.html"
+                }
+            }
+        })
 
-   $urlRouterProvider.otherwise('/login');
+        .state('eventmenu.menuVendedor.revisionVentas.buscarTicket', {
+            url: "/buscarTicket",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/buscarTicket.html"
+                }
+            }
+        })
+
+        .state('eventmenu.menuVendedor.revisionVentas.cierreVentas', {
+            url: "/cierreVentas",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/cierreDiario.html"
+                }
+            }
+        })
+
+        .state('eventmenu.menuVendedor.revisionVentas.resumenDiario', {
+            url: "/resumenDiario",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/vistaDiaria.html"
+                }
+            }
+        })
+
+        .state('eventmenu.menuVendedor.revisionVentas.totalesDiarios', {
+            url: "/totalesDiarios",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/totalesDiarios.html"
+                }
+            }
+        })
+
+        .state('eventmenu.menuVendedor.listaPrecios', {
+            url: "/listaPrecios",
+            views: {
+                'menuContent@eventmenu': {
+                    templateUrl: "templates/listaDePrecios.html"
+                }
+            }
+        })
+
+
+        // MENU ADMINISTRADOR
+
+        .state('eventmenu.menuAdmin', {
+            url: "/menuAdmin",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/menuAdministrador.html"
+                }
+            }
+        })
+
+      .state('eventmenu.menuAdmin.usuarios', {
+          url: "/liquidarTicket",
+          views: {
+              'menuContent@eventmenu': {
+                  templateUrl: "templates/usuarios.html",
+                  controller: 'UsuariosCtrl'
+              }
+          }
+      })
+
+    // MENU CONDUCTOR
+
+        //.state('eventmenu.menuConductor', {
+        //    url: "/menuConductor",
+        //    views: {
+        //    'menuContent' :{
+        //        templateUrl: "templates/menu.html",
+        //        controller: 'MenuConductorController'
+        //    }
+        //    }
+        //})
+
+        .state('menu', {
+            url: "/menu",
+            abstract: true,
+            templateUrl: "templates/menu.html",
+            controller: 'MenuConductorController'
+        })
+
+        .state('menu.map', {
+          url: "/map",
+          views: {
+            'menuContent' :{
+              templateUrl: "templates/map.html",
+              controller: 'MapController'
+            }
+          }
+        })
+
+    ;
+
+      $urlRouterProvider.otherwise("/login");
 })
 

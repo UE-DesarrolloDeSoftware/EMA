@@ -4,8 +4,36 @@
         "uninstalled": []
     },
     "config_munge": {
-        "files": {}
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"EmailComposer\"><param name=\"ios-package\" value=\"EmailComposer\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
     },
-    "installed_plugins": {},
-    "dependent_plugins": {}
+    "installed_plugins": {
+        "com.jcjee.plugins.emailcomposer": {
+            "PACKAGE_NAME": "com.ionicframework.ema666101"
+        }
+    },
+    "dependent_plugins": {},
+    "modules": [
+        {
+            "id": "com.jcjee.plugins.emailcomposer.EmailComposer",
+            "file": "plugins/com.jcjee.plugins.emailcomposer/www/EmailComposer.js",
+            "pluginId": "com.jcjee.plugins.emailcomposer",
+            "clobbers": [
+                "EmailComposer"
+            ]
+        }
+    ],
+    "plugin_metadata": {
+        "com.jcjee.plugins.emailcomposer": "1.4.6"
+    }
 }

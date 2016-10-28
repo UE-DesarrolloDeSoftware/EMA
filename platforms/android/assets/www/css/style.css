@@ -18,3 +18,8 @@ body {
 .tabs.border-top {
   border-top: 1px solid #ddd !important;
 }
+
+img.center {
+    display: block;
+    margin: 0 auto;
+}

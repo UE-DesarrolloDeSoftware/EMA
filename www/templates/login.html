@@ -1,28 +1,28 @@
   <ion-view view-title="Login">
-    <!--<div class="bar bar-header bar-balanced">-->
-      <!--<h1 class="title">EMA</h1>-->
-    <!--</div>-->
 
-    <img src="img/logo.jpg" class="center" style="padding: 20px;" alt="Estacionamiento Medido Automatizado" height="200">
+    <ion-content scroll="false">
+        <img src="img/logo.png" class="center" style="padding: 20px;" alt="Estacionamiento Medido Automatizado" height="200">
 
-    <ion-content style="padding-top: 200px;">
-      <form ng-submit="doLogin()" class="padding">
-        <div class="list">
-          <label class="item item-input">
-            <input id="email" name="email" type="email"  placeholder="Your email" ng-model="login.email">
-          </label>
-          <label class="item item-input">
-            <input id="password" name="password" type="password" placeholder="Your password" ng-model="login.password">
-          </label>
-        </div>
+        <form ng-submit="doLogin()" name="loginForm" class="padding">
+
+            <div class="list">
+                <label class="item item-input">
+                <input id="email" name="email" type="email"  placeholder="Your email" ng-model="login.email">
+                </label>
+                <label class="item item-input">
+                <input id="password" name="password" type="password" placeholder="Your password" ng-model="login.password">
+                </label>
+            </div>
+
+            <div class="padding">
+                <button class="button button-block button-positive" type="submit"> Login </button>
+            </div>
+
+        </form>
+
         <div class="padding">
-          <button class="button button-block button-positive" type="submit">
-            Login
-          </button>
+            <a style="cursor:pointer;" ng-click="modal.show()">Registrarme!</a>
         </div>
-        <div class="padding">
-          <a ng-click="modal.show()">Registrarme!</a>
-        </div>
-      </form>
+
     </ion-content>
-  </ion-view>
+  </ion-view> 
