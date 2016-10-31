@@ -1,4 +1,4 @@
-angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
+angular.module('ema', ['ionic', 'ema.controllers', 'ema.services', 'backand', 'angularjs-dropdown-multiselect'])
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -180,7 +180,8 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         url: "/menuAdmin",
         views: {
             'menuContent': {
-                templateUrl: "templates/menuAdministrador.html"
+                templateUrl: "templates/menuAdministrador.html",
+                controller: 'MenuAdminController'
             }
         }
     })
@@ -190,7 +191,47 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         views: {
             'menuContent@eventmenu': {
                 templateUrl: "templates/usuarios.html",
-                controller: 'UsuariosCtrl'
+                controller: 'UsuariosController'
+            }
+        }
+    })
+
+    .state('eventmenu.menuAdmin.configuracion', {
+        url: "/configuracion",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/configuracionAdmin.html",
+                controller: 'ConfiguracionAdminController'
+            }
+        }
+    })
+
+    .state('eventmenu.menuAdmin.preguntasFrecuentes', {
+        url: "/preguntasFrecuentes",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/preguntasFrecuentes.html",
+                controller: 'PreguntasFrecuentesController'
+            }
+        }
+    })
+
+    .state('eventmenu.menuAdmin.condicionesUso', {
+        url: "/condicionesUso",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/condicionesUso.html",
+                controller: 'CondicionesUsoController'
+            }
+        }
+    })
+
+    .state('eventmenu.menuAdmin.estadoServicio', {
+        url: "/estadoServicio",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/estadoServicio.html",
+                controller: 'EstadoServicioController'
             }
         }
     })
@@ -283,6 +324,16 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
             templateUrl: "templates/map.html",
             controller: 'MapController'
         }
+        }
+    })
+
+    .state('menu.map.configuracionUsuario', {
+        url: "/configuracionUsuario",
+        views: {
+            'menuContent@menu': {
+                templateUrl: "templates/configuracionUsuario.html",
+                controller: 'ConfiguracionUsuarioController'
+            }
         }
     })
 

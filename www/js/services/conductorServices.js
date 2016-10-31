@@ -1,8 +1,8 @@
 angular.module('ema.services')
 
-.service('VendedorService', function ($http, Backand){
+.service('ConductorService', function ($http, Backand){
       var baseUrl = '/1/objects/';
-      var objectName = 'vendors/';
+      var objectName = 'drivers/';
 
 
       function getUrl() {
@@ -13,15 +13,15 @@ angular.module('ema.services')
           return getUrl() + id;
       }
 
-      getVendedores = function () {
+      getConductores = function () {
           return $http.get(getUrl());
       };
 
-      getVendedor = function (id) {
+      getConductor = function (id) {
           return $http.get(getUrlForId(id));
       };
 
-      getVendedoresFilter = function (filter) {
+      getConductoresFilter = function (filter) {
           return $http({
               method: "GET",
               url: getUrl(),
@@ -32,16 +32,20 @@ angular.module('ema.services')
           });
       };
 
-      addVendedor = function (object) {
+      addConductor = function (object) {
           
           return $http.post(getUrl(), object);
       };
 
-      getVendedorByIdUsuario = function (idUsuario) {
+      updateConductor = function (id, object) {
+          return $http.put(getUrlForId(id), object);
+      };
+
+      getConductorByIdUsuario = function (idUsuario) {
 
         return $http({
               method:"GET",
-              url:Backand.getApiUrl() + '/1/query/data/getVendedorByIdUsuario',
+              url: Backand.getApiUrl() + '/1/query/data/getConductorByIdUsuario',
               params:{
                 parameters: {
                   idUsuario: idUsuario
@@ -51,10 +55,11 @@ angular.module('ema.services')
     };
 
     return {
-        getVendedores: getVendedores,
-        getVendedor: getVendedor,
-        getVendedoresFilter: getVendedoresFilter,
-        addVendedor: addVendedor,
-        getVendedorByIdUsuario: getVendedorByIdUsuario
+        getConductores: getConductores,
+        getConductor: getConductor,
+        getConductoresFilter: getConductoresFilter,
+        addConductor: addConductor,
+        updateConductor: updateConductor,
+        getConductorByIdUsuario: getConductorByIdUsuario
     }
 })

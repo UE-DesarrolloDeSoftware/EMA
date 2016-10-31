@@ -1,23 +1,34 @@
 ﻿<ion-view title="Menu" class="has-header">
+
+    <ion-nav-buttons side="left">
+        <label class="">
+            Bienvenido, {{usuarioLogueado.name}}
+        </label>
+    </ion-nav-buttons>
+
     <ion-list>
         <ion-item class="item-thumbnail-left calm" ui-sref="eventmenu.menuAdmin.usuarios">
             <img src="img/menuAdmin/usuarios.ico">
             <h2calm>Usuarios</h2calm>
         </ion-item>
-        <ion-item class="item-thumbnail-left calm" id="menu-list-item4" >
+        <ion-item class="item-thumbnail-left calm" ui-sref="eventmenu.menuAdmin.configuracion">
             <img src="img/menuAdmin/configuracion.ico">
             <h2calm>Configuracion</h2calm>
         </ion-item>
-         <ion-item class="item-thumbnail-left calm" id="menu-list-item5" >
+        <ion-item class="item-thumbnail-left calm" ui-sref="eventmenu.menuAdmin.preguntasFrecuentes">
             <img src="img/preguntas_frecuentes.ico">
             <h2calm>Ayuda y Preguntas Frecuentes</h2calm>
         </ion-item>
-         <ion-item class="item-thumbnail-left calm" id="menu-list-item6" >
+        <ion-item class="item-thumbnail-left calm" ui-sref="eventmenu.menuAdmin.condicionesUso">
             <img src="img/terminos_y_condiciones.ico">
             <h2calm>Terminos y Condiciones</h2calm>
         </ion-item>
-         <ion-item class="item-thumbnail-left calm" id="menu-list-item7" >
+        <ion-item class="item-thumbnail-left calm" ui-sref="eventmenu.menuAdmin.estadoServicio">
             <img src="img/estado_aplicacion.ico">
             <h2calm>Estado</h2calm>
+        </ion-item>
+        <ion-item class="item-thumbnail-left calm" ui-sref="eventmenu.menuAdmin.contactoSoporte">
+            <img src="img/contacto.ico">
+            <h2calm>Contacto</h2calm>
         </ion-item>
 </ion-view>

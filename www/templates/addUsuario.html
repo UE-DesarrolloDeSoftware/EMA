@@ -1,4 +1,4 @@
-<ion-modal-view>
+<ion-modal-view style="width: 50%; height: 80%;top: 5%;">
     <ion-header-bar class="bar-calm">
 
         <h1 class="title">Nuevo Usuario</h1>
@@ -34,6 +34,45 @@
                 <label class="item item-input">
                     <input type="text" placeholder="Telefono Celular" ng-model="input.mobilephone" >
                 </label>    
+                <label class="item item-input item-select" ng-show="isAdmin" >
+                    <div class="input-label">
+                        Rol
+                    </div>
+                    <select ng-model="input.role_id" ng-required="isAdmin">
+                        <option value="1">Administrador</option>
+                        <option value="2">Vendedor</option>
+                        <option value="3">Agente de transito</option>
+                        <option value="4">Conductor</option>
+                    </select>
+                </label>
+                
+                <div ng-show="!isAdmin||input.role_id==4">
+                    <label class="item item-input">
+                        <input type="text" placeholder="Patente" ng-model="input.patente" ng-required="!isAdmin||input.role_id==4">
+                    </label>
+                </div>
+ 
+                <div ng-show="input.role_id==2">
+                    <label class="item item-input">
+                        <input type="text" placeholder="Cuit" ng-model="input.cuit">
+                    </label> 
+                    <label class="item item-input">
+                        <input type="text" placeholder="Ubicacion" ng-model="input.location">
+                    </label> 
+                </div>
+
+                <div ng-show="input.role_id==3">
+                    <label class="item item-input">
+                        <input type="text" placeholder="Horario desde" ng-model="input.schedule_from">
+                    </label>
+                    <label class="item item-input">
+                        <input type="text" placeholder="Horario Hasta" ng-model="input.schedule_to">
+                    </label>
+
+                    <div ng-dropdown-multiselect="" options="example1data" selected-model="example1model" translation-texts="example5customTexts" extra-settings="example13settings"></div>
+
+                </div>
+      
             </div>
 
             <div class="padding">

@@ -1,18 +1,38 @@
-<ion-view  id="map" title="map" >
+<ion-view title="Mapa" >
 
         <!--ion-nav-bar class="bar-positive nav-title-slide-ios7"-->
-            <ion-nav-buttons side="left">
-                <button menu-toggle="leftbottom" class="button button-icon icon ion-navicon"></button>
-                </ion-nav-buttons>
-            <ion-nav-buttons side="right">
-                <button ng-click="locate();" class="button button-icon icon ion-pinpoint"></button>
-            </ion-nav-buttons>
+
+        <ion-nav-buttons side="left">
+            <button menu-toggle="leftbottom" class="button button-icon icon ion-navicon"></button>
+        </ion-nav-buttons>
+
+        <ion-nav-buttons side="right">
+            <button ng-click="clearMap();" class="button">Limpiar Mapa</button>
+            <button ng-click="locate();" class="button button-icon icon ion-pinpoint"></button>
+        </ion-nav-buttons>
 
         <!--</ion-nav-bar>-->
 
         <ion-content data-tap-disabled="true">
 
-            <leaflet id="map"  markers="markers" ></leaflet>
+            <!--<leaflet id="map">
+                
+
+            </leaflet>-->
+            
+            <!--<div id="map">
+                <button type="button"> estacionar</button>
+
+            </div>-->
+
+            <div style="height:100%">
+                <div id="map-wrapper">
+                    <div id="map"></div>
+                    <div id="button-wrapper">
+                        <button type="button" class="button button-assertive" ng-click="estacionar();"> Estacionar</button>
+                    </div>
+                </div>
+            </div>
 
         </ion-content>
 

@@ -14,8 +14,8 @@
         </div>
 
         <div class="row" ng-repeat="usuario in usuarios">
-            <div class="col">{{usuario.email}}</div>
-            <div class="col">{{usuario.password}}</div>
+            <div class="col" style="width:6em;word-wrap: break-word;">{{usuario.email}}</div>
+            <div class="col" style="width:6em;word-wrap: break-word;">{{usuario.password}}</div>
             <div class="col">{{usuario.name}}</div>
             <div class="col">{{usuario.lastname}}</div>
             <div class="col">{{usuario.dni}}</div>
@@ -31,6 +31,12 @@
                 <button class="button button-assertive" ng-click="deleteUsuario(usuario.id)"> Eliminar </button>
             </div>
         </div>
+        <button ng-click="loadPreviousPage()" ng-show="currentPage > 1">
+            Pag.Anterior
+        </button>
+        <button ng-click="loadNextPage()" ng-show="usuarios.length == pageSize">
+            Pag.Siguiente
+        </button>
 
         <div class="padding">
             <button class="button button-balanced" ng-click="modal.show();">

@@ -17,6 +17,17 @@ angular.module('ema.services', [])
           return $http.get(getUrl());
       };
 
+      getUsuariosPage = function (pageSize, pageNumber) {
+          return $http({
+              method: 'GET',
+              url: getUrl(),
+              params: {
+                  pageSize: pageSize,
+                  pageNumber: pageNumber
+              }
+          });
+      };
+
       getUsuario = function (id) {
           return $http.get(getUrlForId(id));
       };
@@ -84,6 +95,7 @@ angular.module('ema.services', [])
 
       return {
         getUsuarios: getUsuarios,
+        getUsuariosPage: getUsuariosPage,
         getUsuario: getUsuario,
         addUsuario: addUsuario,
         updateUsuario: updateUsuario,

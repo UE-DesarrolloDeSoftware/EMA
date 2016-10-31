@@ -1,0 +1,25 @@
+<ion-view title="Configuracion de Usuario" style="background-color:#6C9FEE;">
+    
+     <ion-content padding="true" class="has-header">
+
+         <div class="row" ng-repeat="config in configuraciones">
+             <div class="col">{{config.key}}</div>
+             <div class="col" style="width:12em;height:4em;overflow:hidden;text-overflow:ellipsis;">{{config.value}}</div>
+
+             <div class="col" style="border: none;">
+                 <button class="button button-assertive" ng-click="editarConfig(config.id)"> Editar </button>
+             </div>
+         </div>
+
+        <form name="usuarioForm" ng-submit="updateConductor()">
+            <div class="list">
+                <label class="item item-input">
+                    <textarea ng-model="input.edit"></textarea>
+                </label>
+
+                <button class="button button-dark  button-block">Guardar</button>
+            </div>
+        </form>
+
+    </ion-content>
+</ion-view>

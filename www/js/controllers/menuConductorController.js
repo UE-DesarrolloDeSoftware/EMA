@@ -72,3 +72,26 @@ angular.module('ema.controllers')
 
 
 })
+
+.controller('ConfiguracionUsuarioController', function ($scope, $state, ConductorService) {
+    $scope.input = {};
+    var conductor = {};
+    var usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
+
+    ConductorService.getConductorByIdUsuario(usuarioLogueado.id).then(function (result) {
+
+        conductor = result.data.data[0];
+        $scope.input.patente = conductor.patente;
+    });
+
+    $scope.updateConductor = function () {
+
+        conductor.patente = $scope.input.patente;
+
+        ConductorService.updateConductor(conductor.id, conductor).then(function (result) {
+
+            //POPUP ACTUALIZADO
+        });
+    }
+
+})

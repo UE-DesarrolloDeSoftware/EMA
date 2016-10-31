@@ -1,6 +1,6 @@
 ﻿angular.module('ema.controllers')
 
-.controller('LoginCtrl', function ($scope, $ionicPopup, $ionicModal, $state, UsuarioService, ConfigurationsService, $ionicHistory, Backand) {
+.controller('LoginCtrl', function ($scope, $ionicPopup, $ionicModal, $state, UsuarioService, ConductorService, ConfigurationsService, $ionicHistory, Backand) {
     $scope.input = {};
     $scope.login = {};
 
@@ -59,17 +59,26 @@
                 // Genera codigo de verificacion por email
                 $scope.input.verification_hash = randomString();
 
-                UsuarioService.addUsuario($scope.input).then(function () {
+                // ALTA DE USUARIO
+                UsuarioService.addUsuario($scope.input).then(function (usuario) {
 
-                    ConfigurationsService.getConfigurationByKey("verification_email").then(function (result) {
+                    var conductor = {};
+                    conductor.usuario_id = usuario.data.__metadata.id;
+                    conductor.patente = $scope.input.patente;
 
-                    var email = String.format(result.data.data[0].value, $scope.input.email, $scope.input.verification_hash);
+                    // ALTA DE ROL CONDUCTOR
+                    ConductorService.addConductor(conductor).then(function () {
 
-                    $scope.send($scope.input.email, "Email de Verificacion", encodeURIComponent(email));
+                        // ENVIO MAIL DE VALIDACION AL NUEVO USUARIO
+                        ConfigurationsService.getConfigurationByKey("verification_email").then(function (result) {
 
-                    $scope.input = {};
-                    $scope.modal.hide();
+                            var email = String.format(result.data.data[0].value, $scope.input.email, $scope.input.verification_hash);
+                            $scope.send($scope.input.email, "Email de Verificacion", encodeURIComponent(email));
 
+                            // Blanqueo y cierro PopUp de registracion
+                            $scope.input = {};
+                            $scope.modal.hide();
+                        });
                     });
                 });
             }
