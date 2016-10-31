@@ -167,11 +167,13 @@ angular.module('ema', ['ionic', 'ema.controllers', 'ema.services', 'backand', 'a
             url: "/contactoSoporte",
             views: {
                 'menuContent@eventmenu': {
+
                     templateUrl: "templates/contactoSoporte.html",
                     controller: 'ContactoSoporteController'
                 }
             }
         })
+
 
 
     // MENU ADMINISTRADOR
@@ -235,6 +237,27 @@ angular.module('ema', ['ionic', 'ema.controllers', 'ema.services', 'backand', 'a
             }
         }
     })
+
+    .state('eventmenu.menuAdmin.mapAdminZonas', {
+        url: "/mapadminZonas",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/mapAdminZonas.html",
+                controller: 'MapAdminController'
+            }
+        }
+    })
+
+    .state('eventmenu.menuAdmin.mapAdminPuntosVenta', {
+        url: "/mapAdminPuntosVenta",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/mapAdminPuntosVenta.html",
+                controller: 'MapAdminPuntosVentaController'
+            }
+        }
+    })
+
 
     .state('eventmenu.menuAdmin.contactoSoporte', {
         url: "/contactoSoporte",

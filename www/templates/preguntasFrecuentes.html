@@ -1,9 +1,80 @@
 <ion-view title="Preguntas Frecuentes" style="background-color:#6C9FEE;">
 
     <ion-content padding="true" class="has-header">
-        <div>
-            Listado de preguntas frecuentes
-
+        <div id="Conductor" ng-show="input.role_id==1">
+			<h1>Preguntas Frecuentes</h1>
+			<ion-list>
+			
+				<ion-item><a href="#">¿C&oacute;mo me registro en EMA?</a></ion-item>
+				<ion-item><a href="#">¿Debo SI o SI estar registrado para usar EMA?</a></ion-item>
+				<ion-item><a href="#">Olvid&eacute; mi contrase&nacute;a. ¿Qu&eacute; hago? </a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo puedo ver las Zonas de Estacionamiento Medido? </a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo veo los puntos de venta? </a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo selecciono un punto de venta? </a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo cambio de punto de venta?</a></ion-item>
+				<ion-item><a href="#">Ya seleccion&eacute; un punto de venta. ¿Y ahora qu&eacute;? </a></ion-item>
+				<ion-item><a href="#">¿Qu&eacute; pasa si me excedo del tiempo de pr&oacute;rroga?</a></ion-item>
+				<ion-item><a href="#">Ya compr&eacute; un código de venta. ¿Y ahora qu&eacute;?</a></ion-item>
+				<ion-item><a href="#">¿Qu&eacute; pasa si me excedo del tiempo l&iacute;mite de tiempo para ingresar el c&oacute;digo? </a></ion-item>
+				<ion-item><a href="#">¿Puedo ingresar m&aacute;s de un c&oacute;digo a la vez? </a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo cancelo el tiempo de estacionamiento?</a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo veo el estado de mi vehículo? </a></ion-item>
+				<ion-item><a href="#">¿Cu&aacute;ntos veh&iacute;culos puedo tener registrados en mi cuenta? </a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo puedo cambiar de veh&iacute;culo para ver sus estados?</a></ion-item>				
+				<ion-item><a href="#">¿Puedo personalizar mi cuenta? </a></ion-item>
+				<ion-item><a href="#">¿Qu&eacute; puedo hacer en el men&uacute; "Opciones"?</a></ion-item>
+			
+			</ion-list>
+        </div>
+        <div id="Agente de Transito" ng-show="input.role_id==2">
+			
+			<h1>Preguntas Frecuentes</h1>
+			<ion-list>
+			
+				<ion-item><a href="#">Olvid&eacute; mi contrase&nacute;a. ¿Qu&eacute; hago?</a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo veo el estado de un veh&iacute;culo?</a></ion-item>
+				<ion-item><a href="#">¿Cu&aacute;les son los posibles estados que puedo visualizar?</a></ion-item>
+				<ion-item><a href="#">¿Qu&eacute; puedo hacer en el men&uacute; "Opciones"?</a></ion-item>
+			
+			</ion-list>
+			
+        </div>
+        <div id="Vendedor" ng-show="input.role_id==3">
+			
+			<h1>Preguntas Frecuentes</h1>
+			<ion-list>
+			
+				<ion-item><a href="#">Olvid&eacute; mi contrase&nacute;a. ¿Qu&eacute; hago? </a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo doy de alta un c&oacute;digo de pago?</a></ion-item>
+				<ion-item><a href="#">¿Puedo dar de baja un c&oacute;digo de pago?</a></ion-item>
+				<ion-item><a href="#">¿D&oacute;nde veo el registro de ventas del d&iacute;a?</a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo cierro las ventas del d&iacute;a?</a></ion-item>
+				<ion-item><a href="#">¿Puedo ver un promedio de ventas?</a></ion-item>
+				<ion-item><a href="#">¿Por cu&aacute;nto tiempo quedan guardados los registros de venta?</a></ion-item>
+				<ion-item><a href="#">¿Qu&eacute; puedo hacer en el men&uacute; "Opciones"?</a></ion-item>
+			
+			</ion-list>
+			
+        </div>
+        <div id="Administrador" ng-show="input.role_id==4">
+			
+			<h1>Preguntas Frecuentes</h1>
+			<ion-list>
+			
+				<ion-item><a href="#">Olvid&eacute; mi contrase&nacute;a. ¿Qu&eacute; hago? </a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo doy de alta un “Agente de Tr&aacute;nsito”?</a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo doy de alta un “Vendedor”?</a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo modifico uno o m&aacute;s de un campo de un Usuario?</a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo doy de baja un Usuario?</a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo doy de alta una “Zona de Estacionamiento Medido”?</a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo doy de baja una “Zona de Estacionamiento Medido”?</a></ion-item>
+				<ion-item><a href="#">¿Puedo modificar una “Zona de Estacionamiento Medido” existente?</a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo doy de alta un Punto de Venta?</a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo modifico un Punto de Venta?</a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo doy de baja un Punto de Venta?</a></ion-item>
+				<ion-item><a href="#">¿Qu&eacute; puedo hacer en el men&uacute; "Opciones"?</a></ion-item>
+			
+			</ion-list>
         </div>
     </ion-content>
 </ion-view>
