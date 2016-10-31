@@ -1,31 +1,18 @@
 <ion-view title="Preguntas Frecuentes" style="background-color:#6C9FEE;">
 
     <ion-content padding="true" class="has-header">
-        <div id="Conductor">
+        <div id="Conductor" ng-show="input.role_id==1">
 			<h1>Preguntas Frecuentes</h1>
 			<ion-list>
 			
-				<ion-item><a href="#"></a></ion-item>
+				<ion-item><a href="#">¿C&oacute;mo me registro en EMA?</a></ion-item>
 				<ion-item><a href="#"></a></ion-item>
 				<ion-item><a href="#"></a></ion-item>
 				<ion-item><a href="#"></a></ion-item>
 			
 			</ion-list>
         </div>
-        <div id="Agente de Transito">
-			
-			<h1>Preguntas Frecuentes</h1>
-			<ion-list>
-			
-				<ion-item><a href="#"></a></ion-item>
-				<ion-item><a href="#"></a></ion-item>
-				<ion-item><a href="#"></a></ion-item>
-				<ion-item><a href="#"></a></ion-item>
-			
-			</ion-list>
-			
-        </div>
-        <div id="Vendedor">
+        <div id="Agente de Transito" ng-show="input.role_id==2">
 			
 			<h1>Preguntas Frecuentes</h1>
 			<ion-list>
@@ -38,7 +25,20 @@
 			</ion-list>
 			
         </div>
-        <div id="Administrador">
+        <div id="Vendedor" ng-show="input.role_id==3">
+			
+			<h1>Preguntas Frecuentes</h1>
+			<ion-list>
+			
+				<ion-item><a href="#"></a></ion-item>
+				<ion-item><a href="#"></a></ion-item>
+				<ion-item><a href="#"></a></ion-item>
+				<ion-item><a href="#"></a></ion-item>
+			
+			</ion-list>
+			
+        </div>
+        <div id="Administrador" ng-show="input.role_id==4">
 			
 			<h1>Preguntas Frecuentes</h1>
 			<ion-list>
