@@ -197,6 +197,27 @@ angular.module('ema', ['ionic', 'ema.controllers','ema.services', 'backand'])
         }
     })
 
+    .state('eventmenu.menuAdmin.mapAdminZonas', {
+        url: "/mapadminZonas",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/mapAdminZonas.html",
+                controller: 'MapAdminController'
+            }
+        }
+    })
+
+    .state('eventmenu.menuAdmin.mapAdminPuntosVenta', {
+        url: "/mapAdminPuntosVenta",
+        views: {
+            'menuContent@eventmenu': {
+                templateUrl: "templates/mapAdminPuntosVenta.html",
+                controller: 'MapAdminPuntosVentaController'
+            }
+        }
+    })
+
+
     .state('eventmenu.menuAdmin.contactoSoporte', {
         url: "/contactoSoporte",
         views: {
