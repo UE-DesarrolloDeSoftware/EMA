@@ -7,7 +7,6 @@
         </ion-nav-buttons>
 
         <ion-nav-buttons side="right">
-            <button ng-click="clearMap();" class="button">Limpiar Mapa</button>
             <button ng-click="locate();" class="button button-icon icon ion-pinpoint"></button>
         </ion-nav-buttons>
 
@@ -24,7 +23,8 @@
                 <div id="map-wrapper">
                     <div id="map"></div>
                     <div id="button-wrapper">
-                        <button type="button" class="button button-assertive" ng-click="estacionar();"> Estacionar</button>
+                        <button type="button" class="button button-assertive" ng-click="estacionar();" ng-show="mostrarBtnEsctacionar">Estacionar</button>
+                        <button type="button" class="button button-assertive" ng-click="cancelarEstacionamiento(layerPtosVentaId);" ng-show="mostrarBtnCancelar">Cancelar</button>
                     </div>
                 </div>
             </div>

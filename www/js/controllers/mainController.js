@@ -1,6 +1,6 @@
 ﻿angular.module('ema.controllers', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncate', 'backand'])
 
-.controller('MainContoller', function ($scope, $state, $http, $ionicNavBarDelegate, Backand) {
+.controller('MainContoller', function ($scope, $state, $http, $ionicNavBarDelegate, $ionicLoading, Backand) {
 
         //$ionicNavBarDelegate.showBackButton(false);
 
@@ -30,6 +30,21 @@
             }, function(error) {
                 console.log("ERROR " + JSON.stringify(error));
             });
+        }
+
+        $scope.showLoading = function () {
+            // Setup the loader
+            $ionicLoading.show({
+                content: 'Loading',
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 200,
+                showDelay: 0
+            });
+        }
+
+        $scope.hideLoading = function () {
+            $ionicLoading.hide();
         }
 })
 
