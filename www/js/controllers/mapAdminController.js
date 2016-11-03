@@ -35,7 +35,7 @@ angular.module('ema.controllers')
                 shadowUrl: null,
                 iconAnchor: new L.Point(12, 12),
                 iconSize: new L.Point(18, 18),
-                iconUrl: 'img/menuAdmin/punto_de_venta.gif'
+                iconUrl: 'img/menuAdmin/punto_de_venta.png'
                 
 
             }
