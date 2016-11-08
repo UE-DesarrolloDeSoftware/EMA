@@ -11,8 +11,8 @@
 
 }
 body {
-  text-align: center;
-  height: auto;
+  /*text-align: center;*/
+  /*height: auto;*/
   min-height: 100%;
   font-family: 'EMAfont', Fallback, AR BONNIE;
  }
@@ -51,9 +51,7 @@ div.header .col {
     border: solid 1px grey;
     border-bottom-style: solid;
     border-right-style: solid;
- 
-    
-
+    background-color:#FFFFFF; 
 }
 
 .col:last-child {
@@ -108,4 +106,18 @@ div.circleLabel {
     bottom: 10px;
     width: 100%;
     text-align: center;
+}
+
+.list .item.item-accordion {
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
 }

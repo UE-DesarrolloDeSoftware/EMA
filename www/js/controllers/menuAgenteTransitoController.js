@@ -17,7 +17,7 @@ angular.module('ema.controllers')
 
      $scope.comprobarEstado = function () {
 
-         ParkingService.getParkingByPatente($scope.inputForm.patente.toLowerCase()).then(function (result) {
+         ParkingService.getParkingByPatente($scope.inputForm.patente.toUpperCase()).then(function (result) {
 
              if (result.data.length > 0) {
 
@@ -47,9 +47,4 @@ angular.module('ema.controllers')
              }
          });
      }
- })
-
-.controller('PreguntasFrecuentesController', function ($scope, $state) {
-
-     $scope.usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
  })

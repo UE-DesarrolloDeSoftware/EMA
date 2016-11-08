@@ -1,113 +1,156 @@
 angular.module('ema.controllers')
 
 .controller('MapController', function ($scope, $cordovaGeolocation, $ionicPopup, $q, ZonaEstacionamientoServices, VendedorService) {
+    // Codigo que se ejecuta luego de cargar la pagina
+    $scope.$on("$stateChangeSuccess", function () {
+
+
+    });
+
     // Distancia de tolerancia entre un punto y una polyline, para determinar que esta sobre la linea
     var distanciaAlPunto = 25;
 
     $scope.mostrarBtnEsctacionar = true;
     $scope.mostrarBtnCancelar = false;
+    $scope.mostrarBtnCancelarPtoVenta = false;
 
-    // Codigo que se ejecuta luego de cargar la pagina
-    $scope.$on("$stateChangeSuccess", function () {
+    // SITUAR EN POSICION ACTUAL
+    $scope.locate = function () {
 
-        
-    });
-
-    // LLAMADA ASINCRONICA
-    getActualLocation().then(function (actualPosition) {
-
-        // CREACION DEL MAPA
-        var cloudmadeUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-        cloudmade = new L.TileLayer(cloudmadeUrl, { maxZoom: 18 }),
-        map = new L.Map('map', { layers: [cloudmade], center: actualPosition, zoom: 18 });
-
-        addMarkerAuto(map, actualPosition);
-
-        // SITUAR EN POSICION ACTUAL
-        $scope.locate = function () {
-
-            // LLAMADA ASINCRONICA
-            var promise3 = getActualLocation();
-
-            promise3.then(function (actualPosition) {
-
-                map.setView(actualPosition, 18);
-
-                addMarkerAuto(map, actualPosition);
-
-            }, function (reason) {
-                alert('Failed: ' + reason);
-            });
-        };
-
-        $scope.showLoading();
         // LLAMADA ASINCRONICA
-        addLinesFromDb(map).then(function (polylines) {
+        var promise3 = getActualLocation();
 
-            $scope.hideLoading();
+        promise3.then(function (actualPosition) {
 
-            //Evento click del mapa
-            map.on('click',
-                function (e) {
+            $scope.map.setView(actualPosition, 18);
 
-                    if (!isPointOnLine(map, polylines, e.latlng)) {
-                        $ionicPopup.alert({
-                            title: 'Atencion',
-                            template: "Estacionamiento libre"
-                        });
-                    }
-                }
-            );
-
-            // Funcion de Estacionar
-            $scope.estacionar = function () {
-
-                getActualLocation().then(function (actualPosition) {
-
-                    if (isPointOnLine(map, polylines, actualPosition)) {
-                        // Estacionamiento medido
-
-                        $scope.showLoading();
-
-                        var filter = { "q": {"location" : {"$withinKilometers": [[actualPosition.lat, actualPosition.lng], 1]}}}
-
-                        // Obtener puntos de venta cercanos a la posicion actual
-                        VendedorService.getVendedoresFilter(filter).then(function (result) {
-                     
-                            // Crea los markers de puntos de venta y setea el id del groupLayer
-                            $scope.layerPtosVentaId = addMarkersPtosVenta(map, result.data.data);                     
-
-                            $scope.mostrarBtnEsctacionar = false;
-                            $scope.mostrarBtnCancelar = true;
-
-                            $scope.hideLoading();
-                        });
-                    }
-                    else // Estacionamiento libre
-                    {    
-                        $ionicPopup.alert({
-                            title: 'Atencion',
-                            template: "Estacionamiento libre"
-                        });
-                    }
-                });
-            }
-
-            // Funcion de Cancelar estacionamiento, elimina los markers de puntos de venta
-            $scope.cancelarEstacionamiento = function (layerId) {
-                map.removeLayer(map._layers[layerId]);
-
-                $scope.mostrarBtnEsctacionar = true;
-                $scope.mostrarBtnCancelar = false;
-            }
+            addMarkerAuto($scope.map, actualPosition);
 
         }, function (reason) {
             alert('Failed: ' + reason);
         });
+    };
+
+    // CREACION DEL MAPA
+    var cloudmadeUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+    cloudmade = new L.TileLayer(cloudmadeUrl, { maxZoom: 18 });
+
+    $scope.map = new L.Map('map', { layers: [cloudmade], zoom: 18 });
+
+    $scope.locate();
+
+    $scope.showLoading();
+    // LLAMADA ASINCRONICA
+    addLinesFromDb($scope.map).then(function (polylines) {
+
+        $scope.hideLoading();
+
+        //Evento click del mapa que evalua la situacion de estacionamiento
+        $scope.map.on('click',
+            function (e) {
+
+                if (!isPointOnLine($scope.map, polylines, e.latlng)) {
+                    $ionicPopup.alert({
+                        title: 'Atencion',
+                        template: "Estacionamiento libre"
+                    });
+                }
+            }
+        );
+
+        // Funcion de Estacionar
+        $scope.estacionar = function () {
+
+            getActualLocation().then(function (actualPosition) {
+
+                if (isPointOnLine($scope.map, polylines, actualPosition)) {
+                    // Estacionamiento medido
+
+                    $scope.showLoading();
+
+                    // Filtro por puntos de venta cernanos a 1km de la posicion actual
+                    var filter = { "q": {"location" : {"$withinKilometers": [[actualPosition.lat, actualPosition.lng], 1]}}}
+
+                    // Obtener puntos de venta cercanos a la posicion actual
+                    VendedorService.getVendedoresFilter(filter).then(function (result) {
+                     
+                        // Crea los markers de puntos de venta y setea el id del groupLayer
+                        $scope.layerPtosVentaId = addMarkersPtosVenta($scope.map, result.data.data);
+
+                        $scope.mostrarBtnEsctacionar = false;
+                        $scope.mostrarBtnCancelar = true;
+
+                        $scope.hideLoading();
+                    });
+                }
+                else // Estacionamiento libre
+                {    
+                    $ionicPopup.alert({
+                        title: 'Atencion',
+                        template: "Estacionamiento libre"
+                    });
+                }
+            });
+        }
+
+        // Funcion de Cancelar estacionamiento, elimina los markers de puntos de venta
+        $scope.cancelarEstacionamiento = function (layerId) {
+            $scope.map.removeLayer($scope.map._layers[layerId]);
+
+            $scope.mostrarBtnEsctacionar = true;
+            $scope.mostrarBtnCancelar = false;
+        }
 
     }, function (reason) {
         alert('Failed: ' + reason);
     });
+
+
+    function mostrarRuta (lat, lng) {
+    
+        getActualLocation().then(function (actualPosition) {
+
+            var waypoints = [actualPosition, L.latLng(lat, lng)];
+
+            $scope.routingControl = L.Routing.control({
+                plan: L.Routing.plan(waypoints, {
+                    createMarker: function (i, wp) {
+                        // Crea marker de punto de venta solo para la segunda coordenada(destino)
+                        if (i == 1) {
+                            return L.marker(wp.latLng, {
+                                draggable: true,
+                                icon: L.icon({ iconUrl: 'img/pto_venta.png', iconSize: [40, 40], iconAnchor: [20, 20] })
+                            });
+                        } else { return false; }
+                    }
+                })
+            });
+
+            $scope.routingControl.addTo($scope.map);
+
+            // Ocultar los puntos de venta marcados en el mapa, dejando solo la ruta hacia el punto elegido
+            $scope.map._layers[$scope.layerPtosVentaId].eachLayer(function (layer) {
+                layer._icon.style.display = 'none';
+                if (layer._popup._isOpen)
+                    $scope.map.closePopup(layer._popup);
+            });
+
+            $scope.mostrarBtnCancelar = false;
+            $scope.mostrarBtnCancelarPtoVenta = true;
+        });
+    }
+
+    $scope.cancelarPuntoVenta = function () {
+        $scope.map._layers[$scope.layerPtosVentaId].eachLayer(function (layer) {
+            layer._icon.style.display = 'block';
+        });
+
+        $scope.map.removeControl($scope.routingControl);
+        //$scope.routingControl.removeFrom($scope.map);
+
+        $scope.mostrarBtnCancelar = true;
+        $scope.mostrarBtnCancelarPtoVenta = false;
+    }
 
     function addLinesFromDb(map) {
 
@@ -227,7 +270,7 @@ angular.module('ema.controllers')
         var icon = L.icon({
             iconUrl: 'img/pto_venta.png',
             iconSize: [40, 40],
-            iconAnchor: [40, 40] // Pixeles que marcan el punto en el mapa 
+            iconAnchor: [20, 20] // Pixeles que marcan el punto en el mapa 
         });
 
         for (var x = 0; x < ptosVenta.length; x++) {
@@ -242,7 +285,15 @@ angular.module('ema.controllers')
 
             // VER COMO HACER EN EL EVENTO CLICK PARA MANDAR DATOS DEL PUNTO DE VENTA
             var idPtoVenta = ptosVenta[x].id;
-            boton.addEventListener("click", function () { alert(ptosVenta[x].id); });
+            boton.addEventListener('click', function(lat, lng) {
+
+                // return the actual event handler function
+                return function() {
+                    mostrarRuta(lat, lng);
+                };
+
+            }(ptosVenta[x].location[0], ptosVenta[x].location[1]), false); 
+
             div.appendChild(boton);
 
             var marker = L.marker(new L.LatLng(ptosVenta[x].location[0], ptosVenta[x].location[1]), { draggable: false, icon: icon })
@@ -277,4 +328,4 @@ angular.module('ema.controllers')
             return false;
         }
     }    
-}) 
+})

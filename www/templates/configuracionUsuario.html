@@ -1,11 +1,13 @@
 <ion-view title="Configuracion de Usuario" style="background-color:#6C9FEE;">
     
-     <ion-content padding="true" class="has-header">
+     <ion-content padding="true" has-header="true">
 
         <form name="usuarioForm" ng-submit="updateConductor()">
             <div class="list">
+
                 <label class="item item-input">
-                    <input type="text" placeholder="Patente por defecto" ng-model="input.patente" required>
+                    <span class="input-label">Patente por defecto</span>
+                    <input type="text" ng-model="input.patente" required>
                 </label>
 
                 <button class="button button-dark  button-block">Guardar</button>
