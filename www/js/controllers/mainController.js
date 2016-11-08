@@ -98,3 +98,33 @@
 
     });
 })
+
+.controller('PreguntasFrecuentesController', function ($scope) {
+    $scope.usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
+
+    $scope.groups = [];
+    for (var i = 0; i < 10; i++) {
+        $scope.groups[i] = {
+            name: i,
+            respuesta: "",
+            show: false
+        };
+        $scope.groups[i].respuesta = i;
+    }
+
+    /*
+     * if given group is the selected group, deselect it
+     * else, select the given group
+     */
+    $scope.toggleGroup = function (group) {
+        group.show = !group.show;
+    };
+    $scope.isGroupShown = function (group) {
+        return group.show;
+    };
+
+})
+
+.controller('EstadoServicioController', function ($scope) {
+
+})
