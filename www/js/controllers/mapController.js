@@ -249,7 +249,7 @@ angular.module('ema.controllers')
     function addMarkerAuto(map, latLng) {
 
         var icon = L.icon({
-            iconUrl: 'img/auto.gif',
+            iconUrl: 'img/auto.png',
             iconSize: [45, 45],
             iconAnchor: [40, 40] // Pixeles que marcan el punto en el mapa     
         });
