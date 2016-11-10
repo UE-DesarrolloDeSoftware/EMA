@@ -1,6 +1,6 @@
 <ion-view title="Preguntas Frecuentes" style="background-color:#6C9FEE;">
 
-    <ion-content padding="true" class="has-header">
+    <!--<ion-content padding="true" class="has-header">
         <div id="Conductor" ng-show="input.role_id==1">
 			<h1>Preguntas Frecuentes</h1>
 			<ion-list>
@@ -181,5 +181,25 @@
 				
 			</ion-list>
         </div>
+    </ion-content>-->
+
+    <ion-content padding="true" has-header="true">
+
+        <ion-list>
+            <div ng-repeat="group in groups">
+                <ion-item class="item-stable"
+                          ng-click="toggleGroup(group)"
+                          ng-class="{active: isGroupShown(group)}">
+                    <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
+                    &nbsp;
+                    Pregunta {{group.name}}
+                </ion-item>
+                <ion-item class="item-accordion"
+                          ng-show="isGroupShown(group)">
+                    Respuesta {{group.respuesta}}
+                </ion-item>
+            </div>
+        </ion-list>
+
     </ion-content>
 </ion-view>

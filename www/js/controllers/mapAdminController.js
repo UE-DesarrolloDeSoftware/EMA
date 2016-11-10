@@ -41,9 +41,7 @@ angular.module('ema.controllers')
                 shadowUrl: null,
                 iconAnchor: new L.Point(24, 24),
                 iconSize: new L.Point(38, 38),
-                iconUrl: 'img/menuAdmin/punto_de_venta.gif'
-                
-
+                iconUrl: 'img/menuAdmin/pto_venta.png'
             }
         });
         

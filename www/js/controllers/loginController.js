@@ -1,6 +1,11 @@
 ﻿angular.module('ema.controllers')
 
 .controller('LoginCtrl', function ($scope, $ionicPopup, $ionicModal, $state, UsuarioService, ConductorService, ConfigurationsService, $ionicHistory, Backand) {
+    // Limpia la cache cuando el usuario es redirigido al login 
+    $scope.$on('$ionicView.enter', function (event, viewData) {
+        $ionicHistory.clearCache();
+    });
+
     $scope.input = {};
     $scope.login = {};
 
@@ -96,7 +101,7 @@
 
         var usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
 
-        // Para que la vista de login no se retrocedible
+        // Para que la vista de login no sea retrocedible
         $ionicHistory.nextViewOptions({ disableAnimate: true, disableBack: true });
 
         // Redireccion segun rol

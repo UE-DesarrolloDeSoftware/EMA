@@ -1,12 +1,18 @@
-<ion-view title="Configuracion de Usuario" style="background-color:#6C9FEE;">
+<ion-view title="Configuracion parametros generales" style="background-color:#6C9FEE;">
     
-     <ion-content padding="true" class="has-header">
+     <ion-content padding="true" has-header="true">
+
+         <div class="row header">
+             <div class="col">Clave</div>
+             <div class="col">Valor</div>
+             <div class="col" style="border: none;background-color:#6C9FEE;"></div>
+         </div>
 
          <div class="row" ng-repeat="config in configuraciones">
-             <div class="col">{{config.key}}</div>
+             <div class="col" >{{config.key}}</div>
              <div class="col" style="width:12em;height:4em;overflow:hidden;text-overflow:ellipsis;">{{config.value}}</div>
 
-             <div class="col" style="border: none;">
+             <div class="col" style="border: none;background-color:#6C9FEE;">
                  <button class="button button-assertive" ng-click="editarConfig(config.id)"> Editar </button>
              </div>
          </div>

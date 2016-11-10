@@ -73,24 +73,28 @@ angular.module('ema.controllers')
 
 })
 
-.controller('ConfiguracionUsuarioController', function ($scope, $state, ConductorService) {
+.controller('ConfiguracionUsuarioController', function ($scope, $state, $ionicPopup, ConductorService) {
     $scope.input = {};
     var conductor = {};
     var usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
 
     ConductorService.getConductorByIdUsuario(usuarioLogueado.id).then(function (result) {
 
-        conductor = result.data.data[0];
+        conductor = result.data[0];
         $scope.input.patente = conductor.patente;
     });
 
     $scope.updateConductor = function () {
 
-        conductor.patente = $scope.input.patente;
+        conductor.patente = $scope.input.patente.toUpperCase();
 
         ConductorService.updateConductor(conductor.id, conductor).then(function (result) {
 
             //POPUP ACTUALIZADO
+            $ionicPopup.alert({
+                title: 'Guardado',
+                template: 'Las modificaciones han sido guardadas correctamente.'
+            });
         });
     }
 

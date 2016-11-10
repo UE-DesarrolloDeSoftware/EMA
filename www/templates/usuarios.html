@@ -1,4 +1,4 @@
-<ion-view view-title="Usuarios">
+<ion-view view-title="Usuarios" style="background-color:#6C9FEE;">
     <ion-content padding="true" class="has-header">
 
         <div class="row header">
@@ -10,7 +10,7 @@
             <div class="col">Telefono</div>
             <div class="col">Telefono Movil</div>
             <div class="col">Rol</div>
-            <div class="col" style="border: none; background-color:#FFFFFF;"></div>
+            <div class="col" style="border: none; background-color:#6C9FEE;"></div>
         </div>
 
         <div class="row" ng-repeat="usuario in usuarios">
@@ -27,7 +27,7 @@
                             }}
             </div>
 
-            <div class="col" style="border: none;">
+            <div class="col" style="border: none;background-color:#6C9FEE;">
                 <button class="button button-assertive" ng-click="deleteUsuario(usuario.id)"> Eliminar </button>
             </div>
         </div>
