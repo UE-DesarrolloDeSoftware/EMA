@@ -248,15 +248,16 @@ angular.module('ema', ['ionic', 'ema.controllers', 'ema.services', 'backand', 'a
         }
     })
 
-    .state('eventmenu.menuAdmin.mapAdminPuntosVenta', {
+    //se hace todo dentro de la pantalla de zonas de estacionamiento
+   /* .state('eventmenu.menuAdmin.mapAdminPuntosVenta', {
         url: "/mapAdminPuntosVenta",
         views: {
             'menuContent@eventmenu': {
-                templateUrl: "templates/mapAdminPuntosVenta.html",
-                controller: 'MapAdminPuntosVentaController'
+                templateUrl: "templates/mapAdminZonas.html",
+                controller: 'MapAdminController'
             }
         }
-    })
+    })*/
 
 
     .state('eventmenu.menuAdmin.contactoSoporte', {

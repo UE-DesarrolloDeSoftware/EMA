@@ -10,19 +10,19 @@ L.drawLocal = {
 			// #TODO: this should be reorganized where actions are nested in actions
 			// ex: actions.undo  or actions.cancel
 			actions: {
-				title: 'Cancel drawing',
-				text: 'Cancel'
+				title: 'Cancelar marcado',
+				text: 'Cancelar'
 			},
 			finish: {
-				title: 'Finish drawing',
-				text: 'Finish'
+				title: 'Finalizar marcado',
+				text: 'Finalizar'
 			},
 			undo: {
 				title: 'Delete last point drawn',
 				text: 'Delete last point'
 			},
 			buttons: {
-				polyline: 'Draw a polyline',
+				polyline: 'Marcar una zona de estacionamiento',
 				polygon: 'Draw a polygon',
 				rectangle: 'Draw a rectangle',
 				circle: 'Draw a circle',
@@ -72,12 +72,12 @@ L.drawLocal = {
 		toolbar: {
 			actions: {
 				save: {
-					title: 'Save changes.',
-					text: 'Save'
+					title: 'guardar cambios.',
+					text: 'Guardar'
 				},
 				cancel: {
-					title: 'Cancel editing, discards all changes.',
-					text: 'Cancel'
+					title: 'cancelar cambios, desechar todos los cambios.',
+					text: 'Cancelar'
 				}
 			},
 			buttons: {
