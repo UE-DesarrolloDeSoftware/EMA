@@ -101,7 +101,7 @@
 
 .controller('PreguntasFrecuentesController', function ($scope) {
     $scope.usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
-
+    
     $scope.groups = [];
     for (var i = 0; i < 10; i++) {
         $scope.groups[i] = {
@@ -111,7 +111,12 @@
         };
         $scope.groups[i].respuesta = i;
     }
-
+    
+    $scope.preguntas = [];
+    $scope.respuestas = [];
+         
+    if $scope.usuarioLogueado == 
+         
     /*
      * if given group is the selected group, deselect it
      * else, select the given group
