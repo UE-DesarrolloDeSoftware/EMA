@@ -2,7 +2,7 @@ angular.module('ema.services')
 
 .service('ZonaEstacionamientoServices', function ($http, Backand){
       var baseUrl = '/1/objects/';
-      var objectName = 'paid_parking_zones';
+      var objectName = 'paid_parking_zones/';
       
 
       function getUrl() {

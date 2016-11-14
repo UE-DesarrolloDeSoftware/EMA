@@ -36,6 +36,13 @@ angular.module('ema.services')
           
           return $http.post(getUrl(), object);
       };
+      updateVendedor = function (id, object) {
+          return $http.put(getUrlForId(id), object);
+      };
+
+      deleteVendedor = function (id) {
+          return $http.delete(getUrlForId(id));
+      };
 
       getVendedorByIdUsuario = function (idUsuario) {
 
@@ -55,6 +62,8 @@ angular.module('ema.services')
         getVendedor: getVendedor,
         getVendedoresFilter: getVendedoresFilter,
         addVendedor: addVendedor,
+        updateVendedor:updateVendedor,
+        deleteVendedor:deleteVendedor,
         getVendedorByIdUsuario: getVendedorByIdUsuario
     }
 })
