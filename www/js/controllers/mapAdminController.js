@@ -9,18 +9,18 @@ angular.module('ema.controllers')
      id = null ;
     // INICIALIZACION DEL MAPA
        
-        var cloudmadeUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-        cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18}),
-        map = new L.Map('map',
+    var cloudmadeUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+    cloudmade = new L.TileLayer(cloudmadeUrl, { maxZoom: 18 });
+    $scope.map = new L.Map('map',
          {layers: [cloudmade], center: new L.LatLng(-34.789439,-58.523198),
          zoom: 16 });
         
         var editableLayers = new L.FeatureGroup();
-        map.addLayer(editableLayers);
+        $scope.map.addLayer(editableLayers);
         drawnItems = new L.FeatureGroup();
         
-        var zonesparking = viewZoneParking(map);
-        var puntosventa = viewPointsSales(map);
+        var zonesparking = viewZoneParking($scope.map);
+        var puntosventa = viewPointsSales($scope.map);
         //var geocodeService = L.esri.Geocoding.geocodeService();
        
 
@@ -28,10 +28,10 @@ angular.module('ema.controllers')
             metric: true,
             imperial: false,
             updateWhenIdle: true
-        }).addTo(map); 
+        }).addTo($scope.map);
         
        
-        map.zoomControl.setPosition('bottomleft');
+        $scope.map.zoomControl.setPosition('bottomleft');
 
         var MyCustomMarker = L.Icon.extend({
             options: {
@@ -99,9 +99,9 @@ angular.module('ema.controllers')
 
 
         var drawControl = new L.Control.Draw(options);
-        map.addControl(drawControl);
+        $scope.map.addControl(drawControl);
 
-        map.on('draw:created', function (e) {
+        $scope.map.on('draw:created', function (e) {
 
           var type = e.layerType,
               layer = e.layer;
@@ -148,7 +148,7 @@ angular.module('ema.controllers')
                   
            });
 
-          map.on('draw:edited', function (e) {
+        $scope.map.on('draw:edited', function (e) {
               var layers = e.layers;
               layers.eachLayer(function (layer) {
                     if (layer instanceof L.Polyline) {
@@ -186,7 +186,7 @@ angular.module('ema.controllers')
 
 
           
-          map.on('draw:deleted', function (e) {
+        $scope.map.on('draw:deleted', function (e) {
               var layers = e.layers;
               var type = e.layerType;
               layers.eachLayer(function (layer) {
@@ -211,17 +211,7 @@ angular.module('ema.controllers')
           .getCurrentPosition()
           .then(function (position) {
 
-              $scope.map.center.lat = position.coords.latitude;
-              $scope.map.center.lng = position.coords.longitude;
-              $scope.map.center.zoom = 18;
-
-              $scope.map.markers.now = {
-                  lat:position.coords.latitude,
-                  lng:position.coords.longitude,
-                  message: "Estas Aqui!",
-                  focus: true,
-                  draggable: false
-              };
+              $scope.map.setView(new L.LatLng(position.coords.latitude, position.coords.longitude), 18);
 
           }, function(err) {
               // error
@@ -230,7 +220,6 @@ angular.module('ema.controllers')
                   template: err.message
                   });
               });
-
        };
     })
 

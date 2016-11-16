@@ -115,8 +115,6 @@
     $scope.preguntas = [];
     $scope.respuestas = [];
          
-    if $scope.usuarioLogueado == 
-         
     /*
      * if given group is the selected group, deselect it
      * else, select the given group
