@@ -50,6 +50,30 @@ angular.module('ema.controllers')
         });
     }
 
+    $scope.actualizar = function (id) {
+           $scope.usuario = {};
+        UsuarioService.getUsuario(id).then(function(result){
+            $scope.usuario = result.data;
+            $scope.modalUpdate.show();
+
+        })
+        
+    }
+
+    $scope.updateUsuario = function () {
+         UsuarioService.updateUsuario($scope.usuario.id,$scope.usuario).then(function (result) {
+            $scope.modalUpdate.hide();
+            getAllUsuarios();
+
+
+             //POPUP ACTUALIZADO
+            $ionicPopup.alert({
+                title: 'Guardado',
+                template: 'Las modificaciones han sido guardadas correctamente.'
+            });
+        });
+    }
+
     $scope.deleteUsuario = function (id) {
         UsuarioService.deleteUsuario(id).then(function (result) {
             getAllUsuarios();
@@ -76,6 +100,14 @@ angular.module('ema.controllers')
         animation: 'slide-in-up'
     }).then(function (modal) {
         $scope.modal = modal;
+    });
+
+    /* GENERA VISTA DE update DE USUARIO */
+    $ionicModal.fromTemplateUrl('templates/updateUsuario.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function (modal) {
+        $scope.modalUpdate = modal;
     });
 
     getAllUsuarios();

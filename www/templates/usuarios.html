@@ -2,34 +2,43 @@
     <ion-content padding="true" class="has-header">
 
         <div class="row header">
-            <div class="col">Email</div>
-            <div class="col">Password</div>
-            <div class="col">Nombre</div>
-            <div class="col">Apellido</div>
-            <div class="col">DNI</div>
-            <div class="col">Telefono</div>
-            <div class="col">Telefono Movil</div>
-            <div class="col">Rol</div>
-            <div class="col" style="border: none; background-color:#6C9FEE;"></div>
+            <div class="col col-10">E-mail</div>
+            <div class="col col-10">Pass</div>        
+            <div class="col col-10">Nombre</div>
+            <div class="col col-10">Apellido</div>
+            <div class="col col-10">DNI</div>
+            <div class="col col-10">Telefono</div>
+            <div class="col col-10">Telefono Movil</div>
+            <div class="col col-10">Rol</div>
+            <div class="col 10" style="border: none; background-color:#6C9FEE;"></div>
+            <div class="col 10" style="border: none; background-color:#6C9FEE;"></div>
+
         </div>
 
         <div class="row" ng-repeat="usuario in usuarios">
-            <div class="col" style="width:6em;word-wrap: break-word;">{{usuario.email}}</div>
-            <div class="col" style="width:6em;word-wrap: break-word;">{{usuario.password}}</div>
-            <div class="col">{{usuario.name}}</div>
-            <div class="col">{{usuario.lastname}}</div>
-            <div class="col">{{usuario.dni}}</div>
-            <div class="col">{{usuario.phone}}</div>
-            <div class="col">{{usuario.mobilephone}}</div>
-            <div class="col">{{usuario.role_id == 1 ? "Administrador" : 
+            <div class="col col-10">{{usuario.email}}</div>   
+            <div class="col col-10">{{usuario.password}}</div>
+            <div class="col col-10">{{usuario.name}}</div>
+            <div class="col col-10">{{usuario.lastname}}</div>
+            <div class="col col-10">{{usuario.dni}}</div>
+            <div class="col col-10">{{usuario.phone}}</div>
+            <div class="col col-10">{{usuario.mobile_phone}}</div>
+            <div class="col col-10">{{usuario.role_id == 1 ? "Administrador" : 
                                                       usuario.role_id == 2 ? "Vendedor" : 
                                                       usuario.role_id == 3 ? "Agente transito" : "Conductor"
                             }}
             </div>
 
-            <div class="col" style="border: none;background-color:#6C9FEE;">
+            <div class="col 10" style="border: none;background-color:#6C9FEE;">
                 <button class="button button-assertive" ng-click="deleteUsuario(usuario.id)"> Eliminar </button>
             </div>
+            
+            <div class="col 10" style="border: none;background-color:#6C9FEE;">   
+                <button class="button button-balanced" ng-click="actualizar(usuario.id)">
+                    Editar
+                </button>
+            </div>
+
         </div>
         <button ng-click="loadPreviousPage()" ng-show="currentPage > 1">
             Pag.Anterior

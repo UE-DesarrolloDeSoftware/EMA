@@ -11,10 +11,12 @@
 
 }
 body {
-  /*text-align: center;*/
+
+   /*text-align: center;*/
   /*height: auto;*/
   min-height: 100%;
-  font-family: 'EMAfont', Fallback, AR BONNIE;
+  font-family: 'EMAfont', Fallback, verdana;
+  
  }
 
 .scroll, .angular-leaflet-map {

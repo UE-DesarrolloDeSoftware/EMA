@@ -1,38 +1,38 @@
 <ion-modal-view style="width: 50%; height: 80%;top: 5%;">
     <ion-header-bar class="bar-calm">
 
-        <h1 class="title">Nuevo Usuario</h1>
+        <h1 class="title">Editar</h1>
 
         <div class="buttons">
-            <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
+            <button class="button button-clear" ng-click="modalUpdate.hide()">Cancel</button>
         </div>
 
     </ion-header-bar>
 
     <ion-content class="padding">
 
-        <form name="usuarioForm" ng-submit="addUsuario()">
+        <form name="usuarioForm" ng-submit="updateUsuario()">
             <div class="list">    
-                <label class="item item-input">
-                    <input type="text" placeholder="Nombre" ng-model="input.name" required>
+                <label class="item item-input" >
+                   <ion-label>Nombre</ion-label>  <input type="text"  name="name" ng-model="usuario.name" required>
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="Apellido" ng-model="input.lastname" required>
+                  <ion-label>Apellido</ion-label>  <input type="text" name="Apellido" ng-model="usuario.lastname" required>
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="Email" ng-model="input.email" required>
+                   <ion-label>E-mail</ion-label> <input type="text" name="Email" ng-model="usuario.email" required>
                 </label>
                 <label class="item item-input">
-                    <input type="password" placeholder="Password" ng-model="input.password" required>
+                   <ion-label>Contraseña</ion-label> <input type="password" name="Password" ng-model="usuario.password" required>
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="DNI" ng-model="input.dni" >
+                   <ion-label>DNI</ion-label> <input type="text" name="DNI" ng-model="usuario.dni" >
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="Telefono Fijo" ng-model="input.phone">
+                   <ion-label>Tel. Fijo</ion-label> <input type="text" name="Telefono Fijo" ng-model="usuario.phone">
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="Telefono Celular" ng-model="input.mobilephone" >
+                   <ion-label>Celular</ion-label> <input type="text" name="Telefono Celular" ng-model="usuario.mobile_phone" >
                 </label>    
                 <label class="item item-input item-select" ng-show="isAdmin" >
                     <div class="input-label">
@@ -48,28 +48,28 @@
                 
                 <div ng-show="!isAdmin||input.role_id==4">
                     <label class="item item-input">
-                        <input type="text" placeholder="Patente" ng-model="input.patente" ng-required="!isAdmin||input.role_id==4">
+                        <input type="text" placeholder="Patente" ng-model="usuario.patente" ng-required="!isAdmin||input.role_id==4">
                     </label>
                 </div>
  
                 <div ng-show="input.role_id==2">
                     <label class="item item-input">
-                        <input type="text" placeholder="Razon Social" ng-model="input.business_name">
+                        <ion-label>Razon Social</ion-label><input type="text" ng-model="usuario.business_name">
                     </label> 
                     <label class="item item-input">
-                        <input type="text" placeholder="Cuit" ng-model="input.cuit">
+                       <ion-label>CUIT</ion-label> <input type="text" ng-model="usuario.cuit">
                     </label> 
                     <label class="item item-input">
-                        <input type="text" placeholder="Ubicacion" ng-model="input.location">
+                       <ion-label>Ubicacion</ion-label> <input type="text"  ng-model="usuario.location">
                     </label> 
                 </div>
 
                 <div ng-show="input.role_id==3">
                     <label class="item item-input">
-                        <input type="text" placeholder="Horario desde" ng-model="input.schedule_from">
+                       <ion-label>Horario desde</ion-label> <input type="text" ng-model="usuario.schedule_from">
                     </label>
                     <label class="item item-input">
-                        <input type="text" placeholder="Horario Hasta" ng-model="input.schedule_to">
+                      <ion-label>Horario hasta</ion-label>  <input type="text" ng-model="usuario.schedule_to">
                     </label>
 
                     <!--<div ng-dropdown-multiselect="" options="example1data" selected-model="example1model" translation-texts="example5customTexts" extra-settings="example13settings"></div>-->
@@ -79,7 +79,7 @@
             </div>
 
             <div class="padding">
-                <button class="button button-block button-balanced" ng-disabled="usuarioForm.$invalid">Guardar Usuario</button>
+                <button class="button button-block button-balanced" ng-disabled="usuarioForm.$invalid">Guardar</button>
             </div>
         </form>
 
