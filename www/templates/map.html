@@ -22,10 +22,16 @@
             <div style="height:100%">
                 <div id="map-wrapper">
                     <div id="map"></div>
+
+                    <div id="timer-wrapper" ng-show="mostrarTimer">
+                        <img src="img/cronometro.png" height="120" />
+                        <h5 id="timer"></h5>
+                    </div>
+
                     <div id="button-wrapper">
-                        <button type="button" class="button button-assertive" ng-click="estacionar();" ng-show="mostrarBtnEsctacionar">Estacionar</button>
-                        <button type="button" class="button button-assertive" ng-click="cancelarEstacionamiento(layerPtosVentaId);" ng-show="mostrarBtnCancelar">Cancelar</button>
-                        <button type="button" class="button button-assertive" ng-click="cancelarPuntoVenta();" ng-show="mostrarBtnCancelarPtoVenta">Cancelar Punto venta</button>
+                        <button type="button" class="button button-assertive" ng-click="estacionar();" ng-show="verBtnEsctacionar">Estacionar</button>
+                        <button type="button" class="button button-assertive" ng-click="cancelarEstacionamiento(layerPtosVentaId);" ng-show="verBtnCancelarEstacionamiento">Cancelar estacionamiento</button>
+                        <button type="button" class="button button-assertive" ng-click="cancelarRutaPuntoVenta();" ng-show="verBtnCancelarRutaPtoVenta">Cancelar ruta</button>
                     </div>
                 </div>
             </div>

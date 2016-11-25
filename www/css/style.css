@@ -75,7 +75,7 @@ div.circle {
 }
 
 .circle.orange{
-    background-color:orangered;
+    background-color:orange;
 }
 
 .circle.green{
@@ -110,6 +110,7 @@ div.circleLabel {
     text-align: center;
 }
 
+
 .list .item.item-accordion {
   line-height: 38px;
   padding-top: 0;
@@ -122,4 +123,19 @@ div.circleLabel {
 .list .item.item-accordion.ng-hide-add,
 .list .item.item-accordion.ng-hide-remove {
   display: block !important;
+}
+
+#timer-wrapper {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    width: 100%;
+    text-align: right;
+}
+
+#timer { 
+   position: absolute; 
+   top: 50px; 
+   right: 35px; 
+   width: 100%; 
 }

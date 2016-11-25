@@ -1,18 +1,18 @@
 angular.module('ema.controllers')
 
-.controller('MapController', function ($scope, $cordovaGeolocation, $ionicPopup, $q, ZonaEstacionamientoServices, VendedorService) {
+.controller('MapController', function ($scope, $cordovaGeolocation, $ionicPopup, $q, ZonaEstacionamientoServices, VendedorService, ConductorService, ParkingService, ConfigurationsService) {
     // Codigo que se ejecuta luego de cargar la pagina
     $scope.$on("$stateChangeSuccess", function () {
-
 
     });
 
     // Distancia de tolerancia entre un punto y una polyline, para determinar que esta sobre la linea
-    var distanciaAlPunto = 25;
+    var distanciaAlPunto = 35;
 
-    $scope.mostrarBtnEsctacionar = true;
-    $scope.mostrarBtnCancelar = false;
-    $scope.mostrarBtnCancelarPtoVenta = false;
+    $scope.verBtnEsctacionar = true;
+    $scope.verBtnCancelarEstacionamiento = false;
+    $scope.verBtnCancelarRutaPtoVenta = false;
+    $scope.mostrarTimer = false;
 
     // SITUAR EN POSICION ACTUAL
     $scope.locate = function () {
@@ -37,6 +37,8 @@ angular.module('ema.controllers')
 
     $scope.map = new L.Map('map', { layers: [cloudmade], zoom: 18 });
 
+    $scope.map.zoomControl.setPosition('bottomleft');
+
     $scope.locate();
 
     $scope.showLoading();
@@ -46,20 +48,24 @@ angular.module('ema.controllers')
         $scope.hideLoading();
 
         //Evento click del mapa que evalua la situacion de estacionamiento
-        $scope.map.on('click',
-            function (e) {
+        //$scope.map.on('click',
+        //    function (e) {
 
-                if (!isPointOnLine($scope.map, polylines, e.latlng)) {
-                    $ionicPopup.alert({
-                        title: 'Atencion',
-                        template: "Estacionamiento libre"
-                    });
-                }
-            }
-        );
+        //        if (!isPointOnLine($scope.map, polylines, e.latlng)) {
+        //            $ionicPopup.alert({
+        //                title: 'Estacionamiento libre'
+        //            });
+        //        }
+        //    }
+        //);
 
         // Funcion de Estacionar
         $scope.estacionar = function () {
+
+            //$scope.minutos_proroga = 1;
+            ConfigurationsService.getConfigurationByKey("minutos_prorroga").then(function (result) {
+                $scope.minutos_proroga = parseInt(result.data.data[0].value);
+            });
 
             getActualLocation().then(function (actualPosition) {
 
@@ -77,8 +83,82 @@ angular.module('ema.controllers')
                         // Crea los markers de puntos de venta y setea el id del groupLayer
                         $scope.layerPtosVentaId = addMarkersPtosVenta($scope.map, result.data.data);
 
-                        $scope.mostrarBtnEsctacionar = false;
-                        $scope.mostrarBtnCancelar = true;
+                        var usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
+
+                        ConductorService.getConductorByIdUsuario(usuarioLogueado.id).then(function (result) {
+
+                            var conductor = result.data[0];
+                           
+                            //  POPUP PREGUNTANDO QUE PATENTE USARA
+                            $scope.popupData = {};
+                            $scope.popupData.patente = conductor.patente;
+                            $ionicPopup.show({
+                                template: '<input ng-model="popupData.patente" type="text" placeholder="Patente">',
+                                title: 'Ingrese la patente a utilizar',
+                                subTitle: '',
+                                scope: $scope,
+                                buttons: [ {text: '<b>OK</b>', type: 'button-positive', onTap: function (e) { return $scope.popupData.patente || true; }}]
+                            }).then(function (patentePopUp) {
+
+                                var parkingFilter = {
+                                    "q":
+                                    {
+                                        "patente": { "$eq": patentePopUp },
+                                        "driver" : { "$eq": conductor.id }
+                                        //"arrival_date": { "$lt": "2016-11-24T00:50" } // DIA DE HOY o HACE x Horas
+                                    }
+                                }
+
+                                ParkingService.getParkingsFilter(parkingFilter).then(function (result) {
+
+                                    var parkingDB = {};
+
+                                    if (result.data.data.length != 0) { parkingDB = result.data.data[0]; }
+
+                                    // TIENE ESTACIONAMIENTO PREVIO NO FINALIZADO
+                                    if (parkingDB.id != null && 
+                                        parkingDB.location[0] == actualPosition.lat && parkingDB.location[1] == actualPosition.lng) {
+
+                                        $scope.parking = parkingDB;
+
+                                        $ionicPopup.alert({
+                                            title: 'Atencion',
+                                            template: "Posee un estacionamiento no finalizado en este lugar, el mismo sera reanudado."
+                                        }).then(function () {
+
+                                            arrancarReloj(new Date(parkingDB.departure_date));
+                                        });                                        
+
+                                    } else {
+                                        // NUEVO ESTACIONAMIENTO           
+                                        var parking = {};
+
+                                        parking.driver = conductor.id;
+                                        parking.arrival_date = new Date();
+
+                                        var departure_date = new Date(parking.arrival_date);
+                                        departure_date.setMinutes(departure_date.getMinutes() + $scope.minutos_proroga);
+                                        parking.departure_date = departure_date;
+
+                                        parking.location = [actualPosition.lat, actualPosition.lng];
+                                        parking.patente = patentePopUp;
+
+                                        $scope.parking = parking;
+
+                                        //CREAR REGISTRO PARKING
+                                        ParkingService.addParking(parking).then(function (result) {
+
+                                        });
+
+                                        arrancarReloj(parking.departure_date);
+                                    }
+                                });
+                            });
+
+                        });
+
+                        $scope.verBtnEsctacionar = false;
+                        $scope.verBtnCancelarEstacionamiento = true;
 
                         $scope.hideLoading();
                     });
@@ -86,8 +166,7 @@ angular.module('ema.controllers')
                 else // Estacionamiento libre
                 {    
                     $ionicPopup.alert({
-                        title: 'Atencion',
-                        template: "Estacionamiento libre"
+                        title: 'Estacionamiento libre'
                     });
                 }
             });
@@ -95,16 +174,28 @@ angular.module('ema.controllers')
 
         // Funcion de Cancelar estacionamiento, elimina los markers de puntos de venta
         $scope.cancelarEstacionamiento = function (layerId) {
-            $scope.map.removeLayer($scope.map._layers[layerId]);
 
-            $scope.mostrarBtnEsctacionar = true;
-            $scope.mostrarBtnCancelar = false;
+            $ionicPopup.confirm({
+                title: 'Cancelar estacionamiento',
+                template: "Esta seguro que desea realizar la operacion?",
+                okText: 'Cancelar',
+                cancelText: 'Volver'
+            }).then(function (cancelar) {
+
+                if (cancelar) {
+                    $scope.map.removeLayer($scope.map._layers[layerId]);
+
+                    pararReloj();
+
+                    $scope.verBtnEsctacionar = true;
+                    $scope.verBtnCancelarEstacionamiento = false;
+                }
+            });
         }
 
     }, function (reason) {
         alert('Failed: ' + reason);
     });
-
 
     function mostrarRuta (lat, lng) {
     
@@ -123,7 +214,9 @@ angular.module('ema.controllers')
                             });
                         } else { return false; }
                     }
-                })
+                }),
+                language :'es',
+                position: 'topleft'
             });
 
             $scope.routingControl.addTo($scope.map);
@@ -135,12 +228,12 @@ angular.module('ema.controllers')
                     $scope.map.closePopup(layer._popup);
             });
 
-            $scope.mostrarBtnCancelar = false;
-            $scope.mostrarBtnCancelarPtoVenta = true;
+            $scope.verBtnCancelarEstacionamiento = false;
+            $scope.verBtnCancelarRutaPtoVenta = true;
         });
     }
 
-    $scope.cancelarPuntoVenta = function () {
+    $scope.cancelarRutaPuntoVenta = function () {
         $scope.map._layers[$scope.layerPtosVentaId].eachLayer(function (layer) {
             layer._icon.style.display = 'block';
         });
@@ -148,36 +241,13 @@ angular.module('ema.controllers')
         $scope.map.removeControl($scope.routingControl);
         //$scope.routingControl.removeFrom($scope.map);
 
-        $scope.mostrarBtnCancelar = true;
-        $scope.mostrarBtnCancelarPtoVenta = false;
+        $scope.verBtnCancelarEstacionamiento = true;
+        $scope.verBtnCancelarRutaPtoVenta = false;
     }
 
     function addLinesFromDb(map) {
 
         return $q(function (resolve, reject) {
-
-            //var coordenadas = [];
-
-            //coordenadas.push({ lat: -34.78872170211281, lng: -58.524470329284675});
-            //coordenadas.push({ lat: -34.789171071087175, lng:-58.52483510971069 });
-            //coordenadas.push({ lat: -34.79104782092408, lng: -58.52540373802185});
-            //coordenadas.push({ lat: -34.7924928010859, lng: -58.52628350257874});
-            //coordenadas.push({ lat: -34.79293333878163, lng:-58.526444435119636 });
-            //coordenadas.push({ lat: -34.79348841292727, lng: -58.52620840072632});
-            //coordenadas.push({ lat: -34.7947571398005, lng: -58.52495312690734 });
-
-            //var polyline = L.polyline(coordenadas, { color: 'red', weight: 10 });
-
-            //var jsonVar = JSON.parse("[[-34.78918869335001,-58.52478682994842],[-34.78950148788859,-58.52241039276122]]");
-            //var polyline2 = L.polyline(jsonVar, { color: 'red', weight: 10 });
-
-            //var polylineArray = [
-            //      polyline,
-            //      polyline2
-            //];
-            //var polylines = L.layerGroup(polylineArray);
-            //// Add all polylines to the map
-            //polylines.addTo(map);
 
             var polylineArray = [];
 
@@ -231,7 +301,7 @@ angular.module('ema.controllers')
         }
 
         return inside;
-    };
+    }
 
     function clearMap(m) {
         for (i in m._layers) {
@@ -297,7 +367,7 @@ angular.module('ema.controllers')
             div.appendChild(boton);
 
             var marker = L.marker(new L.LatLng(ptosVenta[x].location[0], ptosVenta[x].location[1]), { draggable: false, icon: icon })
-            marker.bindPopup(div, { 'maxWidth': '500', 'offset': [-20, -20] });
+            marker.bindPopup(div, { 'maxWidth': '500', 'offset': [0, -10] });
 
             markersArray.push(marker);
         }
@@ -327,5 +397,67 @@ angular.module('ema.controllers')
         else {
             return false;
         }
-    }    
+    }
+
+    function arrancarReloj(hasta) {
+        $scope.mostrarTimer = true;
+
+        $scope.countdown = new Countdown({
+            selector: '#timer',
+            msgAfter: "0:00:00",
+            msgPattern: "{hours}:{minutes}:{seconds}",
+            leadingZeros: true,
+            dateStart: new Date(),
+            dateEnd: hasta,
+            onStart: function () {
+                $scope.comprobarPago = window.setInterval(comprobarPago, 3000);
+            },
+            onEnd: function () {
+                window.clearInterval($scope.comprobarPago);
+                $ionicPopup.alert({
+                    title: 'Tiempo de prorroga finalizado',
+                    template: "Acerquese cuanto antes a un punto de venta para efectuar el pago."
+                });
+            }
+        });
+    }
+
+    function actualizarReloj(hasta) {
+
+        $scope.countdown.updateEndDate(hasta);
+        $scope.countdown.updateOnEnd(function () {
+            $ionicPopup.alert({
+                title: 'Tiempo de estacionamiento finalizado',
+                template: "Acerquese cuanto antes a un punto de venta para agregar mas tiempo."
+            });
+
+            $scope.comprobarPago = window.setInterval(comprobarPago, 3000);
+        });
+        if (!$scope.countdown.started)
+        $scope.countdown.initialize();
+    }
+
+    function pararReloj() {
+        $scope.mostrarTimer = false;
+        $scope.countdown.stop();
+    }
+
+    function comprobarPago() {
+
+        ParkingService.getParkingByPatente($scope.parking.patente).then(function (result) {
+
+            var parkingDB = result.data[0];
+            // FECHA DE LLEGADA CON PRORROGA
+            var prorroga_date = new Date(parkingDB.arrival_date);
+            prorroga_date.setMinutes(prorroga_date.getMinutes() + $scope.minutos_proroga);
+
+            if (parkingDB.departure_date != null &&
+                new Date(parkingDB.departure_date) > prorroga_date && new Date(parkingDB.departure_date) > new Date()) {
+
+                actualizarReloj(new Date(parkingDB.departure_date));
+
+                window.clearInterval($scope.comprobarPago);
+            }
+        });
+    }
 })

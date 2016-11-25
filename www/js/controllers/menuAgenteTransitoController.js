@@ -12,7 +12,7 @@ angular.module('ema.controllers')
      var minutosProrroga = 0;
 
      ConfigurationsService.getConfigurationByKey("minutos_prorroga").then(function (result) {
-         minutosProrroga = result.data.data[0].value
+         minutosProrroga = result.data.data[0].value;
      });
 
      $scope.comprobarEstado = function () {
@@ -23,16 +23,20 @@ angular.module('ema.controllers')
 
                  var parking = result.data[0];
 
-                 var departure_date_prorroga = new Date(parking.arrival_date);
-                 departure_date_prorroga.setMinutes(departure_date_prorroga.getMinutes() + parseInt(minutosProrroga));
+                 var prorroga_date = new Date(parking.arrival_date);
+                 prorroga_date.setMinutes(prorroga_date.getMinutes() + parseInt(minutosProrroga));
+
+                 var departure_date = new Date(parking.departure_date);
 
                  var fechaActual = new Date();
 
-                 if (parking.departure_date != null && new Date(parking.departure_date) > fechaActual) {
+                 if (departure_date > prorroga_date &&
+                     departure_date > fechaActual) {
                      // Estacionado
                      $scope.parking.estado = 3;
                  }
-                 else if (departure_date_prorroga > fechaActual) {
+                 else if (prorroga_date >= departure_date &&
+                    departure_date > fechaActual) {
                      // Prorroga
                      $scope.parking.estado = 2;
                  }

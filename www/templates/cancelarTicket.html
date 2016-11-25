@@ -1,5 +1,6 @@
-<ion-view title="Cancelar ticket" id="page3" style="background-color:#6C9FEE;">
-    <ion-content padding="true" class="has-header">
+<ion-view title="Cancelar ticket" style="background-color:#6C9FEE;">
+
+    <ion-content padding="true" has-header="true">
         
         <form name="buscarForm" ng-submit="buscarVentas()" class="list">
             <label class="item item-input" id="buscarVenta-input17">
@@ -26,7 +27,7 @@
           <div class="col">{{sale.hours}}</div>
           <div class="col">{{sale.vendor}}</div>
           <div class="col"> $ {{sale.amount}}</div>
-          <div class="col" style="border: none;">
+          <div class="col" style="border: none;background-color:#6C9FEE;">
                 <button class="button button-assertive" ng-click="deleteVenta(sale.id)"> Eliminar </button>
          </div>
         

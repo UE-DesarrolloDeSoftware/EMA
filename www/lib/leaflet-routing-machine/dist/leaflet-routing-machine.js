@@ -480,6 +480,32 @@ if (typeof module === 'object' && module.exports) {
 	L.extend(L.Routing, require('./L.Routing.Mapbox'));
 	L.extend(L.Routing, require('./L.Routing.ErrorControl'));
 
+    var onZoomEnd = function () {
+        if (!this._selectedRoute ||
+            !this._router.requiresMoreDetail) {
+            return;
+        }
+
+        var map = this._map;
+        if (this._router.requiresMoreDetail(this._selectedRoute,
+                map.getZoom(), map.getBounds())) {
+            this.route({
+                callback: L.bind(function (err, routes) {
+                    var i;
+                    if (!err) {
+                        for (i = 0; i < routes.length; i++) {
+                            this._routes[i].properties = routes[i].properties;
+                        }
+                        this._updateLineCallback(err, routes);
+                    }
+
+                }, this),
+                simplifyGeometry: false,
+                geometryOnly: true
+            });
+        }
+    }
+
 	L.Routing.Control = L.Routing.Itinerary.extend({
 		options: {
 			fitSelectedRoutes: 'smart',
@@ -516,38 +542,14 @@ if (typeof module === 'object' && module.exports) {
 				this.route();
 			}
 		},
-
+        
 		onAdd: function(map) {
 			var container = L.Routing.Itinerary.prototype.onAdd.call(this, map);
 
 			this._map = map;
 			this._map.addLayer(this._plan);
 
-			this._map.on('zoomend', function() {
-				if (!this._selectedRoute ||
-					!this._router.requiresMoreDetail) {
-					return;
-				}
-
-				var map = this._map;
-				if (this._router.requiresMoreDetail(this._selectedRoute,
-						map.getZoom(), map.getBounds())) {
-					this.route({
-						callback: L.bind(function(err, routes) {
-							var i;
-							if (!err) {
-								for (i = 0; i < routes.length; i++) {
-									this._routes[i].properties = routes[i].properties;
-								}
-								this._updateLineCallback(err, routes);
-							}
-
-						}, this),
-						simplifyGeometry: false,
-						geometryOnly: true
-					});
-				}
-			}, this);
+			this._map.on('zoomend', onZoomEnd, this);
 
 			if (this._plan.options.geocoder) {
 				container.insertBefore(this._plan.createGeocoders(), container.firstChild);
@@ -566,6 +568,9 @@ if (typeof module === 'object' && module.exports) {
 					map.removeLayer(this._alternatives[i]);
 				}
 			}
+
+			map.off('zoomend', onZoomEnd, this);
+
 			return L.Routing.Itinerary.prototype.onRemove.call(this, map);
 		},
 

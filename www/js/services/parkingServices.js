@@ -39,10 +39,8 @@ angular.module('ema.services')
       };
 
       addParking = function (object) {
-
-          var venta = Object.assign({}, object);
           
-          return $http.post(getUrl(), venta);
+          return $http.post(getUrl(), object);
       };
 
       getParkingByPatente = function (patente) {
@@ -56,13 +54,18 @@ angular.module('ema.services')
                 }
               }
         });
-    };
+      };
+
+      updateParking = function (id, object) {
+          return $http.put(getUrlForId(id), object);
+      };
 
       return {
         getParkings: getParkings,
         getParking: getParking,
         getParkingsFilter: getParkingsFilter,
         addParking: addParking,
-        getParkingByPatente: getParkingByPatente
+        getParkingByPatente: getParkingByPatente,
+        updateParking: updateParking
       }
   })

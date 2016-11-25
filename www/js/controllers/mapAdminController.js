@@ -1,37 +1,39 @@
 
 angular.module('ema.controllers')
 
-.controller('MapAdminController',function($scope, $cordovaGeolocation, $ionicPopup,ZonaEstacionamientoServices, VendedorService ){
+.controller('MapAdminController',function($scope, $cordovaGeolocation, $ionicPopup,$q,ZonaEstacionamientoServices, VendedorService ,UsuarioService){
 
     var coordinates = [],
      markersLocation= [],
      zonaEdit= {},
+     vendedorusers = [],
      id = null ;
+     var markerObject = {};
     // INICIALIZACION DEL MAPA
        
-        var cloudmadeUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-        cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18}),
-        map = new L.Map('map',
+    var cloudmadeUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+    cloudmade = new L.TileLayer(cloudmadeUrl, { maxZoom: 18 });
+    $scope.map = new L.Map('map',
          {layers: [cloudmade], center: new L.LatLng(-34.789439,-58.523198),
          zoom: 16 });
         
         var editableLayers = new L.FeatureGroup();
-        map.addLayer(editableLayers);
+        $scope.map.addLayer(editableLayers);
         drawnItems = new L.FeatureGroup();
         
-        var zonesparking = viewZoneParking(map);
-        var puntosventa = viewPointsSales(map);
-        //var geocodeService = L.esri.Geocoding.geocodeService();
+        var zonesparking = viewZoneParking($scope.map);
+        var puntosventa = viewPointsSales($scope.map);
+          //var geocodeService = L.esri.Geocoding.geocodeService();
        
 
         L.control.scale({
             metric: true,
             imperial: false,
             updateWhenIdle: true
-        }).addTo(map); 
+        }).addTo($scope.map);
         
        
-        map.zoomControl.setPosition('bottomleft');
+        $scope.map.zoomControl.setPosition('bottomleft');
 
         var MyCustomMarker = L.Icon.extend({
             options: {
@@ -49,7 +51,7 @@ angular.module('ema.controllers')
                     shapeOptions: {
                         color: '#3333ff',
                         message: 'marca una zona de estacionamiento medido',
-                        weight: 12,
+                        weight: 6,
                         id_bd:id 
                     }
                 },
@@ -78,7 +80,7 @@ angular.module('ema.controllers')
                  for (var x = 0; x < coordenadas.length; x++) {
                     id = coordenadas[x].id;
                     var jsonVar = JSON.parse(coordenadas[x].coordinates,id);
-                    var polyline = L.polyline(jsonVar, { color: 'blue', weight: 10 });
+                    var polyline = L.polyline(jsonVar, { color: 'blue', weight: 6 });
                     polyline.id_bd = id;
                     editableLayers.addLayer(polyline).addTo(map);  
                      }
@@ -90,23 +92,28 @@ angular.module('ema.controllers')
             VendedorService.getVendedores().then(function (result) {
                  var coordenadas = result.data.data           
             for (var x = 0; x < coordenadas.length; x++) {
-              markersLocation.push(L.marker(coordenadas[x].location,{icon: new MyCustomMarker()}));
+              id = coordenadas[x].id;
+              markersLocation.push(L.marker(coordenadas[x].location,{icon: new MyCustomMarker()},id));
               var markers = L.layerGroup(markersLocation);
+
               markers.addTo(map);
+              drawnItems.addLayer(markers);
                 } 
               })
-            };
+            };    
+
 
 
         var drawControl = new L.Control.Draw(options);
-        map.addControl(drawControl);
+        $scope.map.addControl(drawControl);
 
-        map.on('draw:created', function (e) {
+        $scope.map.on('draw:created', function (e) {
 
           var type = e.layerType,
               layer = e.layer;
           
           if (type === 'polyline') {
+            var estacionamiento = {};
               latlngs = layer.getLatLngs();
               for (var i = 0; i < latlngs.length; i++) {
                   coordinates.push([latlngs[i].lat,latlngs[i].lng]);
@@ -116,39 +123,97 @@ angular.module('ema.controllers')
               drawnItems.addLayer(layer);
               editableLayers.addLayer(layer); 
                               
-              var estacionamiento = {};
+              
               estacionamiento.coordinates = JSON.stringify(coordinates);
-              ZonaEstacionamientoServices.addZonaEstacionamiento(estacionamiento).then(function () {})
+              ZonaEstacionamientoServices.addZonaEstacionamiento(estacionamiento).then(function () {
+                coordinates = [];
+              })
               };
 
           if (type === 'marker') {
+              var Direccion = null;
 
               var lat = layer.getLatLng().lat,
-              lng = layer.getLatLng().lng;
+              lng = layer.getLatLng().lng,
+              address =  VendedorService.getDireccionByLatLng(lat,lng).then(function (result) {
+                      Direccion = result.data;
+                      var calle = Direccion.address.road,
+                      localidad = Direccion.address.city,
+                      partido = Direccion.address.state_district,
+                      provincia = Direccion.address.state;
+                                     
+              markerObject.location = [lat,lng];
+              var addressfromcoordinates = JSON.stringify(address);
+              var coords = e.layer._latlng;
+              var tempMarker = drawnItems.addLayer(e.layer);
               
-
+              
+              
+              
+             /* var popupContent = 
+              '<ion-modal-view style="width: 100%; height: 100%;top: 10%;">'+
+                '<ion-header-bar class="bar-calm">'+
+                    '<h5 class="title">Nuevo Punto de Venta</h5>'+
+                '</ion-header-bar>'+
+                '<ion-content class="padding">'+
+                    '<form name="usuarioForm" ng-submit=submit()>'+
+                    '    <div class="list">    '+
+                    '        <label class="item item-input">'+
+                    '<span class="input-label">Cuit:</span>'+          
+                    '         <input type="text" placeholder="CUIT" ng-model="markerObject.cuit">'+
+                    '        </label>'+
+                    '        <label class="item item-input">'+
+                    '        <span class="input-label">Punto de Venta:</span>'+
+                    '         <input type="text" placeholder="Nombre punto venta" ng-model="markerObject.business_name">'+
+                    '        </label>'+
+                    '        <label class="item item-input">'+
+                    '        <span class="input-label">Direccion:</span>'+
+                    '            <input type="text" placeholder="Direccion" disabled value='+calle+calle+'>'+
+                    '        </label>'+
+                        '</div>'+
+                        '<div class="padding">'+
+                            '<button class="button button-block button-balanced" >Guardar Punto de Venta</button>'+
+                        '</div>'+
+                    '</form>'+
+                '</ion-content>'+
+            '</ion-modal-view>';
+                tempMarker.bindPopup(popupContent,{
+                keepInView: true,
+                closeButton: true
+                }).openPopup()
             
             
             // here you add it to a layer to display it in the map
-              drawnItems.addLayer(layer);
-              editableLayers.addLayer(layer);  
-                
-              var markerObject = {};
-              markerObject.location = [lat,lng];
+              
+
+              
+
               var myPopup = L.popup()
-              var popupContent = '<ion-modal-view style="width: 40%; height: 60%;top: 5%;">    <ion-header-bar class="bar-calm">        <h6 class="title">Nuevo Punto de Venta</h6>                </div>    </ion-header-bar>    <ion-content class="padding">        <form name="puntoVentaForm" ng-submit="addVendedor()">            <div class="list">                    <label class="item item-input">                    <input type="number" placeholder="CUIT" ng-model="markerObject.cuit" >                </label>                <label class="item item-input">                    <input type="number" placeholder="ID USUARIO" ng-model="markerObject.usuario_id" >                </label><label> <input type="number" placeholder="ID USUARIO"  disabled> </label>                <label class="item item-input">                    <input type="text" placeholder="business Name" ng-model="markerObject.business_name" >                </label>                                                </div>            <div class="padding">                <button class="button button-block button-balanced" ng-disabled="puntoVentaForm.$invalid">Save Punto Venta</button>            </div>        </form>   </ion-content></ion-modal-view>';
               myPopup.setContent(popupContent);
               layer.bindPopup(myPopup).openPopup();
+              console.log(myPopup.value);
+              console.log(myPopup.content);
+              */
+              drawnItems.addLayer(layer);
+              editableLayers.addLayer(layer); 
 
-              VendedorService.addVendedor(markerObject).then(function () {})
-               }    
-          
-           // drawnItems.addLayer(e.target);    
+            
 
-                  
+           
+              VendedorService.addVendedor(markerObject).then(function () {});
+
+           
+              });
+
+
+
+
+
+                  }
+
            });
 
-          map.on('draw:edited', function (e) {
+        $scope.map.on('draw:edited', function (e) {
               var layers = e.layers;
               layers.eachLayer(function (layer) {
                     if (layer instanceof L.Polyline) {
@@ -186,11 +251,12 @@ angular.module('ema.controllers')
 
 
           
-          map.on('draw:deleted', function (e) {
+        $scope.map.on('draw:deleted', function (e) {
               var layers = e.layers;
               var type = e.layerType;
               layers.eachLayer(function (layer) {
-                        var object = {};
+                var object = {};
+                if (layer instanceof L.Polyline) {
                         //OBTENNGO EL ID DE LA LINEA QUE DESEO ELIMINAR
                         zonaRemove= layer.id_bd;
                         //SE OBTIENE EL REGISTRO QUE SE CORRESPONDE CON EL ID QUE SE ELIMINA
@@ -199,29 +265,53 @@ angular.module('ema.controllers')
                         //SE INGRESA EN EL PARAMETRO EL ID QUE SE ELIMINO PARA QUE LO ELIMINE DE BACKAND
                         ZonaEstacionamientoServices.deleteZonaEstacionamiento(object.id).then(function (result) {})                                
                              })
+                      }
+                     
               })
           });
 
 
-
     // SITUAR EN POSICION ACTUAL
+    $scope.locate = function () {
+
+        // LLAMADA ASINCRONICA
+        var posicionActual = getActualLocation();
+
+        posicionActual.then(function (actualPosition) {
+
+            $scope.map.setView(actualPosition, 18);
+
+
+        }, function (reason) {
+            alert('Failed: ' + reason);
+        });
+    };
+
+
+    function getActualLocation () {
+
+        return $q(function (resolve, reject) {
+            $cordovaGeolocation
+            .getCurrentPosition()
+            .then(function (position) {
+
+                resolve(new L.LatLng(position.coords.latitude, position.coords.longitude));
+
+            }, function (err) {
+                // error
+                reject(err.message);
+            });
+        });
+    }
+
+    /*
     $scope.locate = function(){
 
         $cordovaGeolocation
           .getCurrentPosition()
           .then(function (position) {
 
-              $scope.map.center.lat = position.coords.latitude;
-              $scope.map.center.lng = position.coords.longitude;
-              $scope.map.center.zoom = 18;
-
-              $scope.map.markers.now = {
-                  lat:position.coords.latitude,
-                  lng:position.coords.longitude,
-                  message: "Estas Aqui!",
-                  focus: true,
-                  draggable: false
-              };
+              $scope.map.setView(new L.LatLng(position.coords.latitude, position.coords.longitude), 18);
 
           }, function(err) {
               // error
@@ -230,9 +320,9 @@ angular.module('ema.controllers')
                   template: err.message
                   });
               });
-
        };
+       */
     })
-
+    
 
 
