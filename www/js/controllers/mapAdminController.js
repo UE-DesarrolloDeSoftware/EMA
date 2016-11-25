@@ -113,6 +113,7 @@ angular.module('ema.controllers')
               layer = e.layer;
           
           if (type === 'polyline') {
+            var estacionamiento = {};
               latlngs = layer.getLatLngs();
               for (var i = 0; i < latlngs.length; i++) {
                   coordinates.push([latlngs[i].lat,latlngs[i].lng]);
@@ -122,9 +123,11 @@ angular.module('ema.controllers')
               drawnItems.addLayer(layer);
               editableLayers.addLayer(layer); 
                               
-              var estacionamiento = {};
+              
               estacionamiento.coordinates = JSON.stringify(coordinates);
-              ZonaEstacionamientoServices.addZonaEstacionamiento(estacionamiento).then(function () {})
+              ZonaEstacionamientoServices.addZonaEstacionamiento(estacionamiento).then(function () {
+                coordinates = [];
+              })
               };
 
           if (type === 'marker') {
