@@ -12,7 +12,7 @@ angular.module('ema.controllers')
      var minutosProrroga = 0;
 
      ConfigurationsService.getConfigurationByKey("minutos_prorroga").then(function (result) {
-         minutosProrroga = result.data.data[0].value
+         minutosProrroga = result.data.data[0].value;
      });
 
      $scope.comprobarEstado = function () {

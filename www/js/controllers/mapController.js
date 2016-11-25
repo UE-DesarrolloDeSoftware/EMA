@@ -1,18 +1,18 @@
 angular.module('ema.controllers')
 
-.controller('MapController', function ($scope, $cordovaGeolocation, $ionicPopup, $q, ZonaEstacionamientoServices, VendedorService) {
+.controller('MapController', function ($scope, $cordovaGeolocation, $ionicPopup, $q, ZonaEstacionamientoServices, VendedorService, ConductorService, ParkingService) {
     // Codigo que se ejecuta luego de cargar la pagina
     $scope.$on("$stateChangeSuccess", function () {
-
 
     });
 
     // Distancia de tolerancia entre un punto y una polyline, para determinar que esta sobre la linea
     var distanciaAlPunto = 25;
 
-    $scope.mostrarBtnEsctacionar = true;
-    $scope.mostrarBtnCancelar = false;
-    $scope.mostrarBtnCancelarPtoVenta = false;
+    $scope.verBtnEsctacionar = true;
+    $scope.verBtnCancelarEstacionamiento = false;
+    $scope.verBtnCancelarRutaPtoVenta = false;
+    $scope.mostrarTimer = false;
 
     // SITUAR EN POSICION ACTUAL
     $scope.locate = function () {
@@ -36,6 +36,8 @@ angular.module('ema.controllers')
     cloudmade = new L.TileLayer(cloudmadeUrl, { maxZoom: 18 });
 
     $scope.map = new L.Map('map', { layers: [cloudmade], zoom: 18 });
+
+    $scope.map.zoomControl.setPosition('bottomleft');
 
     $scope.locate();
 
@@ -77,8 +79,43 @@ angular.module('ema.controllers')
                         // Crea los markers de puntos de venta y setea el id del groupLayer
                         $scope.layerPtosVentaId = addMarkersPtosVenta($scope.map, result.data.data);
 
-                        $scope.mostrarBtnEsctacionar = false;
-                        $scope.mostrarBtnCancelar = true;
+                        var usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
+
+                        ConductorService.getConductorByIdUsuario(usuarioLogueado.id).then(function (result) {
+
+                            var conductor = result.data[0];
+                           
+                            var parking = {};
+
+                            parking.driver = conductor.id;
+                            parking.arrival_date = new Date();
+                            parking.location = [actualPosition.lat, actualPosition.lng];
+
+                            //  POPUP PREGUNTANDO QUE PATENTE USARA
+                            $scope.popupData = {};
+                            $scope.popupData.patente = conductor.patente;
+                            $ionicPopup.show({
+                                template: '<input ng-model="popupData.patente" type="text" placeholder="Patente">',
+                                title: 'Ingrese la patente ha utilizar',
+                                subTitle: '',
+                                scope: $scope,
+                                buttons: [ {text: '<b>OK</b>', type: 'button-positive', onTap: function (e) { return $scope.popupData.patente || true; }}]
+                            }).then(function (res) {
+                                parking.patente = res;
+                                
+                                // COMENTADO POR PRUEBAS
+                                //CREAR REGISTRO PARKING
+                                //ParkingService.addParking(parking).then(function (result) {
+
+                                //});
+
+                                arrancarReloj();
+                            });
+
+                        });
+
+                        $scope.verBtnEsctacionar = false;
+                        $scope.verBtnCancelarEstacionamiento = true;
 
                         $scope.hideLoading();
                     });
@@ -97,14 +134,15 @@ angular.module('ema.controllers')
         $scope.cancelarEstacionamiento = function (layerId) {
             $scope.map.removeLayer($scope.map._layers[layerId]);
 
-            $scope.mostrarBtnEsctacionar = true;
-            $scope.mostrarBtnCancelar = false;
+            pararReloj();
+
+            $scope.verBtnEsctacionar = true;
+            $scope.verBtnCancelarEstacionamiento = false;
         }
 
     }, function (reason) {
         alert('Failed: ' + reason);
     });
-
 
     function mostrarRuta (lat, lng) {
     
@@ -135,12 +173,12 @@ angular.module('ema.controllers')
                     $scope.map.closePopup(layer._popup);
             });
 
-            $scope.mostrarBtnCancelar = false;
-            $scope.mostrarBtnCancelarPtoVenta = true;
+            $scope.verBtnCancelarEstacionamiento = false;
+            $scope.verBtnCancelarRutaPtoVenta = true;
         });
     }
 
-    $scope.cancelarPuntoVenta = function () {
+    $scope.cancelarRutaPuntoVenta = function () {
         $scope.map._layers[$scope.layerPtosVentaId].eachLayer(function (layer) {
             layer._icon.style.display = 'block';
         });
@@ -148,8 +186,8 @@ angular.module('ema.controllers')
         $scope.map.removeControl($scope.routingControl);
         //$scope.routingControl.removeFrom($scope.map);
 
-        $scope.mostrarBtnCancelar = true;
-        $scope.mostrarBtnCancelarPtoVenta = false;
+        $scope.verBtnCancelarEstacionamiento = true;
+        $scope.verBtnCancelarRutaPtoVenta = false;
     }
 
     function addLinesFromDb(map) {
@@ -297,7 +335,7 @@ angular.module('ema.controllers')
             div.appendChild(boton);
 
             var marker = L.marker(new L.LatLng(ptosVenta[x].location[0], ptosVenta[x].location[1]), { draggable: false, icon: icon })
-            marker.bindPopup(div, { 'maxWidth': '500', 'offset': [-20, -20] });
+            marker.bindPopup(div, { 'maxWidth': '500', 'offset': [0, -10] });
 
             markersArray.push(marker);
         }
@@ -327,5 +365,42 @@ angular.module('ema.controllers')
         else {
             return false;
         }
-    }    
+    }
+
+    function arrancarReloj() {
+        $scope.mostrarTimer = true;
+
+        var now = new Date();
+        var hasta = new Date(now);
+
+        //ConfigurationsService.getConfigurationByKey("minutos_prorroga").then(function (result) {
+        //    hasta.setMinutes(hasta.getMinutes() + parseInt(result.data.data[0].value));
+
+            hasta.setSeconds(hasta.getSeconds() + parseInt(10));
+
+            $scope.countdown = new Countdown({
+                selector: '#timer',
+                //msgBefore: "Will start at Christmas!",
+                msgAfter: "00:00",
+                msgPattern: "{minutes}:{seconds}",
+                leadingZeros: true,
+                dateStart: now,
+                dateEnd: hasta,
+                onStart: function () {
+                    console.log('Inciando prorroga');
+                },
+                onEnd: function () {
+                    $ionicPopup.alert({
+                        title: 'Tiempo de prorroga finalizado',
+                        template: "Acerquese cuanto antes a un punto de venta para efectuar el pago."
+                    });
+                }
+            });
+        //});
+    }
+
+    function pararReloj() {
+        $scope.mostrarTimer = false;
+        $scope.countdown.stop();
+    }
 })

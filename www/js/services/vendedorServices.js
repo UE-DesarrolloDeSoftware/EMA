@@ -56,6 +56,9 @@ angular.module('ema.services')
               }
         });
     };
+    getDireccionByLatLng = function (lat,lng) {
+        return $http.get('http://nominatim.openstreetmap.org/reverse?format=json&lat='+lat+'&lon='+lng+'&zoom=18&addressdetails=1');
+        };
 
     return {
         getVendedores: getVendedores,
@@ -64,6 +67,7 @@ angular.module('ema.services')
         addVendedor: addVendedor,
         updateVendedor:updateVendedor,
         deleteVendedor:deleteVendedor,
-        getVendedorByIdUsuario: getVendedorByIdUsuario
+        getVendedorByIdUsuario: getVendedorByIdUsuario,
+        getDireccionByLatLng: getDireccionByLatLng
     }
 })

@@ -1,24 +1,16 @@
-<ion-view  id="map" title="map" >
+<ion-view title="Mapa" >
+       
+    <ion-nav-buttons side="right">
+        <button ng-click="locate();" class="button button-icon icon ion-pinpoint"></button>
+    </ion-nav-buttons>
 
-        
-            <ion-nav-buttons side="left">
-                <button menu-toggle="leftbottom" class="button button-icon icon ion-navicon"></button>
-                </ion-nav-buttons>
-            <ion-nav-buttons side="right">
-                <button ng-click="locate();" class="button button-icon icon ion-pinpoint"></button>
-            </ion-nav-buttons>
+    <ion-content data-tap-disabled="true">
 
-        
+        <!--<leaflet id="map" ></leaflet>-->
 
-        <ion-content data-tap-disabled="true">
+        <div id="map"></div>
 
-            <leaflet id="map" >
-                
-              
-
-            </leaflet>
-
-        </ion-content>
+    </ion-content>
 
 </ion-view>
 
