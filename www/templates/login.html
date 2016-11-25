@@ -7,21 +7,21 @@
 
             <div class="list">
                 <label class="item item-input">
-                <input id="email" name="email" type="email"  placeholder="Your email" ng-model="login.email">
+                <input id="email" name="email" type="email" placeholder="Email" ng-model="login.email" required>
                 </label>
                 <label class="item item-input">
-                <input id="password" name="password" type="password" placeholder="Your password" ng-model="login.password">
+                <input id="password" name="password" type="password" placeholder="Contrase&ntilde;a" ng-model="login.password" required>
                 </label>
             </div>
 
             <div class="padding">
-                <button class="button button-block button-positive" type="submit"> Login </button>
+                <button class="button button-block button-positive" type="submit" ng-disabled="loginForm.$invalid">Iniciar Sesion</button>
             </div>
 
         </form>
 
         <div class="padding">
-            <a style="cursor:pointer;" ng-click="modal.show()">Registrarme!</a>
+            <a style="cursor:pointer;" ng-click="modal.show()" >Registrarme!</a>
         </div>
 
     </ion-content>

@@ -1,11 +1,13 @@
 <ion-view title="Comprobar estado vehiculo" id="page6" style="background-color:#6C9FEE;">
-    <ion-content padding="true" class="has-header">
+
+    <ion-content padding="true" has-header="true">
+
         <form name="buscarForm" ng-submit="comprobarEstado()" class="list">
-            <label class="item item-input" id="buscarTicket-input17">
+            <label class="item item-input">
                 <span class="input-label">Patente</span>
-                <input type="text" ng-model="inputForm.patente" placeholder="">
+                <input type="text" ng-model="inputForm.patente" pattern="([A-Z,a-z]{2}?[0-9]{3}?[A-Z,a-z]{2}|[A-Z,a-z]{3}?[0-9]{3})" required>
             </label>
-            <button id="buscarTicket-button4" style="border-radius:14px 14px 14px 14px;" class="button button-dark  button-block">Buscar</button>
+            <button class="button button-dark  button-block" ng-disabled="buscarForm.$invalid">Buscar</button>
         </form>
 
         <div class="animate-switch-container"

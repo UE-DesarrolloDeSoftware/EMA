@@ -93,11 +93,11 @@ angular.module('ema.controllers')
                             $scope.popupData = {};
                             $scope.popupData.patente = conductor.patente;
                             $ionicPopup.show({
-                                template: '<input ng-model="popupData.patente" type="text" placeholder="Patente">',
+                                template: '<input ng-model="popupData.patente" type="text" placeholder="Patente" pattern="([A-Z,a-z]{2}?[0-9]{3}?[A-Z,a-z]{2}|[A-Z,a-z]{3}?[0-9]{3})" required>',
                                 title: 'Ingrese la patente a utilizar',
                                 subTitle: '',
                                 scope: $scope,
-                                buttons: [ {text: '<b>OK</b>', type: 'button-positive', onTap: function (e) { return $scope.popupData.patente || true; }}]
+                                buttons: [ {text: '<b>OK</b>', ngdisabled:'', type: 'button-positive', onTap: function (e) { return $scope.popupData.patente || true; }}]
                             }).then(function (patentePopUp) {
 
                                 var parkingFilter = {

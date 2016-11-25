@@ -11,28 +11,49 @@
 
     <ion-content class="padding">
 
-        <form name="usuarioForm" ng-submit="addUsuario()">
+        <form name="usuarioForm" ng-submit="addUsuario()" >
             <div class="list">    
                 <label class="item item-input">
-                    <input type="text" placeholder="Nombre" ng-model="input.name" required>
+                    <div class="input-label">
+                        Nombre
+                    </div>
+                    <input type="text" class="ema-font" ng-model="input.name" required>
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="Apellido" ng-model="input.lastname" required>
+                    <div class="input-label">
+                        Apellido
+                    </div>
+                    <input type="text" ng-model="input.lastname" required>
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="Email" ng-model="input.email" required>
+                    <div class="input-label">
+                        Email
+                    </div>
+                    <input type="text" ng-model="input.email" required>
                 </label>
                 <label class="item item-input">
-                    <input type="password" placeholder="Password" ng-model="input.password" required>
+                    <div class="input-label">
+                        Password
+                    </div>
+                    <input type="password" ng-model="input.password" required>
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="DNI" ng-model="input.dni" >
+                    <div class="input-label">
+                        DNI
+                    </div>
+                    <input type="text" ng-model="input.dni" >
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="Telefono Fijo" ng-model="input.phone">
+                    <div class="input-label">
+                        Telefono Fijo
+                    </div>
+                    <input type="text" ng-model="input.phone">
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="Telefono Celular" ng-model="input.mobilephone" >
+                    <div class="input-label">
+                        Telefono Celular
+                    </div>
+                    <input type="text" ng-model="input.mobilephone" >
                 </label>    
                 <label class="item item-input item-select" ng-show="isAdmin" >
                     <div class="input-label">
@@ -48,7 +69,11 @@
                 
                 <div ng-show="!isAdmin||input.role_id==4">
                     <label class="item item-input">
-                        <input type="text" placeholder="Patente" ng-model="input.patente" ng-required="!isAdmin||input.role_id==4">
+                        <div class="input-label">
+                            Patente
+                        </div>
+                        <input type="text" pattern="([A-Z,a-z]{2}?[0-9]{3}?[A-Z,a-z]{2}|[A-Z,a-z]{3}?[0-9]{3})"
+                                ng-model="input.patente" ng-required="!isAdmin||input.role_id==4">
                     </label>
                 </div>
  

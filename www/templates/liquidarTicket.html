@@ -17,7 +17,7 @@
                     <div class="input-label">
                         Patente
                     </div>
-                    <input type="text" ng-model="input.patente" required >
+                    <input type="text" ng-model="input.patente" pattern="([A-Z,a-z]{2}?[0-9]{3}?[A-Z,a-z]{2}|[A-Z,a-z]{3}?[0-9]{3})" title="Ingrese una patente v&aacute;lida"  required >
                 </label>
 
                 <label class="item item-input item-select">
@@ -32,11 +32,12 @@
                     </select>
                 </label>
 
-                <label class="item item-input">
+                <label class="item item-input padding-right">
                     <div class="input-label">
                         Importe
                     </div>
-                    <input type="number" ng-model="input.amount" readonly>
+                    <!--<input type="text" ng-model="input.amount | currency" ng-readonly="true">-->
+                    <span>{{input.amount | currency}}</span>
                 </label>   
 
             </div>
