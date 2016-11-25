@@ -128,12 +128,12 @@ div.circleLabel {
     top: 20px;
     right: 0;
     width: 100%;
-    text-align: left;
+    text-align: right;
 }
 
 #timer { 
    position: absolute; 
    top: 37px; 
-   left: 27px; 
+   right: 30px; 
    width: 100%; 
 }

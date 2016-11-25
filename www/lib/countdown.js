@@ -89,12 +89,12 @@
 
   // Running the countdown
   Countdown.prototype.run = function () {
-    var that = this,
-        sec  = Math.abs(this.seconds(this.conf.dateEnd) - this.seconds(new Date()));
+    var that = this;
+    this.sec  = Math.abs(this.seconds(this.conf.dateEnd) - this.seconds(new Date()));
 
     // Initial display before first tick
     if (this.isStarted()) {
-      this.display(sec);
+        this.display(this.sec);
     }
 
     // Not started yet
@@ -104,10 +104,10 @@
 
     // Vanilla JS alternative to $.proxy
     this.timer = global.setInterval(function () {
-      sec--;
+      that.sec--;
 
       // Time over
-      if (sec <= 0) {
+      if (that.sec <= 0) {
         global.clearInterval(that.timer);
         that.outOfInterval();
         that.callback("end");
@@ -119,7 +119,7 @@
           that.started = true;
         }
 
-        that.display(sec);
+        that.display(that.sec);
       }
     }, this.interval);
   };
@@ -159,12 +159,14 @@
   // Canceling the countdown in case it's over
   Countdown.prototype.outOfInterval = function () {
     var message = new Date() < this.conf.dateStart ? this.conf.msgBefore : this.conf.msgAfter;
-
+    
     for (var d = 0; d < this.selector.length; d++) {
       if (this.selector[d].innerHTML !== message) {
         this.selector[d].innerHTML = message;
       }
     }
+
+    this.started = false;
   };
 
   // Dealing with events and callbacks
@@ -190,6 +192,17 @@
   // Stoping countdown
   Countdown.prototype.stop = function () {
       global.clearInterval(this.timer);
+  };
+
+  // Update end date
+  Countdown.prototype.updateEndDate = function (dateEnd) {
+      this.conf.dateEnd = dateEnd;
+      this.sec = Math.abs(this.seconds(dateEnd) - this.seconds(new Date()));;
+  };
+
+  // Update end function
+  Countdown.prototype.updateOnEnd = function (onEnd) {
+      this.conf.onEnd = onEnd;
   };
 
   global.Countdown = Countdown;
