@@ -51,7 +51,7 @@ angular.module('ema.controllers')
                     shapeOptions: {
                         color: '#3333ff',
                         message: 'marca una zona de estacionamiento medido',
-                        weight: 12,
+                        weight: 6,
                         id_bd:id 
                     }
                 },
@@ -80,7 +80,7 @@ angular.module('ema.controllers')
                  for (var x = 0; x < coordenadas.length; x++) {
                     id = coordenadas[x].id;
                     var jsonVar = JSON.parse(coordenadas[x].coordinates,id);
-                    var polyline = L.polyline(jsonVar, { color: 'blue', weight: 8 });
+                    var polyline = L.polyline(jsonVar, { color: 'blue', weight: 6 });
                     polyline.id_bd = id;
                     editableLayers.addLayer(polyline).addTo(map);  
                      }
