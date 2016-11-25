@@ -73,7 +73,7 @@ div.circle {
 }
 
 .circle.orange{
-    background-color:orangered;
+    background-color:orange;
 }
 
 .circle.green{
@@ -133,7 +133,7 @@ div.circleLabel {
 
 #timer { 
    position: absolute; 
-   top: 37px; 
-   right: 30px; 
+   top: 50px; 
+   right: 35px; 
    width: 100%; 
 }

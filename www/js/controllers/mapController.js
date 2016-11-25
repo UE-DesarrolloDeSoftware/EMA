@@ -7,7 +7,7 @@ angular.module('ema.controllers')
     });
 
     // Distancia de tolerancia entre un punto y una polyline, para determinar que esta sobre la linea
-    var distanciaAlPunto = 25;
+    var distanciaAlPunto = 35;
 
     $scope.verBtnEsctacionar = true;
     $scope.verBtnCancelarEstacionamiento = false;
@@ -48,17 +48,16 @@ angular.module('ema.controllers')
         $scope.hideLoading();
 
         //Evento click del mapa que evalua la situacion de estacionamiento
-        $scope.map.on('click',
-            function (e) {
+        //$scope.map.on('click',
+        //    function (e) {
 
-                if (!isPointOnLine($scope.map, polylines, e.latlng)) {
-                    $ionicPopup.alert({
-                        title: 'Atencion',
-                        template: "Estacionamiento libre"
-                    });
-                }
-            }
-        );
+        //        if (!isPointOnLine($scope.map, polylines, e.latlng)) {
+        //            $ionicPopup.alert({
+        //                title: 'Estacionamiento libre'
+        //            });
+        //        }
+        //    }
+        //);
 
         // Funcion de Estacionar
         $scope.estacionar = function () {
@@ -95,7 +94,7 @@ angular.module('ema.controllers')
                             $scope.popupData.patente = conductor.patente;
                             $ionicPopup.show({
                                 template: '<input ng-model="popupData.patente" type="text" placeholder="Patente">',
-                                title: 'Ingrese la patente ha utilizar',
+                                title: 'Ingrese la patente a utilizar',
                                 subTitle: '',
                                 scope: $scope,
                                 buttons: [ {text: '<b>OK</b>', type: 'button-positive', onTap: function (e) { return $scope.popupData.patente || true; }}]
@@ -167,8 +166,7 @@ angular.module('ema.controllers')
                 else // Estacionamiento libre
                 {    
                     $ionicPopup.alert({
-                        title: 'Atencion',
-                        template: "Estacionamiento libre"
+                        title: 'Estacionamiento libre'
                     });
                 }
             });
@@ -406,8 +404,8 @@ angular.module('ema.controllers')
 
         $scope.countdown = new Countdown({
             selector: '#timer',
-            msgAfter: "00:00",
-            msgPattern: "{minutes}:{seconds}",
+            msgAfter: "0:00:00",
+            msgPattern: "{hours}:{minutes}:{seconds}",
             leadingZeros: true,
             dateStart: new Date(),
             dateEnd: hasta,

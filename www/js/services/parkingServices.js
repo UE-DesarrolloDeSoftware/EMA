@@ -54,13 +54,18 @@ angular.module('ema.services')
                 }
               }
         });
-    };
+      };
+
+      updateParking = function (id, object) {
+          return $http.put(getUrlForId(id), object);
+      };
 
       return {
         getParkings: getParkings,
         getParking: getParking,
         getParkingsFilter: getParkingsFilter,
         addParking: addParking,
-        getParkingByPatente: getParkingByPatente
+        getParkingByPatente: getParkingByPatente,
+        updateParking: updateParking
       }
   })

@@ -1,5 +1,5 @@
-<ion-view>
-    <ion-header-bar class="bar-calm">
+<ion-view title="Liquidar Ticket" style="background-color:#6C9FEE;">
+    <!--<ion-header-bar class="bar-calm">
 
         <h1 class="title"> Liquidar Ticket</h1>
 
@@ -7,28 +7,42 @@
             <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
         </div>
 
-    </ion-header-bar>
+    </ion-header-bar>-->
 
-    <ion-content class="padding">
+    <ion-content padding="true" has-header="true">
 
         <form name="ventaForm" ng-submit="addVenta()">
             <div class="list">    
                 <label class="item item-input">
-                    <input type="text" placeholder="Patente" ng-model="input.patente" >
+                    <div class="input-label">
+                        Patente
+                    </div>
+                    <input type="text" ng-model="input.patente" required >
                 </label>
+
                 <label class="item item-input item-select">
-                    <input type="number" placeholder="Importe" ng-model="input.amount" >
-                </label>   
-                <label class="item item-input item-select">
-                    <input type="number" placeholder="Hora" ng-model="input.hours" >
-                    <select>
-                          <option>1</option>
+                    <div class="input-label">
+                        Horas
+                    </div>
+                    <select ng-model="input.hours" ng-change="input.amount = input.hours * 2" required>
+                        <option ng-repeat="hora in horas"
+                                value="{{hora}}">
+                            {{hora}}
+                        </option>
                     </select>
                 </label>
+
+                <label class="item item-input">
+                    <div class="input-label">
+                        Importe
+                    </div>
+                    <input type="number" ng-model="input.amount" readonly>
+                </label>   
+
             </div>
 
             <div class="padding">
-                <button class="button button-block button-balanced" ng-disabled="ventaForm.$invalid">Save Venta</button>
+                <button class="button button-dark  button-block" ng-disabled="ventaForm.$invalid">Guardar ticket</button>
             </div>
         </form>
 

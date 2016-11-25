@@ -14,7 +14,15 @@ angular.module('ema.services')
       }
 
       getZonasEstacionamiento = function () {
-          return $http.get(getUrl());
+          //return $http.get(getUrl());
+
+          return $http({
+              method: 'GET',
+              url: getUrl(),
+              params: {
+                  pageSize: 99999
+              }
+          });
       };
 
       getZonaEstacionamiento = function (id) {
