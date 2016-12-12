@@ -8,6 +8,7 @@ angular.module('ema.controllers')
 
     // Distancia de tolerancia entre un punto y una polyline, para determinar que esta sobre la linea
     var distanciaAlPunto = 35;
+    var estacionamientoCancelado= false;
 
     $scope.verBtnEsctacionar = true;
     $scope.verBtnCancelarEstacionamiento = false;
@@ -16,16 +17,16 @@ angular.module('ema.controllers')
 
     // SITUAR EN POSICION ACTUAL
     $scope.locate = function () {
-
+  
         // LLAMADA ASINCRONICA
         var promise3 = getActualLocation();
 
         promise3.then(function (actualPosition) {
 
             $scope.map.setView(actualPosition, 18);
-
-            addMarkerAuto($scope.map, actualPosition);
-
+            
+            addMarkerAuto($scope.map, actualPosition);          
+              
         }, function (reason) {
             alert('Failed: ' + reason);
         });
@@ -179,7 +180,8 @@ angular.module('ema.controllers')
                 title: 'Cancelar estacionamiento',
                 template: "Esta seguro que desea realizar la operacion?",
                 okText: 'Cancelar',
-                cancelText: 'Volver'
+                cancelText: 'Volver',
+                okType: 'button-positive'
             }).then(function (cancelar) {
 
                 if (cancelar) {
@@ -187,8 +189,10 @@ angular.module('ema.controllers')
 
                     pararReloj();
 
+                    estacionamientoCancelado = true;
                     $scope.verBtnEsctacionar = true;
                     $scope.verBtnCancelarEstacionamiento = false;
+                    window.clearInterval($scope.comprobarPago);
                 }
             });
         }
@@ -204,6 +208,8 @@ angular.module('ema.controllers')
             var waypoints = [actualPosition, L.latLng(lat, lng)];
 
             $scope.routingControl = L.Routing.control({
+                lineOptions: {
+                  styles: [{color: 'blue', opacity: 5, weight: 3}]},
                 plan: L.Routing.plan(waypoints, {
                     createMarker: function (i, wp) {
                         // Crea marker de punto de venta solo para la segunda coordenada(destino)
@@ -320,8 +326,8 @@ angular.module('ema.controllers')
 
         var icon = L.icon({
             iconUrl: 'img/auto.png',
-            iconSize: [45, 45],
-            iconAnchor: [40, 40] // Pixeles que marcan el punto en el mapa     
+            iconSize: [30, 30],
+            iconAnchor: [15, 15] // Pixeles que marcan el punto en el mapa     
         });
 
         var marker = L.marker(latLng,
@@ -350,8 +356,8 @@ angular.module('ema.controllers')
             div.innerHTML = String.format("<div>{0}</div>", ptosVenta[x].business_name);
             var boton = document.createElement("button");
             boton.textContent = "Mostrar ruta";
-            boton.className = "button button-assertive";
-            boton.style.margin = "10px";
+            boton.className = "button button-positive";
+            boton.style.margin = "30px";
 
             // VER COMO HACER EN EL EVENTO CLICK PARA MANDAR DATOS DEL PUNTO DE VENTA
             var idPtoVenta = ptosVenta[x].id;
@@ -367,7 +373,7 @@ angular.module('ema.controllers')
             div.appendChild(boton);
 
             var marker = L.marker(new L.LatLng(ptosVenta[x].location[0], ptosVenta[x].location[1]), { draggable: false, icon: icon })
-            marker.bindPopup(div, { 'maxWidth': '500', 'offset': [0, -10] });
+            marker.bindPopup(div, { 'maxWidth': '100', 'offset': [0, -10] });
 
             markersArray.push(marker);
         }
@@ -430,8 +436,13 @@ angular.module('ema.controllers')
                 title: 'Tiempo de estacionamiento finalizado',
                 template: "Acerquese cuanto antes a un punto de venta para agregar mas tiempo."
             });
-
-            $scope.comprobarPago = window.setInterval(comprobarPago, 3000);
+            if(estacionamientoCancelado === false){
+                $scope.comprobarPago = window.setInterval(comprobarPago, 3000);
+                }
+            else{
+                $scope.countdown.stop();
+                window.clearInterval($scope.comprobarPago);
+            }    
         });
         if (!$scope.countdown.started)
         $scope.countdown.initialize();
@@ -451,8 +462,8 @@ angular.module('ema.controllers')
             var prorroga_date = new Date(parkingDB.arrival_date);
             prorroga_date.setMinutes(prorroga_date.getMinutes() + $scope.minutos_proroga);
 
-            if (parkingDB.departure_date != null &&
-                new Date(parkingDB.departure_date) > prorroga_date && new Date(parkingDB.departure_date) > new Date()) {
+            if (parkingDB.departure_date != null && new Date(parkingDB.departure_date) > prorroga_date && 
+                new Date(parkingDB.departure_date) > new Date()) {
 
                 actualizarReloj(new Date(parkingDB.departure_date));
 

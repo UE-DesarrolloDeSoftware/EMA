@@ -1,18 +1,15 @@
 <ion-view title="Configuracion de Usuario" style="background-color:#6C9FEE;">
     
      <ion-content padding="true" has-header="true">
-
-        <form name="usuarioForm" ng-submit="updateConductor()">
-            <div class="list">
-
-                <label class="item item-input">
-                    <span class="input-label">Patente por defecto</span>
-                    <input type="text" ng-model="input.patente" required>
+        <div class="list">
+            <div class="item item-input-inset">
+            <span class="input-label-inset">Patente: </span>
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="conductor.patente" disabled> 
                 </label>
 
-                <button class="button button-dark  button-block" ng-disabled="usuarioForm.$invalid">Guardar</button>
-            </div>
-        </form>
-
+                <button class="button buttoneditar" ng-click="actualizar(conductor.id)">Editar</button>
+            </div>  
+        </div>
     </ion-content>
 </ion-view>

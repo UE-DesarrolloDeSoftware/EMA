@@ -152,7 +152,7 @@ angular.module('ema', ['ionic', 'ema.controllers', 'ema.services', 'backand', 'a
                 }
             }
         })
-
+/*
         .state('eventmenu.menuVendedor.estadoServicio', {
             url: "/estadoServicio",
             views: {
@@ -162,7 +162,7 @@ angular.module('ema', ['ionic', 'ema.controllers', 'ema.services', 'backand', 'a
                 }
             }
         })
-
+*/
         .state('eventmenu.menuVendedor.contactoSoporte', {
             url: "/contactoSoporte",
             views: {
@@ -228,6 +228,7 @@ angular.module('ema', ['ionic', 'ema.controllers', 'ema.services', 'backand', 'a
         }
     })
 
+/*
     .state('eventmenu.menuAdmin.estadoServicio', {
         url: "/estadoServicio",
         views: {
@@ -237,7 +238,7 @@ angular.module('ema', ['ionic', 'ema.controllers', 'ema.services', 'backand', 'a
             }
         }
     })
-
+*/
     .state('eventmenu.menuAdmin.mapAdminZonas', {
         url: "/mapadminZonas",
         views: {
@@ -269,6 +270,13 @@ angular.module('ema', ['ionic', 'ema.controllers', 'ema.services', 'backand', 'a
             }
         }
     })
+
+
+
+
+
+
+
 
     // MENU AGENTE DE TRANSITO
 
@@ -312,6 +320,7 @@ angular.module('ema', ['ionic', 'ema.controllers', 'ema.services', 'backand', 'a
         }
     })
 
+/*
     .state('eventmenu.menuAgenteTransito.estadoServicio', {
         url: "/estadoServicio",
         views: {
@@ -321,7 +330,7 @@ angular.module('ema', ['ionic', 'ema.controllers', 'ema.services', 'backand', 'a
             }
         }
     })
-
+*/
     .state('eventmenu.menuAgenteTransito.contactoSoporte', {
         url: "/contactoSoporte",
         views: {
@@ -331,6 +340,18 @@ angular.module('ema', ['ionic', 'ema.controllers', 'ema.services', 'backand', 'a
             }
         }
     })
+
+
+
+
+
+
+
+
+
+
+
+
 
     // MENU CONDUCTOR
 
@@ -380,6 +401,8 @@ angular.module('ema', ['ionic', 'ema.controllers', 'ema.services', 'backand', 'a
             }
         }
     })
+
+/*
     .state('menu.map.estadoServicio', {
         url: "/estadoServicio",
         views: {
@@ -389,7 +412,7 @@ angular.module('ema', ['ionic', 'ema.controllers', 'ema.services', 'backand', 'a
             }
         }
     })
-
+*/
     .state('menu.map.contactoSoporte', {
         url: "/contactoSoporte",
         views: {

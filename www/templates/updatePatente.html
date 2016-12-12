@@ -1,0 +1,32 @@
+<ion-modal-view style="width: 100%; height: 100%;top: 0%;">
+    <ion-header-bar class="bar-calm">
+
+        <h1 class="title">Editar</h1>
+
+        <div class="buttons">
+            <button class="button button-clear" ng-click="modalUpdate.hide()">Cancelar</button>
+        </div>
+
+    </ion-header-bar>
+
+    <ion-content class="padding">
+
+        <form name="usuarioForm" ng-submit="updateConductor()">
+            <div class="list">    
+                <label class="item item-input" >
+                   <ion-label>Patente Registrada</ion-label>  
+                   <input type="text"  name="Patente Registrada" ng-model="input.patente" required>
+                </label>
+
+            </div>
+      
+            
+
+            <div class="padding">
+                <button class="button button-dark button-balanced" ng-disabled="usuarioForm.$invalid">Guardar Cambios</button>
+            </div>
+        </form>
+
+    </ion-content>
+
+</ion-modal-view>

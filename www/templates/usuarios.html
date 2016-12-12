@@ -1,7 +1,14 @@
 <ion-view view-title="Usuarios" style="background-color:#6C9FEE;">
-    <ion-content padding="true" class="has-header">
 
-        <div class="row header">
+    <ion-content padding="true" class="has-header">
+    
+        <div class="padding">
+            <button class="button button-full button-dark" ng-click="modal.show();">
+                Nuevo Usuario
+            </button>
+        </div>
+       
+        <div class="row header"  style="overflow-x:auto;">
             <div class="col col-10">E-mail</div>
             <div class="col col-10">Pass</div>        
             <div class="col col-10">Nombre</div>
@@ -16,42 +23,39 @@
         </div>
 
         <div class="row" ng-repeat="usuario in usuarios">
-            <div class="col col-10">{{usuario.email}}</div>   
-            <div class="col col-10">{{usuario.password}}</div>
-            <div class="col col-10">{{usuario.name}}</div>
-            <div class="col col-10">{{usuario.lastname}}</div>
-            <div class="col col-10">{{usuario.dni}}</div>
-            <div class="col col-10">{{usuario.phone}}</div>
-            <div class="col col-10">{{usuario.mobile_phone}}</div>
+            <div class="col col-10">{{usuario.email}}                                                               </div>   
+            <div class="col col-10">{{usuario.password}}                                                            </div>
+            <div class="col col-10">{{usuario.name}}                                                                </div>
+            <div class="col col-10">{{usuario.lastname}}                                                            </div>
+            <div class="col col-10">{{usuario.dni}}                                                                 </div>
+            <div class="col col-10">{{usuario.phone}}                                                               </div>
+            <div class="col col-10">{{usuario.mobile_phone}}                                                        </div>
             <div class="col col-10">{{usuario.role_id == 1 ? "Administrador" : 
                                                       usuario.role_id == 2 ? "Vendedor" : 
                                                       usuario.role_id == 3 ? "Agente transito" : "Conductor"
                             }}
             </div>
 
+
+   
             <div class="col 10" style="border: none;background-color:#6C9FEE;">
-                <button class="button button-assertive" ng-click="deleteUsuario(usuario.id)"> Eliminar </button>
+                <button class="button buttoneliminar" ng-click="deleteUsuario(usuario.id)"> Eliminar </button>
             </div>
             
             <div class="col 10" style="border: none;background-color:#6C9FEE;">   
-                <button class="button button-balanced" ng-click="actualizar(usuario.id)">
+                <button class="button buttoneditar" ng-click="actualizar(usuario.id)">
                     Editar
                 </button>
             </div>
-
         </div>
-        <button ng-click="loadPreviousPage()" ng-show="currentPage > 1">
+        </ion-scroll>
+        <button class="button button  button-dark" ng-click="loadPreviousPage()" ng-show="currentPage > 1">
             Pag.Anterior
         </button>
-        <button ng-click="loadNextPage()" ng-show="usuarios.length == pageSize">
+        <button class="button button  button-dark " ng-click="loadNextPage()" ng-show="usuarios.length == pageSize">
             Pag.Siguiente
         </button>
 
-        <div class="padding">
-            <button class="button button-balanced" ng-click="modal.show();">
-                Nuevo Usuario
-            </button>
-        </div>
-
+       
     </ion-content>
 </ion-view>

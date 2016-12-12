@@ -1,31 +1,19 @@
 <ion-view title="Configuracion parametros generales" style="background-color:#6C9FEE;">
-    
      <ion-content padding="true" has-header="true">
-
-         <div class="row header">
-             <div class="col">Clave</div>
+        <div class="row header">
+             <div class="col">Parametro</div>
              <div class="col">Valor</div>
              <div class="col" style="border: none;background-color:#6C9FEE;"></div>
-         </div>
-
-         <div class="row" ng-repeat="config in configuraciones">
-             <div class="col" >{{config.key}}</div>
-             <div class="col" style="width:12em;height:4em;overflow:hidden;text-overflow:ellipsis;">{{config.value}}</div>
-
+        </div>
+        <div class="row" ng-repeat="config in configuraciones">       
+             <div class="col" style="width:20em;height:6em;overflow:hidden;text-overflow:ellipsis;">{{config.key}}</div>
+             <div class="col" style="width:12em;height:6em;overflow:hidden;text-overflow:ellipsis;">{{config.value}}</div>
              <div class="col" style="border: none;background-color:#6C9FEE;">
-                 <button class="button button-assertive" ng-click="editarConfig(config.id)"> Editar </button>
+                 <button class="button buttoneditar" ng-click="editarConfig(config.id)"> Editar </button>
              </div>
-         </div>
-
-        <form name="usuarioForm" ng-submit="updateConductor()">
-            <div class="list">
-                <label class="item item-input">
-                    <textarea ng-model="input.edit"></textarea>
-                </label>
-
-                <button class="button button-dark  button-block">Guardar</button>
-            </div>
-        </form>
-
-    </ion-content>
+        </div>           
+     </ion-content>
 </ion-view>
+
+
+

@@ -39,7 +39,7 @@
                 animation: 'fade-in',
                 showBackdrop: true,
                 maxWidth: 200,
-                showDelay: 0
+                showDelay: 1
             });
         }
 

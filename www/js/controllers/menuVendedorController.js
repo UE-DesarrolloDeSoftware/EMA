@@ -42,7 +42,7 @@ angular.module('ema.controllers')
     }
 })
 
-.controller('LiquidarTicketController', function ($scope, VentasService, ParkingService, VendedorService, ConfigurationsService, $ionicPopup) {
+.controller('LiquidarTicketController', function ($scope,$ionicModal , VentasService, ParkingService, VendedorService, ConfigurationsService, $ionicPopup) {
     $scope.input = {};
 
     $scope.horas = [];
@@ -56,7 +56,7 @@ angular.module('ema.controllers')
             $scope.horas.push(i);
         }
     });
-
+    console.log($scope.horas);
     
     $scope.addVenta = function(){
 
@@ -69,7 +69,7 @@ angular.module('ema.controllers')
 
         ParkingService.getParkingsFilter(parkingFilter).then(function (result) {
          //ParkingService.getParkingByPatente($scope.input.patente).then(function (result) {
-            
+            console.log(result.data.data.length);
              if (result.data.data.length != 0) {
 
                  var parking = result.data.data[0];
@@ -104,6 +104,9 @@ angular.module('ema.controllers')
              }
         });
     }
+
+
+
 })
 
 .controller('CierreController', function ($scope, $ionicPopup, $ionicModal, VentasService) {

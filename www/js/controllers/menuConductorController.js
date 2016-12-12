@@ -73,22 +73,36 @@ angular.module('ema.controllers')
 
 })
 
-.controller('ConfiguracionUsuarioController', function ($scope, $state, $ionicPopup, ConductorService) {
+.controller('ConfiguracionUsuarioController', function ($scope, $state, $ionicModal, $ionicPopup, ConductorService) {
     $scope.input = {};
     var conductor = {};
     var usuarioLogueado = JSON.parse(localStorage.getItem('usuario'));
 
     ConductorService.getConductorByIdUsuario(usuarioLogueado.id).then(function (result) {
 
-        conductor = result.data[0];
+        $scope.conductor = result.data[0];
         $scope.input.patente = conductor.patente;
+
     });
+
+    $scope.actualizar = function (id) {
+        ConductorService.getConductorByIdUsuario(usuarioLogueado.id).then(function(result){
+            $scope.conductor = result.data[0];
+            
+            $scope.modalUpdate.show();
+            $scope.input = conductor;
+             
+        })
+        
+    }
+
 
     $scope.updateConductor = function () {
 
         conductor.patente = $scope.input.patente.toUpperCase();
-
-        ConductorService.updateConductor(conductor.id, conductor).then(function (result) {
+        $scope.conductor.patente = $scope.input.patente;
+        ConductorService.updateConductor($scope.conductor.id, conductor).then(function (result) {
+            $scope.modalUpdate.hide();
 
             //POPUP ACTUALIZADO
             $ionicPopup.alert({
@@ -97,5 +111,13 @@ angular.module('ema.controllers')
             });
         });
     }
+
+    $ionicModal.fromTemplateUrl('templates/updatePatente.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function (modal) {
+        $scope.modalUpdate = modal;
+    });
+
 
 })

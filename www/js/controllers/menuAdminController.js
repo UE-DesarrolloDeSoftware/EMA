@@ -14,7 +14,7 @@ angular.module('ema.controllers')
     $scope.input = {};
 
     $scope.currentPage = 1;
-    $scope.pageSize = 6;
+    $scope.pageSize = 5;
 
     function getAllUsuarios() {
         //UsuarioService.getUsuarios().then(function (result) {
@@ -113,10 +113,57 @@ angular.module('ema.controllers')
     getAllUsuarios();
 })
 
-.controller('ConfiguracionAdminController', function ($scope, $state, ConfigurationsService) {
-    
+.controller('ConfiguracionAdminController', function ($scope, $state,$ionicPopup, $ionicModal, ConfigurationsService) {
+    var configuracion = {};
+    var configuraciones = {};
+    $scope.input = {};
+
     ConfigurationsService.getConfigurations().then(function (result) {
-        $scope.configuraciones = result.data.data;
+            $scope.configuraciones = result.data.data;
     });
+
+
+
+    $scope.editarConfig = function (id) {
+        
+        ConfigurationsService.getConfiguration(id).then(function(result){
+            configuracion = result.data;
+            $scope.modalUpdate.show();
+            $scope.input = configuracion;
+        })
+        
+    }
+
+    $scope.updateConfiguracion = function () {
+
+        //conductor.patente = $scope.input.patente.toUpperCase();
+        //configuracion = input;
+        configuracion.value = $scope.input.value;
+        console.log(configuracion);
+        console.log(configuracion.value);
+        ConfigurationsService.updateConfiguration(configuracion.id, configuracion).then(function (result) {
+            ConfigurationsService.getConfigurations().then(function (result) {
+            $scope.configuraciones = result.data.data;
+            });
+        $scope.modalUpdate.hide();
+
+            //POPUP ACTUALIZADO
+            $ionicPopup.alert({
+                title: 'Guardado',
+                template: 'Las modificaciones han sido guardadas correctamente.'
+            });
+        });
+    }
+
+    $ionicModal.fromTemplateUrl('templates/updateConfiguracion.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function (modal) {
+        $scope.modalUpdate = modal;
+    });
+
+
+
+
 })
 

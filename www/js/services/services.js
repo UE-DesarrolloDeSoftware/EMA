@@ -126,6 +126,9 @@ angular.module('ema.services', [])
     getConfiguration = function (id) {
         return $http.get(getUrlForId(id));
     };
+    updateConfiguration = function (id, object) {
+        return $http.put(getUrlForId(id), object);
+    };
 
     getConfigurationByKey = function (key) {
         return $http({
@@ -145,6 +148,7 @@ angular.module('ema.services', [])
     return {
         getConfigurations: getConfigurations,
         getConfiguration: getConfiguration,
+        updateConfiguration: updateConfiguration,
         getConfigurationByKey: getConfigurationByKey
     }
 })

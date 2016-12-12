@@ -13,18 +13,18 @@
 
         <form name="ventaForm" ng-submit="addVenta()">
             <div class="list">    
-                <label class="item item-input">
+                <label class="item item-input  padding-right">
                     <div class="input-label">
                         Patente
                     </div>
                     <input type="text" ng-model="input.patente" pattern="([A-Z,a-z]{2}?[0-9]{3}?[A-Z,a-z]{2}|[A-Z,a-z]{3}?[0-9]{3})" title="Ingrese una patente v&aacute;lida"  required >
                 </label>
 
-                <label class="item item-input item-select">
+                <label class="item item-input padding-right ">
                     <div class="input-label">
                         Horas
                     </div>
-                    <select ng-model="input.hours" ng-change="input.amount = input.hours * 2" required>
+                    <select ng-model="input.hours" ng-change="input.amount = input.hours * 4" required>
                         <option ng-repeat="hora in horas"
                                 value="{{hora}}">
                             {{hora}}
